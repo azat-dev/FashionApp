@@ -8,13 +8,15 @@
 import UIKit
 
 class CustomLayout: UICollectionViewLayout {
-    var contentBounds: CGRect = .zero
-    var minItemWidth: CGFloat = 100
-    let horizontalSpacing: CGFloat = 10
-    let verticalSpacing: CGFloat = 20
-    let itemHeight: CGFloat = 300
-    let itemOffset: CGFloat = 80
-    var numberOfColumns = 1
+    var insets: UIEdgeInsets = .zero
+    var verticalSpacing: CGFloat = .zero
+    var horizontalSpacing: CGFloat = 10
+    var itemOffset: CGFloat = 80
+    var itemHeight: CGFloat = 300
+    
+    private var contentBounds: CGRect = .zero
+    private var minItemWidth: CGFloat = 100
+    private var numberOfColumns = 1
     
     var lastIndex: Int {
         let count = collectionView!.numberOfItems(inSection: 0)
@@ -36,16 +38,16 @@ class CustomLayout: UICollectionViewLayout {
             return
         }
         
-        let firstAttributes = getAttributes(index: 0)
+        let firstAttributes = getCellAttributes(index: 0)
         contentBounds = contentBounds.union(firstAttributes.frame)
         
         if count == 1 {
             return
         }
         
-        let lastAttributes = getAttributes(index: lastIndex)
+        let lastPosition = getPosition(index: lastIndex)
+        let lastAttributes = getCellAttributes(index: lastPosition.row * numberOfColumns + (numberOfColumns - 1))
         contentBounds = contentBounds.union(lastAttributes.frame)
-        
     }
     
     override var collectionViewContentSize: CGSize {
@@ -60,7 +62,7 @@ class CustomLayout: UICollectionViewLayout {
         )
     }
     
-    func getAttributes(index: Int) -> UICollectionViewLayoutAttributes {
+    func getCellAttributes(index: Int) -> UICollectionViewLayoutAttributes {
         let attributes = UICollectionViewLayoutAttributes(
             forCellWith: IndexPath(row: index, section: 0)
         )
@@ -80,8 +82,8 @@ class CustomLayout: UICollectionViewLayout {
         }
         
         let rect = CGRect(
-            x: CGFloat(position.column) * minItemWidth + horizontalSpacing * CGFloat(position.column),
-            y: CGFloat(position.row) * itemHeight + CGFloat(position.row) * verticalSpacing + offset,
+            x: insets.left + CGFloat(position.column) * minItemWidth + horizontalSpacing * CGFloat(position.column),
+            y: insets.top + CGFloat(position.row) * itemHeight + CGFloat(position.row) * verticalSpacing + offset,
             width: minItemWidth,
             height: itemHeight
         )
@@ -99,7 +101,7 @@ class CustomLayout: UICollectionViewLayout {
     
     /// - Tag: LayoutAttributesForItem
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return getAttributes(index: indexPath.row)
+        return getCellAttributes(index: indexPath.row)
     }
     
     /// - Tag: LayoutAttributesForElements
@@ -116,14 +118,14 @@ class CustomLayout: UICollectionViewLayout {
         // Starting from the match, loop up and down through the array until all the attributes
         // have been added within the query rect.
         
-        let firstItems = stride(from: firstMatchIndex, through: 0, by: -1).map { getAttributes(index: $0) }
+        let firstItems = stride(from: firstMatchIndex, through: 0, by: -1).map { getCellAttributes(index: $0) }
         
         for attributes in firstItems {
             guard attributes.frame.maxY >= rect.minY else { break }
             attributesArray.append(attributes)
         }
         
-        let lastItems = (firstMatchIndex...lastIndex).map { getAttributes(index: $0) }
+        let lastItems = (firstMatchIndex...lastIndex).map { getCellAttributes(index: $0) }
         
         for attributes in lastItems {
             guard attributes.frame.minY <= rect.maxY else { break }
@@ -138,7 +140,7 @@ class CustomLayout: UICollectionViewLayout {
         if end < start { return nil }
         
         let mid = (start + end) / 2
-        let attr = getAttributes(index: mid)
+        let attr = getCellAttributes(index: mid)
         
         if attr.frame.intersects(rect) {
             return mid

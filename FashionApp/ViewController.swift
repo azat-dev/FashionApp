@@ -131,6 +131,9 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 
 extension ViewController {
     func createLayout() -> UICollectionViewLayout {
-        return CustomLayout()
+        let layout = CustomLayout()
+        layout.insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
+        return layout
     }
 }
