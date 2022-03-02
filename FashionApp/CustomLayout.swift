@@ -8,15 +8,19 @@
 import UIKit
 
 class CustomLayout: UICollectionViewLayout {
+    typealias CalculateItemSize = (CGSize) -> CGSize
+    
     var insets: UIEdgeInsets = .zero
     var verticalSpacing: CGFloat = .zero
-    var horizontalSpacing: CGFloat = 10
     var itemOffset: CGFloat = 80
-    var itemHeight: CGFloat = 300
+    
+    var prepareItemSize: CalculateItemSize!
     
     private var contentBounds: CGRect = .zero
-    private var minItemWidth: CGFloat = 100
     private var numberOfColumns = 1
+    private var itemSize: CGSize!
+    private var collectionViewSize: CGSize!
+    private var horizontalSpacing: CGFloat!
     
     var lastIndex: Int {
         let count = collectionView!.numberOfItems(inSection: 0)
@@ -26,28 +30,29 @@ class CustomLayout: UICollectionViewLayout {
     override func prepare() {
         super.prepare()
         
-        let width = collectionView!.bounds.size.width
+        collectionViewSize = collectionView!.bounds.size
+        itemSize = prepareItemSize(collectionViewSize)
         
-        minItemWidth = width / 2 - 20
         let count = collectionView?.numberOfItems(inSection: 0)
-        numberOfColumns = Int(width / CGFloat(minItemWidth))
-        
+        numberOfColumns = Int(collectionViewSize.width / itemSize.width)
         contentBounds = CGRect(origin: .zero, size: collectionView!.bounds.size)
+        
+        horizontalSpacing = collectionViewSize.width - insets.left - insets.right - CGFloat(numberOfColumns) * itemSize.width
         
         if count == 0 {
             return
         }
         
-        let firstAttributes = getCellAttributes(index: 0)
-        contentBounds = contentBounds.union(firstAttributes.frame)
-        
-        if count == 1 {
-            return
-        }
-        
         let lastPosition = getPosition(index: lastIndex)
-        let lastAttributes = getCellAttributes(index: lastPosition.row * numberOfColumns + (numberOfColumns - 1))
-        contentBounds = contentBounds.union(lastAttributes.frame)
+        let lastRowFloat = CGFloat(lastPosition.row)
+        
+        contentBounds = CGRect(
+            x: 0,
+            y: 0,
+            width: collectionViewSize.width,
+            height: insets.top + (lastRowFloat + 1) * itemSize.height + lastRowFloat * verticalSpacing + itemOffset + insets.bottom
+        )
+        
     }
     
     override var collectionViewContentSize: CGSize {
@@ -68,24 +73,17 @@ class CustomLayout: UICollectionViewLayout {
         )
         
         let position = getPosition(index: index)
-        let width = collectionView!.bounds.size.width
-        
-        var horizontalSpacing: CGFloat = 0
-        if numberOfColumns > 1 {
-            horizontalSpacing = (width - CGFloat(numberOfColumns) * minItemWidth) / CGFloat(numberOfColumns - 1)
-        }
-        
         var offset: CGFloat = 0
         
-        if (position.column + 1) % 2 == 0 {
+        if (position.column + 1) % 2 != 0 {
             offset = itemOffset
         }
         
         let rect = CGRect(
-            x: insets.left + CGFloat(position.column) * minItemWidth + horizontalSpacing * CGFloat(position.column),
-            y: insets.top + CGFloat(position.row) * itemHeight + CGFloat(position.row) * verticalSpacing + offset,
-            width: minItemWidth,
-            height: itemHeight
+            x: insets.left + CGFloat(position.column) * itemSize.width + horizontalSpacing * CGFloat(position.column),
+            y: insets.top + CGFloat(position.row) * itemSize.height + CGFloat(position.row) * verticalSpacing + offset,
+            width: itemSize.width,
+            height: itemSize.height
         )
         
         attributes.frame = rect

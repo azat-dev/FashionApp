@@ -132,7 +132,24 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 extension ViewController {
     func createLayout() -> UICollectionViewLayout {
         let layout = CustomLayout()
-        layout.insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
+        let insets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        layout.insets = insets
+        layout.verticalSpacing = 20
+        layout.prepareItemSize = { collectionViewSize in
+            
+            let numberOfColumns: CGFloat = 2
+            let horizontalSpacing: CGFloat = 20
+            let ratio: CGFloat = 1.5
+            
+            let width = (collectionViewSize.width - insets.left - (numberOfColumns - 1) * horizontalSpacing - insets.right) / numberOfColumns
+            
+            print("Width \(width)")
+            return CGSize(
+                width: width,
+                height: width * ratio
+            )
+        }
         
         return layout
     }
