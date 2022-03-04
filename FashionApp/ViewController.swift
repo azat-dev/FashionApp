@@ -134,20 +134,23 @@ extension ViewController {
         let layout = CustomLayout()
         
         let insets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-        layout.insets = insets
-        layout.verticalSpacing = 20
-        layout.prepareItemSize = { collectionViewSize in
+
+        layout.prepareLayoutParams = { collectionViewSize in
             
-            let numberOfColumns: CGFloat = 2
+            let numberOfColumns = 2
             let horizontalSpacing: CGFloat = 20
             let ratio: CGFloat = 1.5
+            let verticalSpacing: CGFloat = 20
             
-            let width = (collectionViewSize.width - insets.left - (numberOfColumns - 1) * horizontalSpacing - insets.right) / numberOfColumns
+            let width = (collectionViewSize.width - insets.left - CGFloat(numberOfColumns - 1) * horizontalSpacing - insets.right) / CGFloat(numberOfColumns)
             
-            print("Width \(width)")
-            return CGSize(
-                width: width,
-                height: width * ratio
+            return CustomLayout.LayoutParams(
+                numberOfColumns: numberOfColumns,
+                horizontalSpacing: horizontalSpacing,
+                verticalSpacing: verticalSpacing,
+                cellWidth: width,
+                cellsHeights: [width * 2.5, width * 2, width * 2, width * 2.5],
+                insets: insets
             )
         }
         
