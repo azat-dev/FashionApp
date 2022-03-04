@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */; };
+		AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542C27D26D8200B36D97 /* ProductCell.swift */; };
+		AA8C542F27D26E1500B36D97 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542E27D26E1500B36D97 /* Product.swift */; };
 		AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9027C4505600E893E1 /* AppDelegate.swift */; };
 		AADDDD9327C4505600E893E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9227C4505600E893E1 /* SceneDelegate.swift */; };
 		AADDDD9527C4505600E893E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9427C4505600E893E1 /* ViewController.swift */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
+		AA8C542C27D26D8200B36D97 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		AA8C542E27D26E1500B36D97 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		AADDDD8D27C4505600E893E1 /* FashionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FashionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AADDDD9027C4505600E893E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AADDDD9227C4505600E893E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA8C543027D26E1D00B36D97 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA8C542E27D26E1500B36D97 /* Product.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		AADDDD8427C4505600E893E1 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +118,8 @@
 				AADDDD9027C4505600E893E1 /* AppDelegate.swift */,
 				AADDDD9227C4505600E893E1 /* SceneDelegate.swift */,
 				AADDDD9427C4505600E893E1 /* ViewController.swift */,
+				AA8C542C27D26D8200B36D97 /* ProductCell.swift */,
+				AA8C543027D26E1D00B36D97 /* Models */,
 				AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */,
 				AADDDD9627C4505600E893E1 /* Main.storyboard */,
 				AADDDD9C27C4505700E893E1 /* Assets.xcassets */,
@@ -267,8 +281,10 @@
 				AADDDD9B27C4505600E893E1 /* FashionApp.xcdatamodeld in Sources */,
 				AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */,
 				AADDDD9527C4505600E893E1 /* ViewController.swift in Sources */,
+				AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */,
 				AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */,
 				AADDDD9327C4505600E893E1 /* SceneDelegate.swift in Sources */,
+				AA8C542F27D26E1500B36D97 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

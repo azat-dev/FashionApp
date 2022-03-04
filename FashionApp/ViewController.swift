@@ -8,73 +8,31 @@
 import UIKit
 
 
-class CustomCell: UICollectionViewCell {
-    static let reuseIdentifier = "CustomCell"
-    
-    var labelView: UILabel!
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configure()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        configure()
-    }
-}
-
-extension CustomCell {
-    func configure() {
-        labelView = UILabel()
-        labelView.text = "Stub"
-        labelView.translatesAutoresizingMaskIntoConstraints = false
-        
-        layer.borderColor = UIColor.red.cgColor
-        layer.borderWidth = 1
-        
-        let inset = CGFloat(10)
-        
-        contentView.addSubview(labelView)
-        
-        contentView.layer.borderColor = UIColor.blue.cgColor
-        contentView.layer.borderWidth = 2
-        
-        labelView.textAlignment = .center
-
-        
-        NSLayoutConstraint.activate([
-            labelView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor, constant: inset),
-            labelView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: -inset),
-            
-            labelView.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: inset),
-            labelView.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor, constant: -inset)
-        ])
-    }
-}
-
 class ViewController: UIViewController {
     private var collectionView: UICollectionView!
-    private var data: [Int] = []
+    private var data: [Product] = [
+        Product(id: "1", brand: "Nike", name: "Fleming Jacket", price: 450),
+        Product(id: "2", brand: "Nike", name: "Fleming Jacket", price: 450),
+        Product(id: "3", brand: "Nike", name: "Fleming Jacket", price: 450),
+        Product(id: "4", brand: "Nike", name: "Fleming Jacket", price: 450),
+        Product(id: "5", brand: "Nike", name: "Fleming Jacket", price: 450),
+        Product(id: "6", brand: "Nike", name: "Fleming Jacket", price: 450)
+    ]
     
-    private var cellRegistration: UICollectionView.CellRegistration<CustomCell, Int>!
-
+    private var cellRegistration: UICollectionView.CellRegistration<ProductCell, Product>!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        for index in 0..<100 {
-            data.append(index)
-        }
         setupViews()
     }
-
+    
     func setupViews() {
         cellRegistration = {
             UICollectionView.CellRegistration(
                 handler: {
-                    cell, indexPath, itemIdentifier in
+                    cell, indexPath, product in
                     
-                    let item = self.data[itemIdentifier]
-                    cell.labelView.text = "\(item)"
+                    cell.product = product
                 }
             )
         } ()
@@ -94,7 +52,7 @@ class ViewController: UIViewController {
         
         collectionView.setCollectionViewLayout(createLayout(), animated: true)
         
-        collectionView.register(CustomCell.self, forCellWithReuseIdentifier: CustomCell.reuseIdentifier)
+        collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
         collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = true
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -125,16 +83,16 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: 100, height: 100)
         }
         
-        return CGSize(width: 150, height: 150)
+        return CGSize(width: 150, height: 150)
     }
-}
+}
 
 extension ViewController {
     func createLayout() -> UICollectionViewLayout {
         let layout = CustomLayout()
         
         let insets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-
+        
         layout.prepareLayoutParams = { collectionViewSize in
             
             let numberOfColumns = 2
@@ -149,7 +107,7 @@ extension ViewController {
                 horizontalSpacing: horizontalSpacing,
                 verticalSpacing: verticalSpacing,
                 cellWidth: width,
-                cellsHeights: [width * 2.5, width * 2, width * 2, width * 2.5],
+                cellsHeights: [width * 2, width * 1.8, width * 1.8, width * 2],
                 insets: insets
             )
         }
