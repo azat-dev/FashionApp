@@ -20,6 +20,14 @@ class ViewController: UIViewController {
     ]
     
     private var cellRegistration: UICollectionView.CellRegistration<ProductCell, Product>!
+    private var roundedCellRegistration: UICollectionView.CellRegistration<ProductCellRounded, Product>!
+    
+    private var cellsPatterns = [
+        (ratio: 2.0, isRounded: false),
+        (ratio: 1.8, isRounded: true),
+        (ratio: 1.8, isRounded: false),
+        (ratio: 2, isRounded: false)
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +39,15 @@ class ViewController: UIViewController {
             UICollectionView.CellRegistration(
                 handler: {
                     cell, indexPath, product in
-                    
+                    cell.product = product
+                }
+            )
+        } ()
+        
+        roundedCellRegistration = {
+            UICollectionView.CellRegistration(
+                handler: {
+                    cell, indexPath, product in
                     cell.product = product
                 }
             )
@@ -47,12 +63,19 @@ class ViewController: UIViewController {
             frame: view.bounds,
             collectionViewLayout: createLayout()
         )
-        
-        collectionView.delegate = self
+
         
         collectionView.setCollectionViewLayout(createLayout(), animated: true)
         
-        collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
+        collectionView.register(
+            ProductCell.self,
+            forCellWithReuseIdentifier: ProductCell.reuseIdentifier
+        )
+        collectionView.register(
+            ProductCellRounded.self,
+            forCellWithReuseIdentifier: ProductCell.reuseIdentifier
+        )
+        
         collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = true
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -62,8 +85,37 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UICollectionViewDataSource {
+    
+    func isRoundedCell(index: IndexPath) -> Bool {
+        let interval = cellsPatterns.count
+        
+        for (patternOffset, cellPattern) in cellsPatterns.enumerated() {
+            if !cellPattern.isRounded {
+                continue
+            }
+            
+            if (index.row - patternOffset) % interval == 0 {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: data[indexPath.row])
+        if isRoundedCell(index: indexPath) {
+            return collectionView.dequeueConfiguredReusableCell(
+                using: roundedCellRegistration,
+                for: indexPath,
+                item: data[indexPath.row]
+            )
+        }
+        
+        return collectionView.dequeueConfiguredReusableCell(
+            using: cellRegistration,
+            for: indexPath,
+            item: data[indexPath.row]
+        )
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -74,18 +126,6 @@ extension ViewController: UICollectionViewDataSource {
         return 1
     }
 }
-
-extension ViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let row = indexPath.row
-        
-        if row % 2 == 0 {
-            return CGSize(width: 100, height: 100)
-        }
-        
-        return CGSize(width: 150, height: 150)
-    }
-}
 
 extension ViewController {
     func createLayout() -> UICollectionViewLayout {
@@ -107,7 +147,10 @@ extension ViewController {
                 horizontalSpacing: horizontalSpacing,
                 verticalSpacing: verticalSpacing,
                 cellWidth: width,
-                cellsHeights: [width * 2, width * 1.8, width * 1.8, width * 2],
+                cellsHeights: self.cellsPatterns.map {
+                    cellPattern in
+                    cellPattern.ratio * width
+                },
                 insets: insets
             )
         }

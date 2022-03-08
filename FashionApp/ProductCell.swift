@@ -8,12 +8,18 @@
 import UIKit
 
 class ProductCell: UICollectionViewCell {
-    static let reuseIdentifier = "ProductCell"
+    class var reuseIdentifier: String {
+        "ProductCell"
+    }
     
-    private var nameLabelView: UILabel!
-    private var brandLabelView: UILabel!
-    private var priceLabelView: UILabel!
-    private var imageView: UIImageView!
+    public var isSmall = false
+    
+    fileprivate var nameLabelView: UILabel!
+    fileprivate var brandLabelView: UILabel!
+    fileprivate var priceLabelView: UILabel!
+    fileprivate var imageView: UIImageView!
+    
+    fileprivate var imageViewLayerDelegate: ImageViewLayerDelegate!
     
     var product: Product! {
         didSet {
@@ -39,8 +45,8 @@ extension ProductCell {
         
         imageView = UIImageView(image: UIImage(named: "ImageTestHoodie"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
+        
         
         nameLabelView = UILabel()
         nameLabelView.text = "Name"
@@ -89,5 +95,48 @@ extension ProductCell {
             
             priceLabelView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset)
         ])
+        
+        imageView.layer.cornerRadius = 8
+    }
+}
+
+class ProductCellRounded: ProductCell {
+    override class var reuseIdentifier: String {
+        "ProductCellRounded"
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        configureImageView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureImageView()
+    }
+    
+    private func configureImageView() {
+        imageViewLayerDelegate = ImageViewLayerDelegate()
+        imageView.layer.mask = CAShapeLayer()
+        imageView.layer.delegate = imageViewLayerDelegate
+    }
+}
+
+class ImageViewLayerDelegate: NSObject, CALayerDelegate {
+    func layoutSublayers(of layer: CALayer) {
+        
+        let bounds = layer.bounds
+        let maskLayer = layer.mask as! CAShapeLayer
+        
+        maskLayer.bounds = layer.bounds
+        maskLayer.frame = layer.frame
+        
+        let path = CGMutablePath()
+        
+        path.addEllipse(in: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.width))
+        path.addRect(CGRect(x: 0, y: bounds.width / 2, width: bounds.width, height: bounds.height - bounds.width / 2))
+        maskLayer.path = path
+        maskLayer.fillColor = UIColor.yellow.cgColor
     }
 }
