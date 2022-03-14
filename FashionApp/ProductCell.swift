@@ -17,9 +17,9 @@ class ProductCell: UICollectionViewCell {
     fileprivate var nameLabelView: UILabel!
     fileprivate var brandLabelView: UILabel!
     fileprivate var priceLabelView: UILabel!
-    fileprivate var imageView: UIImageView!
+    fileprivate var shapedImageView: ShapedImageView!
     
-    fileprivate var imageViewLayerDelegate: ImageViewLayerDelegate!
+    var singleTap: UIGestureRecognizer!
     
     var product: Product! {
         didSet {
@@ -43,10 +43,9 @@ class ProductCell: UICollectionViewCell {
 extension ProductCell {
     func configure() {
         
-        imageView = UIImageView(image: UIImage(named: "ImageTestHoodie"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
-        
+        shapedImageView = ShapedImageView()
+        shapedImageView.imageView.image = UIImage(named: "ImageTestHoodie")
+        shapedImageView.translatesAutoresizingMaskIntoConstraints = false
         
         nameLabelView = UILabel()
         nameLabelView.text = "Name"
@@ -69,21 +68,21 @@ extension ProductCell {
         
         let inset = CGFloat(0)
         
-        contentView.addSubview(imageView)
+        contentView.addSubview(shapedImageView)
         contentView.addSubview(nameLabelView)
         contentView.addSubview(brandLabelView)
         contentView.addSubview(priceLabelView)
         
         
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: inset),
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            shapedImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: inset),
+            shapedImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            shapedImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            nameLabelView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: inset),
-            nameLabelView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -inset),
+            nameLabelView.leadingAnchor.constraint(equalTo: shapedImageView.leadingAnchor, constant: inset),
+            nameLabelView.trailingAnchor.constraint(equalTo: shapedImageView.trailingAnchor, constant: -inset),
             
-            nameLabelView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
+            nameLabelView.topAnchor.constraint(equalTo: shapedImageView.bottomAnchor, constant: 10),
             
             brandLabelView.topAnchor.constraint(equalTo: nameLabelView.bottomAnchor, constant: 2),
             brandLabelView.trailingAnchor.constraint(equalTo: nameLabelView.trailingAnchor),
@@ -96,7 +95,24 @@ extension ProductCell {
             priceLabelView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset)
         ])
         
-        imageView.layer.cornerRadius = 8
+        contentView.isUserInteractionEnabled = true
+        singleTap = UIGestureRecognizer(target: self, action: #selector(tapImageView))
+        contentView.addGestureRecognizer(singleTap)
+        
+        shapedImageView.path = {
+            containerView in
+            CGPath(
+                roundedRect: containerView.frame,
+                cornerWidth: 8,
+                cornerHeight: 8,
+                transform: nil
+            )
+        }
+    }
+    
+    @objc
+    func tapImageView() {
+        print("TAP")
     }
 }
 
@@ -107,7 +123,6 @@ class ProductCellRounded: ProductCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         configureImageView()
     }
     
@@ -117,26 +132,73 @@ class ProductCellRounded: ProductCell {
     }
     
     private func configureImageView() {
-        imageViewLayerDelegate = ImageViewLayerDelegate()
-        imageView.layer.mask = CAShapeLayer()
-        imageView.layer.delegate = imageViewLayerDelegate
+        shapedImageView.path = Self.path
+        shapedImageView.imageView.clipsToBounds = true
+    }
+    
+    private static func path(_ containerView: UIView) -> CGPath {
+        
+        let cornerRadius: CGFloat = 10
+
+        let bounds = containerView.bounds
+
+        let width = bounds.width
+        let height = containerView.bounds.maxY
+        let radius = width / 2
+
+        let origin = containerView.frame.origin
+        
+        let path = CGMutablePath()
+
+        path.addArc(
+            center: CGPoint(x: origin.x + radius, y: origin.y + radius),
+            radius: radius,
+            startAngle: 0,
+            endAngle: CGFloat(180).radians,
+            clockwise: true
+        )
+
+        path.addLine(to: CGPoint(
+            x: origin.x,
+            y: origin.y + height - cornerRadius)
+        )
+
+        path.addArc(
+            center: CGPoint(
+                x: origin.x + cornerRadius,
+                y: origin.y + height - cornerRadius
+            ),
+            radius: cornerRadius,
+            startAngle: CGFloat(180).radians,
+            endAngle: CGFloat(90).radians,
+            clockwise: true
+        )
+
+        path.addLine(to: CGPoint(
+            x: origin.x + width - cornerRadius,
+            y: origin.y + height
+        ))
+
+        path.addArc(
+            center: CGPoint(
+                x: origin.x + width - cornerRadius,
+                y: origin.y + height - cornerRadius
+            ),
+            radius: cornerRadius,
+            startAngle: CGFloat(90).radians,
+            endAngle: CGFloat(0).radians,
+            clockwise: true
+        )
+
+        path.closeSubpath()
+        
+        return path
     }
 }
 
-class ImageViewLayerDelegate: NSObject, CALayerDelegate {
-    func layoutSublayers(of layer: CALayer) {
-        
-        let bounds = layer.bounds
-        let maskLayer = layer.mask as! CAShapeLayer
-        
-        maskLayer.bounds = layer.bounds
-        maskLayer.frame = layer.frame
-        
-        let path = CGMutablePath()
-        
-        path.addEllipse(in: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.width))
-        path.addRect(CGRect(x: 0, y: bounds.width / 2, width: bounds.width, height: bounds.height - bounds.width / 2))
-        maskLayer.path = path
-        maskLayer.fillColor = UIColor.yellow.cgColor
+
+extension CGFloat {
+    var radians: CGFloat {
+        self * .pi / 180.0
     }
 }
