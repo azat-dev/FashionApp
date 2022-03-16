@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var data: [Product] = [
-        Product(id: "1", brand: "NIKE", name: "Fleming Jacket", price: 450),
+        Product(id: "1", brand: "NIKE", name: "Comfort Jacket", price: 450),
         Product(id: "2", brand: "NIKE", name: "Fleming Jacket", price: 450),
         Product(id: "3", brand: "NIKE", name: "Fleming Jacket", price: 450),
         Product(id: "4", brand: "NIKE", name: "Fleming Jacket", price: 450),

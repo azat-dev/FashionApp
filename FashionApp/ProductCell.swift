@@ -19,6 +19,10 @@ class ProductCell: UICollectionViewCell, ShapeDelegate {
     fileprivate var priceLabelView: UILabel!
     fileprivate var shapedImageView: ShapedImageView!
     
+    fileprivate static var nameLabelFont = UIFont.preferredFont(name: FontRedHatDisplay.medium.rawValue, forTextStyle: .headline)
+    fileprivate static var brandLabelFont = UIFont.preferredFont(name: FontRedHatDisplay.bold.rawValue, forTextStyle: .footnote)
+    fileprivate static var priceLabelFont = UIFont.preferredFont(name: FontRedHatDisplay.regular.rawValue, forTextStyle: .headline)
+    
     var singleTap: UIGestureRecognizer!
     
     var product: Product! {
@@ -54,20 +58,22 @@ extension ProductCell {
         
         shapedImageView = ShapedImageView()
         shapedImageView.imageView.image = UIImage(named: "ImageTestHoodie")
+        shapedImageView.imageView.contentMode = .scaleAspectFit
+        shapedImageView.imageView.backgroundColor = UIColor(named: "ColorProductCellBackground")
         shapedImageView.translatesAutoresizingMaskIntoConstraints = false
         
         let shadowColor = UIColor(red: 0.094, green: 0.153, blue: 0.294, alpha: 1).cgColor
         
         shapedImageView.shadows = [
-            .init(
+            ShadowView.ShadowParams(
                 color: shadowColor,
-                opacity: 0.08,
+                opacity: 0.03,
                 radius: 24,
                 offset: CGSize(width: 0, height: 8)
             ),
-            .init(
+            ShadowView.ShadowParams(
                 color: shadowColor,
-                opacity: 0.12,
+                opacity: 0.08,
                 radius: 12,
                 offset: CGSize(width: 0, height: 6)
             ),
@@ -77,20 +83,20 @@ extension ProductCell {
         nameLabelView.text = "Name"
         nameLabelView.translatesAutoresizingMaskIntoConstraints = false
         nameLabelView.textAlignment = .left
-        nameLabelView.font = .preferredFont(forTextStyle: .headline)
+        nameLabelView.font = Self.nameLabelFont
         
         brandLabelView = UILabel()
         brandLabelView.text = "Brand"
         brandLabelView.translatesAutoresizingMaskIntoConstraints = false
         brandLabelView.textColor = UIColor(named: "ColorBrandLabel")
         brandLabelView.textAlignment = .left
-        brandLabelView.font = .preferredFont(forTextStyle: .headline)
+        brandLabelView.font = Self.brandLabelFont
         
         priceLabelView = UILabel()
         priceLabelView.text = "$0"
         priceLabelView.translatesAutoresizingMaskIntoConstraints = false
         priceLabelView.textAlignment = .left
-        priceLabelView.font = .preferredFont(forTextStyle: .title3)
+        priceLabelView.font = Self.priceLabelFont
         
         let inset = CGFloat(0)
         
@@ -110,11 +116,11 @@ extension ProductCell {
             
             nameLabelView.topAnchor.constraint(equalTo: shapedImageView.bottomAnchor, constant: 10),
             
-            brandLabelView.topAnchor.constraint(equalTo: nameLabelView.bottomAnchor, constant: 2),
+            brandLabelView.topAnchor.constraint(equalTo: nameLabelView.bottomAnchor, constant: 0),
             brandLabelView.trailingAnchor.constraint(equalTo: nameLabelView.trailingAnchor),
             brandLabelView.leadingAnchor.constraint(equalTo: nameLabelView.leadingAnchor),
             
-            priceLabelView.topAnchor.constraint(equalTo: brandLabelView.bottomAnchor, constant: 10),
+            priceLabelView.topAnchor.constraint(equalTo: brandLabelView.bottomAnchor, constant: 5),
             priceLabelView.leadingAnchor.constraint(equalTo: brandLabelView.leadingAnchor),
             priceLabelView.trailingAnchor.constraint(equalTo: nameLabelView.trailingAnchor),
             

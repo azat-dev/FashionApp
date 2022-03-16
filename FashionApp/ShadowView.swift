@@ -21,7 +21,6 @@ class ShadowView: UIView {
         var offset: CGSize
     }
     
-    
     private var shadowLayers: [CALayer] = []
     var shadows: [ShadowParams] = [] {
         didSet {
