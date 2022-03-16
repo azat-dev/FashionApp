@@ -7,20 +7,16 @@
 
 import UIKit
 
-class ShapedImageView: UIView {
-    typealias ShapePathCallback = (UIView) -> CGPath
+class ShapedImageView: ShadowView {
     
     var imageView: UIImageView!
-    var path: ShapePathCallback? {
+    override var delegateShape: ShapeDelegate? {
         didSet {
-            if path != nil {
-                maskLayer = CAShapeLayer()
-            } else {
-                maskLayer = nil
-            }
+            updateMask()
         }
     }
     
+    private var currentPath: CGPath!
     private var maskLayer: CAShapeLayer?
     
     override init(frame: CGRect) {
@@ -34,26 +30,29 @@ class ShapedImageView: UIView {
     }
     
     private func updateMask() {
-        if
-            let path = path,
-            let maskLayer = maskLayer
-        {
-            let shapePath = path(self)
-            
-            maskLayer.fillColor = UIColor.yellow.cgColor
-            maskLayer.path = shapePath
-            maskLayer.frame = self.frame
-            maskLayer.bounds = bounds
-            
-            
-            applyShadow(view: self, path: shapePath)
-            layer.shadowPath = shapePath
-            imageView.layer.mask = maskLayer
-            
-        } else {
-            imageView.mask = nil
-            layer.shadowPath = nil
+        guard
+            let shapePath = delegateShape?.shape(view: self)
+        else {
+            imageView.layer.mask = nil
+            maskLayer = nil
+            return
         }
+        
+        if maskLayer == nil {
+            maskLayer = CAShapeLayer()
+        }
+        
+        guard let maskLayer = maskLayer else {
+            return
+        }
+        
+        maskLayer.fillColor = UIColor.yellow.cgColor
+        maskLayer.path = shapePath
+        maskLayer.frame = self.frame
+        maskLayer.bounds = bounds
+        
+        imageView.layer.mask = maskLayer
+        imageView.clipsToBounds = true
     }
     
     private func setupViews() {
@@ -74,7 +73,6 @@ class ShapedImageView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         updateMask()
     }
 }

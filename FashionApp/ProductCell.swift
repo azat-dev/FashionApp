@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductCell: UICollectionViewCell {
+class ProductCell: UICollectionViewCell, ShapeDelegate {
     class var reuseIdentifier: String {
         "ProductCell"
     }
@@ -25,7 +25,7 @@ class ProductCell: UICollectionViewCell {
         didSet {
             nameLabelView.text = product.name
             brandLabelView.text = "From \(product.brand)"
-            priceLabelView.text = "$\(product.price)"
+            priceLabelView.text = "€\(product.price)"
         }
     }
     
@@ -38,6 +38,15 @@ class ProductCell: UICollectionViewCell {
         super.init(coder: coder)
         configure()
     }
+    
+    func shape(view containerView: UIView) -> CGPath? {
+        CGPath(
+            roundedRect: containerView.frame,
+            cornerWidth: 8,
+            cornerHeight: 8,
+            transform: nil
+        )
+    }
 }
 
 extension ProductCell {
@@ -46,6 +55,23 @@ extension ProductCell {
         shapedImageView = ShapedImageView()
         shapedImageView.imageView.image = UIImage(named: "ImageTestHoodie")
         shapedImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let shadowColor = UIColor(red: 0.094, green: 0.153, blue: 0.294, alpha: 1).cgColor
+        
+        shapedImageView.shadows = [
+            .init(
+                color: shadowColor,
+                opacity: 0.08,
+                radius: 24,
+                offset: CGSize(width: 0, height: 8)
+            ),
+            .init(
+                color: shadowColor,
+                opacity: 0.12,
+                radius: 12,
+                offset: CGSize(width: 0, height: 6)
+            ),
+        ]
         
         nameLabelView = UILabel()
         nameLabelView.text = "Name"
@@ -98,107 +124,12 @@ extension ProductCell {
         contentView.isUserInteractionEnabled = true
         singleTap = UIGestureRecognizer(target: self, action: #selector(tapImageView))
         contentView.addGestureRecognizer(singleTap)
-        
-        shapedImageView.path = {
-            containerView in
-            CGPath(
-                roundedRect: containerView.frame,
-                cornerWidth: 8,
-                cornerHeight: 8,
-                transform: nil
-            )
-        }
+
+        shapedImageView.delegateShape = self
     }
     
     @objc
     func tapImageView() {
         print("TAP")
-    }
-}
-
-class ProductCellRounded: ProductCell {
-    override class var reuseIdentifier: String {
-        "ProductCellRounded"
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureImageView()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        configureImageView()
-    }
-    
-    private func configureImageView() {
-        shapedImageView.path = Self.path
-        shapedImageView.imageView.clipsToBounds = true
-    }
-    
-    private static func path(_ containerView: UIView) -> CGPath {
-        
-        let cornerRadius: CGFloat = 10
-
-        let bounds = containerView.bounds
-
-        let width = bounds.width
-        let height = containerView.bounds.maxY
-        let radius = width / 2
-
-        let origin = containerView.frame.origin
-        
-        let path = CGMutablePath()
-
-        path.addArc(
-            center: CGPoint(x: origin.x + radius, y: origin.y + radius),
-            radius: radius,
-            startAngle: 0,
-            endAngle: CGFloat(180).radians,
-            clockwise: true
-        )
-
-        path.addLine(to: CGPoint(
-            x: origin.x,
-            y: origin.y + height - cornerRadius)
-        )
-
-        path.addArc(
-            center: CGPoint(
-                x: origin.x + cornerRadius,
-                y: origin.y + height - cornerRadius
-            ),
-            radius: cornerRadius,
-            startAngle: CGFloat(180).radians,
-            endAngle: CGFloat(90).radians,
-            clockwise: true
-        )
-
-        path.addLine(to: CGPoint(
-            x: origin.x + width - cornerRadius,
-            y: origin.y + height
-        ))
-
-        path.addArc(
-            center: CGPoint(
-                x: origin.x + width - cornerRadius,
-                y: origin.y + height - cornerRadius
-            ),
-            radius: cornerRadius,
-            startAngle: CGFloat(90).radians,
-            endAngle: CGFloat(0).radians,
-            clockwise: true
-        )
-
-        path.closeSubpath()
-        
-        return path
-    }
-}
-
-
-extension CGFloat {
-    var radians: CGFloat {
-        self * .pi / 180.0
     }
 }
