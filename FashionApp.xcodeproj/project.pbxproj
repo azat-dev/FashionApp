@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */; };
 		AA06BCC927E22680003CFF77 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCC827E22680003CFF77 /* Extensions.swift */; };
-		AA06BCCB27E22F5C003CFF77 /* ProductDetailControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCCA27E22F5C003CFF77 /* ProductDetailControllerView.swift */; };
+		AA06BCCB27E22F5C003CFF77 /* ProductDetailsControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */; };
 		AA06BCDB27E24E13003CFF77 /* RedHatDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCCD27E24E12003CFF77 /* RedHatDisplay-Medium.ttf */; };
 		AA06BCDC27E24E13003CFF77 /* RedHatDisplay-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCCE27E24E12003CFF77 /* RedHatDisplay-BoldItalic.ttf */; };
 		AA06BCDD27E24E13003CFF77 /* RedHatDisplay-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCCF27E24E12003CFF77 /* RedHatDisplay-SemiBoldItalic.ttf */; };
@@ -62,7 +62,7 @@
 /* Begin PBXFileReference section */
 		AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellRounded.swift; sourceTree = "<group>"; };
 		AA06BCC827E22680003CFF77 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		AA06BCCA27E22F5C003CFF77 /* ProductDetailControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailControllerView.swift; sourceTree = "<group>"; };
+		AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsControllerView.swift; sourceTree = "<group>"; };
 		AA06BCCD27E24E12003CFF77 /* RedHatDisplay-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-Medium.ttf"; sourceTree = "<group>"; };
 		AA06BCCE27E24E12003CFF77 /* RedHatDisplay-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-BoldItalic.ttf"; sourceTree = "<group>"; };
 		AA06BCCF27E24E12003CFF77 /* RedHatDisplay-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -184,22 +184,22 @@
 		AADDDD8F27C4505600E893E1 /* FashionApp */ = {
 			isa = PBXGroup;
 			children = (
+				AADDDD9E27C4505700E893E1 /* LaunchScreen.storyboard */,
 				AADDDD9627C4505600E893E1 /* Main.storyboard */,
 				AADDDD9027C4505600E893E1 /* AppDelegate.swift */,
 				AADDDD9227C4505600E893E1 /* SceneDelegate.swift */,
 				AADDDD9427C4505600E893E1 /* ViewController.swift */,
+				AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */,
+				AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */,
 				AA8C542C27D26D8200B36D97 /* ProductCell.swift */,
 				AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */,
 				AAF38CC227DF63FD00211DFC /* ShapedImageView.swift */,
-				AA06BCCA27E22F5C003CFF77 /* ProductDetailControllerView.swift */,
 				AAF38CC427DF755400211DFC /* ShadowView.swift */,
 				AA06BCEA27E2555C003CFF77 /* Fonts.swift */,
 				AA06BCC827E22680003CFF77 /* Extensions.swift */,
 				AA8C543027D26E1D00B36D97 /* Models */,
-				AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */,
 				AA06BCCC27E24694003CFF77 /* fonts */,
 				AADDDD9C27C4505700E893E1 /* Assets.xcassets */,
-				AADDDD9E27C4505700E893E1 /* LaunchScreen.storyboard */,
 				AADDDDA127C4505700E893E1 /* Info.plist */,
 				AADDDD9927C4505600E893E1 /* FashionApp.xcdatamodeld */,
 			);
@@ -374,7 +374,7 @@
 				AADDDD9527C4505600E893E1 /* ViewController.swift in Sources */,
 				AAF38CC327DF63FD00211DFC /* ShapedImageView.swift in Sources */,
 				AAF38CC527DF755400211DFC /* ShadowView.swift in Sources */,
-				AA06BCCB27E22F5C003CFF77 /* ProductDetailControllerView.swift in Sources */,
+				AA06BCCB27E22F5C003CFF77 /* ProductDetailsControllerView.swift in Sources */,
 				AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */,
 				AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */,
 				AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */,

@@ -8,15 +8,22 @@
 import UIKit
 
 
+let defaultDescription = """
+Short sleeve silk shirt with Hawaiian print. Classic
+monogram, spread collar and corozo buttons.
+100% silk. Made in Italy. With classic case
+"""
+
+
 class ViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var data: [Product] = [
-        Product(id: "1", brand: "NIKE", name: "Comfort Jacket", price: 450),
-        Product(id: "2", brand: "NIKE", name: "Fleming Jacket", price: 450),
-        Product(id: "3", brand: "NIKE", name: "Fleming Jacket", price: 450),
-        Product(id: "4", brand: "NIKE", name: "Fleming Jacket", price: 450),
-        Product(id: "5", brand: "NIKE", name: "Fleming Jacket", price: 450),
-        Product(id: "6", brand: "NIKE", name: "Fleming Jacket", price: 450)
+        Product(id: "1", brand: "NIKE", name: "Comfort Jacket", price: 450, description: defaultDescription),
+        Product(id: "2", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription),
+        Product(id: "3", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription),
+        Product(id: "4", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription),
+        Product(id: "5", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription),
+        Product(id: "6", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription)
     ]
     
     private var cellRegistration: UICollectionView.CellRegistration<ProductCell, Product>!
@@ -60,11 +67,10 @@ class ViewController: UIViewController {
         layoutWithoutSpace.minimumLineSpacing = 0
         
         collectionView = UICollectionView(
-            frame: view.bounds,
+            frame: view.frame,
             collectionViewLayout: createLayout()
         )
 
-        
         collectionView.setCollectionViewLayout(createLayout(), animated: true)
         
         collectionView.register(
@@ -79,6 +85,7 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = true
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        collectionView.delegate = self
         
         view.addSubview(collectionView)
     }
@@ -127,6 +134,7 @@ extension ViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - Collection View Layout Params
 extension ViewController {
     func createLayout() -> UICollectionViewLayout {
         let layout = CustomLayout()
@@ -156,5 +164,24 @@ extension ViewController {
         }
         
         return layout
+    }
+}
+
+extension ViewController: UICollectionViewDelegate {
+    override func viewDidAppear(_ animated: Bool) {
+        let vc = ProductDetailsViewController()
+        let product = data[0]
+
+        vc.product = product
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+        let vc = ProductDetailsViewController()
+        let product = data[indexPath.row]
+        
+        vc.product = product
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

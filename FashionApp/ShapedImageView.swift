@@ -40,6 +40,8 @@ class ShapedImageView: ShadowView {
         
         if maskLayer == nil {
             maskLayer = CAShapeLayer()
+            maskLayer?.anchorPoint = .zero
+            maskLayer?.position = .zero
         }
         
         guard let maskLayer = maskLayer else {
@@ -48,8 +50,9 @@ class ShapedImageView: ShadowView {
         
         maskLayer.fillColor = UIColor.yellow.cgColor
         maskLayer.path = shapePath
-        maskLayer.frame = self.frame
         maskLayer.bounds = bounds
+        
+        print("MAsk \(maskLayer.bounds) \(maskLayer.frame) \(shapePath.boundingBox)")
         
         imageView.layer.mask = maskLayer
         imageView.clipsToBounds = true
