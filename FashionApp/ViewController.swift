@@ -26,9 +26,6 @@ class ViewController: UIViewController {
         Product(id: "6", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription)
     ]
     
-    private var cellRegistration: UICollectionView.CellRegistration<ProductCell, Product>!
-    private var roundedCellRegistration: UICollectionView.CellRegistration<ProductCellRounded, Product>!
-    
     private var cellsPatterns = [
         (ratio: 2.0, isRounded: false),
         (ratio: 1.8, isRounded: true),
@@ -42,24 +39,6 @@ class ViewController: UIViewController {
     }
     
     func setupViews() {
-        cellRegistration = {
-            UICollectionView.CellRegistration(
-                handler: {
-                    cell, indexPath, product in
-                    cell.product = product
-                }
-            )
-        } ()
-        
-        roundedCellRegistration = {
-            UICollectionView.CellRegistration(
-                handler: {
-                    cell, indexPath, product in
-                    cell.product = product
-                }
-            )
-        } ()
-        
         let layoutWithoutSpace = UICollectionViewFlowLayout()
         
         layoutWithoutSpace.scrollDirection = .vertical
@@ -79,7 +58,7 @@ class ViewController: UIViewController {
         )
         collectionView.register(
             ProductCellRounded.self,
-            forCellWithReuseIdentifier: ProductCell.reuseIdentifier
+            forCellWithReuseIdentifier: ProductCellRounded.reuseIdentifier
         )
         
         collectionView.dataSource = self
@@ -110,19 +89,22 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if isRoundedCell(index: indexPath) {
-            return collectionView.dequeueConfiguredReusableCell(
-                using: roundedCellRegistration,
-                for: indexPath,
-                item: data[indexPath.row]
-            )
-        }
         
-        return collectionView.dequeueConfiguredReusableCell(
-            using: cellRegistration,
-            for: indexPath,
-            item: data[indexPath.row]
-        )
+        let reuseIdentifier = isRoundedCell(index: indexPath) ? ProductCellRounded.reuseIdentifier : ProductCell.reuseIdentifier
+        
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: reuseIdentifier,
+            for: indexPath
+        ) as? ProductCell
+        
+        guard let cell = cell else {
+            fatalError("Can't dequeue cell \(reuseIdentifier)")
+        }
+
+        let product = data[indexPath.row]
+        cell.product = product
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

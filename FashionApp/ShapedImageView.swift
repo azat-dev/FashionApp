@@ -52,8 +52,6 @@ class ShapedImageView: ShadowView {
         maskLayer.path = shapePath
         maskLayer.bounds = bounds
         
-        print("MAsk \(maskLayer.bounds) \(maskLayer.frame) \(shapePath.boundingBox)")
-        
         imageView.layer.mask = maskLayer
         imageView.clipsToBounds = true
     }
