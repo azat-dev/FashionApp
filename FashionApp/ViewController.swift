@@ -150,14 +150,6 @@ extension ViewController {
 }
 
 extension ViewController: UICollectionViewDelegate {
-    override func viewDidAppear(_ animated: Bool) {
-        let vc = ProductDetailsViewController()
-        let product = data[0]
-
-        vc.product = product
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
         let vc = ProductDetailsViewController()

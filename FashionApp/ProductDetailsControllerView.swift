@@ -15,6 +15,7 @@ class ProductDetailsViewController: UIViewController {
     private var brandLabel: UILabel!
     private var descritptionLabel: UILabel!
     private var cartButton: UIButton!
+    private var backButton: UIButton!
     private var imageDescriptionButton: UIButton!
     
     var product: Product! {
@@ -68,29 +69,26 @@ class ProductDetailsViewController: UIViewController {
         descritptionLabel.textColor = UIColor(named: "ColorProductDescription")
         descritptionLabel.lineBreakMode = .byWordWrapping
         descritptionLabel.numberOfLines = 0
-        
+    
 
-        
-        cartButton = UIButton(type: .system)
-        cartButton.translatesAutoresizingMaskIntoConstraints = false
         
         if #available(iOS 15, *) {
             var imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .bold)
             let image = UIImage(systemName: "viewfinder", withConfiguration: imageConfig)
 
             
-            var imageDescriptionButtonConfiguration = UIButton.Configuration.bordered()
-            imageDescriptionButtonConfiguration.image = image
-            imageDescriptionButtonConfiguration.baseBackgroundColor = UIColor(named: "ColorImageDescriptionButtonBackground")
-            imageDescriptionButtonConfiguration.baseForegroundColor = UIColor(named: "ColorImageDescriptionButtonForeground")
-            imageDescriptionButtonConfiguration.cornerStyle = .capsule
-            imageDescriptionButtonConfiguration.contentInsets = NSDirectionalEdgeInsets(all: 16)
-            imageDescriptionButtonConfiguration.background.strokeColor = UIColor(named: "ColorImageDescriptionButtonBorder")
-            imageDescriptionButtonConfiguration.background.strokeWidth = 1
+            var imageDescriptionButtonConfig = UIButton.Configuration.bordered()
+            imageDescriptionButtonConfig.image = image
+            imageDescriptionButtonConfig.baseBackgroundColor = UIColor(named: "ColorImageDescriptionButtonBackground")
+            imageDescriptionButtonConfig.baseForegroundColor = UIColor(named: "ColorImageDescriptionButtonForeground")
+            imageDescriptionButtonConfig.cornerStyle = .capsule
+            imageDescriptionButtonConfig.contentInsets = NSDirectionalEdgeInsets(all: 16)
+            imageDescriptionButtonConfig.background.strokeColor = UIColor(named: "ColorImageDescriptionButtonBorder")
+            imageDescriptionButtonConfig.background.strokeWidth = 1
             
             imageDescriptionButton = UIButton(type: .system)
             imageDescriptionButton.translatesAutoresizingMaskIntoConstraints = false
-            imageDescriptionButton.configuration = imageDescriptionButtonConfiguration
+            imageDescriptionButton.configuration = imageDescriptionButtonConfig
         }
         
         
@@ -105,29 +103,31 @@ class ProductDetailsViewController: UIViewController {
         let cartButtonContentInsets = UIEdgeInsets(top: 25, left: 0, bottom: 25, right: 0)
         
         if #available(iOS 15, *) {
-            var cartButtonConfiguration = UIButton.Configuration.filled();
+            var cartButtonConfig = UIButton.Configuration.filled();
             
             var attString = AttributedString.init("Add to cart")
             attString.font = cartButtonFont
             
-            cartButtonConfiguration.attributedTitle = attString
-            cartButtonConfiguration.baseForegroundColor = UIColor.black
-            cartButtonConfiguration.baseBackgroundColor = cartButtonBackgroundColor
-            cartButtonConfiguration.cornerStyle = .fixed
-            cartButtonConfiguration.background.cornerRadius = cartButtonCornerRadius
+            cartButtonConfig.attributedTitle = attString
+            cartButtonConfig.baseForegroundColor = UIColor.black
+            cartButtonConfig.baseBackgroundColor = cartButtonBackgroundColor
+            cartButtonConfig.cornerStyle = .fixed
+            cartButtonConfig.background.cornerRadius = cartButtonCornerRadius
             
-            cartButtonConfiguration.contentInsets.top = cartButtonContentInsets.top
-            cartButtonConfiguration.contentInsets.bottom = cartButtonContentInsets.bottom
-            cartButtonConfiguration.contentInsets.leading = cartButtonContentInsets.left
-            cartButtonConfiguration.contentInsets.trailing = cartButtonContentInsets.right
+            cartButtonConfig.contentInsets.top = cartButtonContentInsets.top
+            cartButtonConfig.contentInsets.bottom = cartButtonContentInsets.bottom
+            cartButtonConfig.contentInsets.leading = cartButtonContentInsets.left
+            cartButtonConfig.contentInsets.trailing = cartButtonContentInsets.right
             
-            cartButtonConfiguration.image = cartButtonImage
-            cartButtonConfiguration.imagePadding = cartButtonImageInset
+            cartButtonConfig.image = cartButtonImage
+            cartButtonConfig.imagePadding = cartButtonImageInset
             
-            cartButton.configuration = cartButtonConfiguration
+            cartButton = UIButton(configuration: cartButtonConfig, primaryAction: nil)
+            cartButton.configuration = cartButtonConfig
             
         } else {
             
+            cartButton = UIButton(type: .system)
             cartButton.tintColor = cartButtonForegroundColor
             cartButton.backgroundColor = cartButtonBackgroundColor
             cartButton.setTitle("Add to cart", for: .normal)
@@ -135,18 +135,31 @@ class ProductDetailsViewController: UIViewController {
             cartButton.contentEdgeInsets = cartButtonContentInsets
             cartButton.titleLabel?.font = cartButtonFont
             cartButton.layer.cornerRadius = cartButtonCornerRadius
-//            cartButton.imageEdgeInsets = UIEdgeInsets(
-//                top: cartButtonImageInset,
-//                left: cartButtonImageInset,
-//                bottom: cartButtonImageInset,
-//                right: cartButtonImageInset
-//            )
         }
         
-        let backButton = UIButton(type: .system)
-        backButton.setTitle("Back", for: .normal)
-
+        cartButton.translatesAutoresizingMaskIntoConstraints = false
         
+       
+        let backButtonImageConfig = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
+        let backButtonImage = UIImage(systemName: "arrow.left")?.withConfiguration(backButtonImageConfig)
+        
+        if #available(iOS 15, *) {
+            
+            var backButtonConfig = UIButton.Configuration.plain()
+            backButtonConfig.baseForegroundColor = .black
+            backButtonConfig.image = backButtonImage
+            
+            backButton = UIButton(configuration: backButtonConfig, primaryAction: nil)
+        } else {
+            backButton = UIButton(type: .system)
+            backButton.setImage(backButtonImage, for: .normal)
+            backButton.tintColor = .black
+        }
+        
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.addTarget(self, action: #selector(Self.onGoBack), for: .touchUpInside)
+
+
         contentView.addSubview(shapedImageView)
         contentView.addSubview(imageDescriptionButton)
         contentView.addSubview(titleLabel)
@@ -177,6 +190,9 @@ class ProductDetailsViewController: UIViewController {
             
             imageDescriptionButton.bottomAnchor.constraint(equalTo: shapedImageView.bottomAnchor, constant: -20),
             imageDescriptionButton.trailingAnchor.constraint(equalTo: shapedImageView.trailingAnchor, constant: -18),
+            
+            backButton.topAnchor.constraint(equalTo: shapedImageView.topAnchor, constant: 15),
+            backButton.leadingAnchor.constraint(equalTo: shapedImageView.leadingAnchor, constant: 10),
 
             titleLabel.topAnchor.constraint(equalTo: shapedImageView.bottomAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -196,9 +212,6 @@ class ProductDetailsViewController: UIViewController {
             
             cartButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             cartButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-            
-            backButton.leftAnchor.constraint(equalTo: shapedImageView.leftAnchor, constant: 10),
-            backButton.topAnchor.constraint(equalTo: shapedImageView.topAnchor, constant: 10)
         ])
         
         updateViewsFromProduct()
@@ -212,6 +225,11 @@ class ProductDetailsViewController: UIViewController {
         titleLabel.text = product.name
         brandLabel.text = "FROM \(product.brand)"
         descritptionLabel.text = product.description
+    }
+    
+    @objc
+    private func onGoBack() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
