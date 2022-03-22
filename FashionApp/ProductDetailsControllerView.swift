@@ -81,11 +81,11 @@ class ProductDetailsViewController: UIViewController {
             
             var imageDescriptionButtonConfiguration = UIButton.Configuration.bordered()
             imageDescriptionButtonConfiguration.image = image
-            imageDescriptionButtonConfiguration.baseBackgroundColor = UIColor(red: 0xdd/255, green: 0xde/255, blue: 0xdf/255, alpha: 1)
-            imageDescriptionButtonConfiguration.baseForegroundColor = UIColor.black
+            imageDescriptionButtonConfiguration.baseBackgroundColor = UIColor(named: "ColorImageDescriptionButtonBackground")
+            imageDescriptionButtonConfiguration.baseForegroundColor = UIColor(named: "ColorImageDescriptionButtonForeground")
             imageDescriptionButtonConfiguration.cornerStyle = .capsule
             imageDescriptionButtonConfiguration.contentInsets = NSDirectionalEdgeInsets(all: 16)
-            imageDescriptionButtonConfiguration.background.strokeColor = UIColor(red: 0xD8/255, green: 0xD9/255, blue: 0xDB/255, alpha: 1)
+            imageDescriptionButtonConfiguration.background.strokeColor = UIColor(named: "ColorImageDescriptionButtonBorder")
             imageDescriptionButtonConfiguration.background.strokeWidth = 1
             
             imageDescriptionButton = UIButton(type: .system)
