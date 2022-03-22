@@ -8,19 +8,6 @@
 import Foundation
 import UIKit
 
-class GrayButton: UIButton {
-    override var backgroundColor: UIColor? {
-        get {
-            UIColor.black
-        }
-        
-        set {
-        }
-    }
-    
-    
-}
-
 class ProductDetailsViewController: UIViewController {
     private var scrollView: UIScrollView!
     private var shapedImageView: ShapedImageView!
@@ -28,6 +15,7 @@ class ProductDetailsViewController: UIViewController {
     private var brandLabel: UILabel!
     private var descritptionLabel: UILabel!
     private var cartButton: UIButton!
+    private var imageDescriptionButton: UIButton!
     
     var product: Product! {
         didSet {
@@ -86,8 +74,27 @@ class ProductDetailsViewController: UIViewController {
         cartButton = UIButton(type: .system)
         cartButton.translatesAutoresizingMaskIntoConstraints = false
         
+        if #available(iOS 15, *) {
+            var imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .bold)
+            let image = UIImage(systemName: "viewfinder", withConfiguration: imageConfig)
+
+            
+            var imageDescriptionButtonConfiguration = UIButton.Configuration.bordered()
+            imageDescriptionButtonConfiguration.image = image
+            imageDescriptionButtonConfiguration.baseBackgroundColor = UIColor(red: 0xdd/255, green: 0xde/255, blue: 0xdf/255, alpha: 1)
+            imageDescriptionButtonConfiguration.baseForegroundColor = UIColor.black
+            imageDescriptionButtonConfiguration.cornerStyle = .capsule
+            imageDescriptionButtonConfiguration.contentInsets = NSDirectionalEdgeInsets(all: 16)
+            imageDescriptionButtonConfiguration.background.strokeColor = UIColor(red: 0xD8/255, green: 0xD9/255, blue: 0xDB/255, alpha: 1)
+            imageDescriptionButtonConfiguration.background.strokeWidth = 1
+            
+            imageDescriptionButton = UIButton(type: .system)
+            imageDescriptionButton.translatesAutoresizingMaskIntoConstraints = false
+            imageDescriptionButton.configuration = imageDescriptionButtonConfiguration
+        }
         
-        let cartButtonCornerRadius: CGFloat = 10
+        
+        let cartButtonCornerRadius: CGFloat = 12
         let cartButtonImage = UIImage(systemName: "cart")
         let cartButtonBackgroundColor = UIColor(named: "ColorProductCellBackground")
         let cartButtonFont = UIFont.preferredFont(name: "RedHatDisplay-Medium", forTextStyle: .body)
@@ -141,6 +148,7 @@ class ProductDetailsViewController: UIViewController {
 
         
         contentView.addSubview(shapedImageView)
+        contentView.addSubview(imageDescriptionButton)
         contentView.addSubview(titleLabel)
         contentView.addSubview(brandLabel)
         contentView.addSubview(descritptionLabel)
@@ -166,6 +174,9 @@ class ProductDetailsViewController: UIViewController {
             shapedImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             shapedImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
             shapedImageView.heightAnchor.constraint(equalTo: shapedImageView.widthAnchor, multiplier: 1.37, constant: 0),
+            
+            imageDescriptionButton.bottomAnchor.constraint(equalTo: shapedImageView.bottomAnchor, constant: -20),
+            imageDescriptionButton.trailingAnchor.constraint(equalTo: shapedImageView.trailingAnchor, constant: -18),
 
             titleLabel.topAnchor.constraint(equalTo: shapedImageView.bottomAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -208,8 +219,8 @@ extension ProductDetailsViewController: ShapeDelegate {
     func shape(view containerView: UIView) -> CGPath? {
         return CGPath(
             roundedRect: containerView.bounds,
-            cornerWidth: 10,
-            cornerHeight: 10,
+            cornerWidth: 20,
+            cornerHeight: 20,
             transform: nil
         )
     }

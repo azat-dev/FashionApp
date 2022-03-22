@@ -33,3 +33,9 @@ extension UIFont {
         return metrics.scaledFont(for: font)
     }
 }
+
+extension NSDirectionalEdgeInsets {
+    init(all: CGFloat) {
+        self.init(top: all, leading: all, bottom: all, trailing: all)
+    }
+}
