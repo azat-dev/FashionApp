@@ -1,18 +1,12 @@
 //
-//  Extensions.swift
+//  UIFont.swift
 //  FashionApp
 //
-//  Created by Azat Kaiumov on 16.03.2022.
+//  Created by Azat Kaiumov on 23.03.22.
 //
 
 import Foundation
 import UIKit
-
-extension CGFloat {
-    var radians: CGFloat {
-        self * .pi / 180.0
-    }
-}
 
 extension UIFont {
     static func preferredFont(forTextStyle style: TextStyle, weight: Weight) -> UIFont {
@@ -31,11 +25,5 @@ extension UIFont {
         let font = UIFont(name: name, size: descriptor.pointSize)!
         
         return metrics.scaledFont(for: font)
-    }
-}
-
-extension NSDirectionalEdgeInsets {
-    init(all: CGFloat) {
-        self.init(top: all, leading: all, bottom: all, trailing: all)
     }
 }

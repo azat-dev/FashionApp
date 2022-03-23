@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */; };
-		AA06BCC927E22680003CFF77 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCC827E22680003CFF77 /* Extensions.swift */; };
 		AA06BCCB27E22F5C003CFF77 /* ProductDetailsControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */; };
 		AA06BCDB27E24E13003CFF77 /* RedHatDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCCD27E24E12003CFF77 /* RedHatDisplay-Medium.ttf */; };
 		AA06BCDC27E24E13003CFF77 /* RedHatDisplay-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCCE27E24E12003CFF77 /* RedHatDisplay-BoldItalic.ttf */; };
@@ -25,6 +24,9 @@
 		AA06BCE727E24E13003CFF77 /* RedHatDisplay-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCD927E24E13003CFF77 /* RedHatDisplay-SemiBold.ttf */; };
 		AA06BCE827E24E13003CFF77 /* RedHatDisplay-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCDA27E24E13003CFF77 /* RedHatDisplay-MediumItalic.ttf */; };
 		AA06BCEB27E2555C003CFF77 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCEA27E2555C003CFF77 /* Fonts.swift */; };
+		AA0A520827EB3C30009B3BF2 /* UIFont+Preffered.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520727EB3C30009B3BF2 /* UIFont+Preffered.swift */; };
+		AA0A520A27EB3C7A009B3BF2 /* CGFloat+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */; };
+		AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */; };
 		AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */; };
 		AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542C27D26D8200B36D97 /* ProductCell.swift */; };
 		AA8C542F27D26E1500B36D97 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542E27D26E1500B36D97 /* Product.swift */; };
@@ -61,7 +63,6 @@
 
 /* Begin PBXFileReference section */
 		AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellRounded.swift; sourceTree = "<group>"; };
-		AA06BCC827E22680003CFF77 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsControllerView.swift; sourceTree = "<group>"; };
 		AA06BCCD27E24E12003CFF77 /* RedHatDisplay-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-Medium.ttf"; sourceTree = "<group>"; };
 		AA06BCCE27E24E12003CFF77 /* RedHatDisplay-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -78,6 +79,9 @@
 		AA06BCD927E24E13003CFF77 /* RedHatDisplay-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-SemiBold.ttf"; sourceTree = "<group>"; };
 		AA06BCDA27E24E13003CFF77 /* RedHatDisplay-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-MediumItalic.ttf"; sourceTree = "<group>"; };
 		AA06BCEA27E2555C003CFF77 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		AA0A520727EB3C30009B3BF2 /* UIFont+Preffered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Preffered.swift"; sourceTree = "<group>"; };
+		AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Radians.swift"; sourceTree = "<group>"; };
+		AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDirectionalEdgeInsets+Init.swift"; sourceTree = "<group>"; };
 		AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		AA8C542C27D26D8200B36D97 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		AA8C542E27D26E1500B36D97 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
@@ -153,6 +157,16 @@
 			path = RedHatDisplay;
 			sourceTree = "<group>";
 		};
+		AA0A520627EB3C00009B3BF2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */,
+				AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */,
+				AA0A520727EB3C30009B3BF2 /* UIFont+Preffered.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		AA8C543027D26E1D00B36D97 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,7 +210,7 @@
 				AAF38CC227DF63FD00211DFC /* ShapedImageView.swift */,
 				AAF38CC427DF755400211DFC /* ShadowView.swift */,
 				AA06BCEA27E2555C003CFF77 /* Fonts.swift */,
-				AA06BCC827E22680003CFF77 /* Extensions.swift */,
+				AA0A520627EB3C00009B3BF2 /* Extensions */,
 				AA8C543027D26E1D00B36D97 /* Models */,
 				AA06BCCC27E24694003CFF77 /* fonts */,
 				AADDDD9C27C4505700E893E1 /* Assets.xcassets */,
@@ -368,7 +382,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA0A520A27EB3C7A009B3BF2 /* CGFloat+Radians.swift in Sources */,
 				AADDDD9B27C4505600E893E1 /* FashionApp.xcdatamodeld in Sources */,
+				AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */,
 				AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */,
 				AA06BCEB27E2555C003CFF77 /* Fonts.swift in Sources */,
 				AADDDD9527C4505600E893E1 /* ViewController.swift in Sources */,
@@ -378,8 +394,8 @@
 				AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */,
 				AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */,
 				AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */,
+				AA0A520827EB3C30009B3BF2 /* UIFont+Preffered.swift in Sources */,
 				AADDDD9327C4505600E893E1 /* SceneDelegate.swift in Sources */,
-				AA06BCC927E22680003CFF77 /* Extensions.swift in Sources */,
 				AA8C542F27D26E1500B36D97 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
