@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-protocol ShapeDelegate {
+protocol ShapeDelegate: AnyObject {
     func shape(view: UIView) -> CGPath?
 }
 
@@ -28,7 +28,7 @@ class ShadowView: UIView {
         }
     }
     
-    var delegateShape: ShapeDelegate? {
+    weak var delegateShape: ShapeDelegate? {
         didSet {
             updateShadows()
         }

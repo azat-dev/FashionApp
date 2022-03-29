@@ -1,33 +1,15 @@
 //
-//  ProductCellRounded.swift
+//  ProductCellRounded+Styles.swift
 //  FashionApp
 //
-//  Created by Azat Kaiumov on 16.03.2022.
+//  Created by Azat Kaiumov on 28.03.22.
 //
 
 import Foundation
 import UIKit
 
-class ProductCellRounded: ProductCell {
-    override class var reuseIdentifier: String {
-        "ProductCellRounded"
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureImageView()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        configureImageView()
-    }
-    
-    private func configureImageView() {
-//        shapedImageView.imageView.clipsToBounds = true
-    }
-
-    override func shape(view containerView: UIView) -> CGPath? {
+class ProductCellRoundedStyler: ShapeDelegate {
+    func shape(view containerView: UIView) -> CGPath? {
         
         let cornerRadius: CGFloat = 10
 

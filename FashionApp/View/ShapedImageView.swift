@@ -10,7 +10,7 @@ import UIKit
 class ShapedImageView: ShadowView {
     
     var imageView: UIImageView!
-    override var delegateShape: ShapeDelegate? {
+    override weak var delegateShape: ShapeDelegate? {
         didSet {
             updateMask()
         }

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA053F8527F1860D004DE5B2 /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8427F1860D004DE5B2 /* ProductListViewModel.swift */; };
+		AA053F8827F18EA6004DE5B2 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8727F18EA6004DE5B2 /* ProductViewModel.swift */; };
+		AA053F8A27F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8927F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift */; };
+		AA053F8C27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8B27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift */; };
+		AA053F8E27F1A964004DE5B2 /* ProductCell+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8D27F1A964004DE5B2 /* ProductCell+Styles.swift */; };
+		AA053F9027F1AACA004DE5B2 /* ProductCell+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8F27F1AACA004DE5B2 /* ProductCell+Layout.swift */; };
+		AA053F9227F1B29A004DE5B2 /* ProductCellRounded+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F9127F1B29A004DE5B2 /* ProductCellRounded+Styles.swift */; };
+		AA053F9427F1D69E004DE5B2 /* ProductListViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F9327F1D69E004DE5B2 /* ProductListViewController+Layout.swift */; };
 		AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */; };
 		AA06BCCB27E22F5C003CFF77 /* ProductDetailsControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */; };
 		AA06BCDB27E24E13003CFF77 /* RedHatDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCCD27E24E12003CFF77 /* RedHatDisplay-Medium.ttf */; };
@@ -30,10 +38,11 @@
 		AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */; };
 		AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542C27D26D8200B36D97 /* ProductCell.swift */; };
 		AA8C542F27D26E1500B36D97 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542E27D26E1500B36D97 /* Product.swift */; };
+		AAAE49E627F1009300F3FBD1 /* ProductCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE49E527F1009300F3FBD1 /* ProductCellViewModel.swift */; };
+		AAAE49E827F100B700F3FBD1 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE49E727F100B700F3FBD1 /* Observable.swift */; };
 		AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9027C4505600E893E1 /* AppDelegate.swift */; };
 		AADDDD9327C4505600E893E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9227C4505600E893E1 /* SceneDelegate.swift */; };
-		AADDDD9527C4505600E893E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9427C4505600E893E1 /* ViewController.swift */; };
-		AADDDD9827C4505600E893E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AADDDD9627C4505600E893E1 /* Main.storyboard */; };
+		AADDDD9527C4505600E893E1 /* ProductsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9427C4505600E893E1 /* ProductsListViewController.swift */; };
 		AADDDD9B27C4505600E893E1 /* FashionApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9927C4505600E893E1 /* FashionApp.xcdatamodeld */; };
 		AADDDD9D27C4505700E893E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AADDDD9C27C4505700E893E1 /* Assets.xcassets */; };
 		AADDDDA027C4505700E893E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AADDDD9E27C4505700E893E1 /* LaunchScreen.storyboard */; };
@@ -62,6 +71,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA053F8427F1860D004DE5B2 /* ProductListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewModel.swift; sourceTree = "<group>"; };
+		AA053F8727F18EA6004DE5B2 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
+		AA053F8927F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailsControllerView+Styles.swift"; sourceTree = "<group>"; };
+		AA053F8B27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailsControllerView+Layout.swift"; sourceTree = "<group>"; };
+		AA053F8D27F1A964004DE5B2 /* ProductCell+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductCell+Styles.swift"; sourceTree = "<group>"; };
+		AA053F8F27F1AACA004DE5B2 /* ProductCell+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductCell+Layout.swift"; sourceTree = "<group>"; };
+		AA053F9127F1B29A004DE5B2 /* ProductCellRounded+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductCellRounded+Styles.swift"; sourceTree = "<group>"; };
+		AA053F9327F1D69E004DE5B2 /* ProductListViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductListViewController+Layout.swift"; sourceTree = "<group>"; };
 		AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellRounded.swift; sourceTree = "<group>"; };
 		AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsControllerView.swift; sourceTree = "<group>"; };
 		AA06BCCD27E24E12003CFF77 /* RedHatDisplay-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-Medium.ttf"; sourceTree = "<group>"; };
@@ -85,11 +102,12 @@
 		AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		AA8C542C27D26D8200B36D97 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		AA8C542E27D26E1500B36D97 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		AAAE49E527F1009300F3FBD1 /* ProductCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellViewModel.swift; sourceTree = "<group>"; };
+		AAAE49E727F100B700F3FBD1 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		AADDDD8D27C4505600E893E1 /* FashionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FashionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AADDDD9027C4505600E893E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AADDDD9227C4505600E893E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		AADDDD9427C4505600E893E1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AADDDD9727C4505600E893E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AADDDD9427C4505600E893E1 /* ProductsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListViewController.swift; sourceTree = "<group>"; };
 		AADDDD9A27C4505600E893E1 /* FashionApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FashionApp.xcdatamodel; sourceTree = "<group>"; };
 		AADDDD9C27C4505700E893E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AADDDD9F27C4505700E893E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -128,6 +146,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA053F8627F18870004DE5B2 /* ProductDetails */ = {
+			isa = PBXGroup;
+			children = (
+				AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */,
+				AA053F8927F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift */,
+				AA053F8B27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift */,
+			);
+			path = ProductDetails;
+			sourceTree = "<group>";
+		};
 		AA06BCCC27E24694003CFF77 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,12 +195,71 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		AA8C543027D26E1D00B36D97 /* Models */ = {
+		AA0A521127EB49F9009B3BF2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */,
+				AA06BCEA27E2555C003CFF77 /* Fonts.swift */,
+				AAF38CC427DF755400211DFC /* ShadowView.swift */,
+				AAF38CC227DF63FD00211DFC /* ShapedImageView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AA0A521227EB4A27009B3BF2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AAAE49E527F1009300F3FBD1 /* ProductCellViewModel.swift */,
+				AA053F8427F1860D004DE5B2 /* ProductListViewModel.swift */,
+				AA053F8727F18EA6004DE5B2 /* ProductViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AA0A521327EB5981009B3BF2 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				AADDDD9027C4505600E893E1 /* AppDelegate.swift */,
+				AADDDD9227C4505600E893E1 /* SceneDelegate.swift */,
+				AADDDD9E27C4505700E893E1 /* LaunchScreen.storyboard */,
+				AADDDD9927C4505600E893E1 /* FashionApp.xcdatamodeld */,
+				AADDDDA127C4505700E893E1 /* Info.plist */,
+				AADDDD9C27C4505700E893E1 /* Assets.xcassets */,
+				AA06BCCC27E24694003CFF77 /* fonts */,
+				AAAE49E727F100B700F3FBD1 /* Observable.swift */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		AA0A521427EB60E5009B3BF2 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				AA053F8627F18870004DE5B2 /* ProductDetails */,
+				AA0A521527EB60F2009B3BF2 /* ProductsList */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		AA0A521527EB60F2009B3BF2 /* ProductsList */ = {
+			isa = PBXGroup;
+			children = (
+				AA8C542C27D26D8200B36D97 /* ProductCell.swift */,
+				AA053F8D27F1A964004DE5B2 /* ProductCell+Styles.swift */,
+				AA053F8F27F1AACA004DE5B2 /* ProductCell+Layout.swift */,
+				AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */,
+				AA053F9127F1B29A004DE5B2 /* ProductCellRounded+Styles.swift */,
+				AADDDD9427C4505600E893E1 /* ProductsListViewController.swift */,
+				AA053F9327F1D69E004DE5B2 /* ProductListViewController+Layout.swift */,
+			);
+			path = ProductsList;
+			sourceTree = "<group>";
+		};
+		AA8C543027D26E1D00B36D97 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				AA8C542E27D26E1500B36D97 /* Product.swift */,
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		AADDDD8427C4505600E893E1 = {
@@ -198,24 +285,12 @@
 		AADDDD8F27C4505600E893E1 /* FashionApp */ = {
 			isa = PBXGroup;
 			children = (
-				AADDDD9E27C4505700E893E1 /* LaunchScreen.storyboard */,
-				AADDDD9627C4505600E893E1 /* Main.storyboard */,
-				AADDDD9027C4505600E893E1 /* AppDelegate.swift */,
-				AADDDD9227C4505600E893E1 /* SceneDelegate.swift */,
-				AADDDD9427C4505600E893E1 /* ViewController.swift */,
-				AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */,
-				AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */,
-				AA8C542C27D26D8200B36D97 /* ProductCell.swift */,
-				AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */,
-				AAF38CC227DF63FD00211DFC /* ShapedImageView.swift */,
-				AAF38CC427DF755400211DFC /* ShadowView.swift */,
-				AA06BCEA27E2555C003CFF77 /* Fonts.swift */,
+				AA8C543027D26E1D00B36D97 /* Model */,
+				AA0A521427EB60E5009B3BF2 /* Modules */,
+				AA0A521127EB49F9009B3BF2 /* View */,
+				AA0A521227EB4A27009B3BF2 /* ViewModel */,
+				AA0A521327EB5981009B3BF2 /* SupportFiles */,
 				AA0A520627EB3C00009B3BF2 /* Extensions */,
-				AA8C543027D26E1D00B36D97 /* Models */,
-				AA06BCCC27E24694003CFF77 /* fonts */,
-				AADDDD9C27C4505700E893E1 /* Assets.xcassets */,
-				AADDDDA127C4505700E893E1 /* Info.plist */,
-				AADDDD9927C4505600E893E1 /* FashionApp.xcdatamodeld */,
 			);
 			path = FashionApp;
 			sourceTree = "<group>";
@@ -355,7 +430,6 @@
 				AA06BCE027E24E13003CFF77 /* RedHatDisplay-Bold.ttf in Resources */,
 				AA06BCE627E24E13003CFF77 /* RedHatDisplay-Italic.ttf in Resources */,
 				AA06BCE427E24E13003CFF77 /* RedHatDisplay-ExtraBoldItalic.ttf in Resources */,
-				AADDDD9827C4505600E893E1 /* Main.storyboard in Resources */,
 				AA06BCE527E24E13003CFF77 /* RedHatDisplay-BlackItalic.ttf in Resources */,
 				AA06BCE827E24E13003CFF77 /* RedHatDisplay-MediumItalic.ttf in Resources */,
 			);
@@ -383,17 +457,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA0A520A27EB3C7A009B3BF2 /* CGFloat+Radians.swift in Sources */,
+				AA053F8E27F1A964004DE5B2 /* ProductCell+Styles.swift in Sources */,
+				AA053F9427F1D69E004DE5B2 /* ProductListViewController+Layout.swift in Sources */,
 				AADDDD9B27C4505600E893E1 /* FashionApp.xcdatamodeld in Sources */,
+				AAAE49E627F1009300F3FBD1 /* ProductCellViewModel.swift in Sources */,
 				AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */,
 				AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */,
+				AA053F8C27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift in Sources */,
+				AA053F8A27F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift in Sources */,
+				AA053F9027F1AACA004DE5B2 /* ProductCell+Layout.swift in Sources */,
+				AA053F8827F18EA6004DE5B2 /* ProductViewModel.swift in Sources */,
 				AA06BCEB27E2555C003CFF77 /* Fonts.swift in Sources */,
-				AADDDD9527C4505600E893E1 /* ViewController.swift in Sources */,
+				AA053F9227F1B29A004DE5B2 /* ProductCellRounded+Styles.swift in Sources */,
+				AADDDD9527C4505600E893E1 /* ProductsListViewController.swift in Sources */,
 				AAF38CC327DF63FD00211DFC /* ShapedImageView.swift in Sources */,
 				AAF38CC527DF755400211DFC /* ShadowView.swift in Sources */,
 				AA06BCCB27E22F5C003CFF77 /* ProductDetailsControllerView.swift in Sources */,
 				AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */,
 				AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */,
+				AAAE49E827F100B700F3FBD1 /* Observable.swift in Sources */,
 				AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */,
+				AA053F8527F1860D004DE5B2 /* ProductListViewModel.swift in Sources */,
 				AA0A520827EB3C30009B3BF2 /* UIFont+Preffered.swift in Sources */,
 				AADDDD9327C4505600E893E1 /* SceneDelegate.swift in Sources */,
 				AA8C542F27D26E1500B36D97 /* Product.swift in Sources */,
@@ -433,14 +517,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		AADDDD9627C4505600E893E1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AADDDD9727C4505600E893E1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AADDDD9E27C4505700E893E1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -577,10 +653,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8JWF52JVK7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = FashionApp/Info.plist;
+				INFOPLIST_FILE = FashionApp/SupportFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -605,10 +680,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8JWF52JVK7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = FashionApp/Info.plist;
+				INFOPLIST_FILE = FashionApp/SupportFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
