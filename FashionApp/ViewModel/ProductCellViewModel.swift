@@ -37,7 +37,8 @@ extension ProductCellViewModel {
     private func update(from product: Product) {
         self.name.value = product.name
         self.brand.value = "From \(product.brand)"
-        self.price.value = "€\(product.price)"
+        let priceText = String(format: "%.0f", product.price)
+        self.price.value = "€\(priceText)"
     }
 }
 

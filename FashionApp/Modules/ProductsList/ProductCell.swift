@@ -7,7 +7,11 @@
 
 import UIKit
 
-class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: UICollectionViewCell {
+protocol ProductCellWithViewModel: AnyObject {
+    var viewModel: ProductCellViewModel? { get set }
+}
+
+class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: UICollectionViewCell, ProductCellWithViewModel {
 
     private var nameLabel: UILabel = UILabel()
     private var brandLabel: UILabel = UILabel()

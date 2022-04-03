@@ -10,7 +10,7 @@ import UIKit
 
 class ProductsListViewController: UIViewController {
     typealias Cell = ProductCell<ProductCellLayout, ProductCellStyles>
-    typealias RoundedCell = ProductCell<ProductCellLayout, ProductCellStyles>
+    typealias RoundedCell = ProductCellRounded<ProductCellLayout, ProductCellRoundedStyles>
     typealias DetailsViewController = ProductDetailsViewController<ProductDetailsViewControllerLayout, ProductDetailsViewControllerStyles>
     
     private var collectionView: UICollectionView!
@@ -69,20 +69,19 @@ extension ProductsListViewController {
 extension ProductsListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let reuseIdentifier = isRoundedCell(index: indexPath) ? RoundedCell.reuseIdentifier : Cell.reuseIdentifier
+        let isRounded = isRoundedCell(index: indexPath)
+        let reuseIdentifier = isRounded ? RoundedCell.reuseIdentifier : Cell.reuseIdentifier
         
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: reuseIdentifier,
             for: indexPath
-        ) as? Cell
+        )
         
-        guard let cell = cell else {
-            fatalError("Can't dequeue cell \(reuseIdentifier)")
-        }
-
+        
         let product = viewModel.getProduct(at: indexPath.row)
-        cell.viewModel = ProductCellViewModel(product: product)
+        let viewModel = ProductCellViewModel(product: product)
         
+        (cell as? ProductCellWithViewModel)?.viewModel = viewModel
         return cell
     }
     
