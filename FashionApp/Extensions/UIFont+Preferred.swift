@@ -1,5 +1,5 @@
 //
-//  UIFont.swift
+//  UIFont+Preferred.swift
 //  FashionApp
 //
 //  Created by Azat Kaiumov on 23.03.22.

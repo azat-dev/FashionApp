@@ -32,7 +32,7 @@
 		AA06BCE727E24E13003CFF77 /* RedHatDisplay-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCD927E24E13003CFF77 /* RedHatDisplay-SemiBold.ttf */; };
 		AA06BCE827E24E13003CFF77 /* RedHatDisplay-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA06BCDA27E24E13003CFF77 /* RedHatDisplay-MediumItalic.ttf */; };
 		AA06BCEB27E2555C003CFF77 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCEA27E2555C003CFF77 /* Fonts.swift */; };
-		AA0A520827EB3C30009B3BF2 /* UIFont+Preffered.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520727EB3C30009B3BF2 /* UIFont+Preffered.swift */; };
+		AA0A520827EB3C30009B3BF2 /* UIFont+Preferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520727EB3C30009B3BF2 /* UIFont+Preferred.swift */; };
 		AA0A520A27EB3C7A009B3BF2 /* CGFloat+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */; };
 		AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */; };
 		AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */; };
@@ -96,7 +96,7 @@
 		AA06BCD927E24E13003CFF77 /* RedHatDisplay-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-SemiBold.ttf"; sourceTree = "<group>"; };
 		AA06BCDA27E24E13003CFF77 /* RedHatDisplay-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedHatDisplay-MediumItalic.ttf"; sourceTree = "<group>"; };
 		AA06BCEA27E2555C003CFF77 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		AA0A520727EB3C30009B3BF2 /* UIFont+Preffered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Preffered.swift"; sourceTree = "<group>"; };
+		AA0A520727EB3C30009B3BF2 /* UIFont+Preferred.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Preferred.swift"; sourceTree = "<group>"; };
 		AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Radians.swift"; sourceTree = "<group>"; };
 		AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDirectionalEdgeInsets+Init.swift"; sourceTree = "<group>"; };
 		AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 			children = (
 				AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */,
 				AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */,
-				AA0A520727EB3C30009B3BF2 /* UIFont+Preffered.swift */,
+				AA0A520727EB3C30009B3BF2 /* UIFont+Preferred.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -199,7 +199,6 @@
 			isa = PBXGroup;
 			children = (
 				AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */,
-				AA06BCEA27E2555C003CFF77 /* Fonts.swift */,
 				AAF38CC427DF755400211DFC /* ShadowView.swift */,
 				AAF38CC227DF63FD00211DFC /* ShapedImageView.swift */,
 			);
@@ -219,6 +218,7 @@
 		AA0A521327EB5981009B3BF2 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				AA06BCEA27E2555C003CFF77 /* Fonts.swift */,
 				AADDDD9027C4505600E893E1 /* AppDelegate.swift */,
 				AADDDD9227C4505600E893E1 /* SceneDelegate.swift */,
 				AADDDD9E27C4505700E893E1 /* LaunchScreen.storyboard */,
@@ -478,7 +478,7 @@
 				AAAE49E827F100B700F3FBD1 /* Observable.swift in Sources */,
 				AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */,
 				AA053F8527F1860D004DE5B2 /* ProductListViewModel.swift in Sources */,
-				AA0A520827EB3C30009B3BF2 /* UIFont+Preffered.swift in Sources */,
+				AA0A520827EB3C30009B3BF2 /* UIFont+Preferred.swift in Sources */,
 				AADDDD9327C4505600E893E1 /* SceneDelegate.swift in Sources */,
 				AA8C542F27D26E1500B36D97 /* Product.swift in Sources */,
 			);

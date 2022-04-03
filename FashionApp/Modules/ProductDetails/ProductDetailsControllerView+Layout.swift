@@ -8,8 +8,9 @@
 import Foundation
 import UIKit
 
-extension ProductDetailsViewController {
-    func layout(
+class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
+    class func apply(
+        view: UIView,
         scrollView: UIScrollView,
         contentView: UIView,
         shapedImageView: ShapedImageView,
@@ -26,6 +27,9 @@ extension ProductDetailsViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         brandLabel.translatesAutoresizingMaskIntoConstraints = false
         backButton.translatesAutoresizingMaskIntoConstraints = false
+        shapedImageView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        imageDescriptionButton.translatesAutoresizingMaskIntoConstraints = false
 
         imageDescriptionButton.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false

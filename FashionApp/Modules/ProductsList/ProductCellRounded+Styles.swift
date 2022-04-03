@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ProductCellRoundedStyler: ShapeDelegate {
+class ProductCellRoundedStyles: ProductCellStyles {
     func shape(view containerView: UIView) -> CGPath? {
         
         let cornerRadius: CGFloat = 10

@@ -7,45 +7,40 @@
 
 import Foundation
 import UIKit
-
-protocol ProductCellStylable {
-    static func style(shapedImageView: ShapedImageView)
-    static func style(nameLabel: UILabel)
-    static func style(brandLabel: UILabel)
-    static func style(priceLabel: UILabel)
-}
-
-class RoundedRectShapeDelegate: ShapeDelegate {
-    func shape(view containerView: UIView) -> CGPath? {
-        CGPath(
-            roundedRect: containerView.frame,
-            cornerWidth: 8,
-            cornerHeight: 8,
-            transform: nil
-        )
-    }
-}
  
-extension ProductCell: ProductCellStylable {
-    static let roundedShapeDelegate = RoundedRectShapeDelegate()
-    
-    static var nameLabelFont: UIFont {
-        .preferredFont(name: FontRedHatDisplay.medium.rawValue, forTextStyle: .headline)
+class ProductCellStyles: ProductCellStylable {
+    class var nameLabelFont: UIFont {
+        Fonts.RedHatDisplay.medium.preferred(with: .headline)
     }
     
-    static var brandLabelFont: UIFont {
-        .preferredFont(name: FontRedHatDisplay.bold.rawValue, forTextStyle: .footnote)
+    class var brandLabelFont: UIFont {
+        Fonts.RedHatDisplay.bold.preferred(with: .footnote)
     }
     
-    static var priceLabelFont: UIFont {
-        .preferredFont(name: FontRedHatDisplay.regular.rawValue, forTextStyle: .headline)
+    class var priceLabelFont: UIFont {
+        Fonts.RedHatDisplay.regular.preferred(with: .headline)
     }
     
-    static func style(shapedImageView: ShapedImageView) {
+    class var imageShape: ShapeCallback {
+        get {
+            let callback: ShapeCallback = {
+               CGPath(
+                roundedRect: $0.frame,
+                   cornerWidth: 8,
+                   cornerHeight: 8,
+                   transform: nil
+               )
+           }
+            
+            return callback
+        }
+    }
+    
+    static func apply(shapedImageView: ShapedImageView) {
         shapedImageView.imageView.contentMode = .scaleAspectFit
         shapedImageView.imageView.backgroundColor = UIColor(named: "ColorProductCellBackground")
         shapedImageView.translatesAutoresizingMaskIntoConstraints = false
-        shapedImageView.delegateShape = Self.roundedShapeDelegate
+        shapedImageView.imageShape = imageShape
         
         let shadowColor = UIColor(red: 0.094, green: 0.153, blue: 0.294, alpha: 1).cgColor
         
@@ -65,20 +60,20 @@ extension ProductCell: ProductCellStylable {
         ]
     }
     
-    static func style(nameLabel: UILabel) {
+    static func apply(nameLabel: UILabel) {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.textAlignment = .left
         nameLabel.font = Self.nameLabelFont
     }
     
-    static func style(brandLabel: UILabel) {
+    static func apply(brandLabel: UILabel) {
         brandLabel.translatesAutoresizingMaskIntoConstraints = false
         brandLabel.textColor = UIColor(named: "ColorBrandLabel")
         brandLabel.textAlignment = .left
         brandLabel.font = Self.brandLabelFont
     }
     
-    static func style(priceLabel: UILabel) {
+    static func apply(priceLabel: UILabel) {
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         priceLabel.textAlignment = .left
         priceLabel.font = Self.priceLabelFont

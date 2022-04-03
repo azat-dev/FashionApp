@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ProductCell: UICollectionViewCell {
+class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: UICollectionViewCell {
 
-    private lazy var nameLabel: UILabel = UILabel()
-    private lazy var brandLabel: UILabel = UILabel()
-    private lazy var priceLabel: UILabel = UILabel()
-    private lazy var shapedImage: ShapedImageView = ShapedImageView()
+    private var nameLabel: UILabel = UILabel()
+    private var brandLabel: UILabel = UILabel()
+    private var priceLabel: UILabel = UILabel()
+    private var shapedImage: ShapedImageView = ShapedImageView()
 
     class var reuseIdentifier: String {
         "ProductCell"
@@ -82,19 +82,37 @@ private extension ProductCell {
 }
 
 // MARK: - Assign styles
+protocol ProductCellStylable {
+    static func apply(nameLabel: UILabel)
+    static func apply(brandLabel: UILabel)
+    static func apply(priceLabel: UILabel)
+    static func apply(shapedImageView: ShapedImageView)
+}
+
 private extension ProductCell {
     func style() {
-        Self.style(shapedImageView: shapedImage)
-        Self.style(nameLabel: nameLabel)
-        Self.style(brandLabel: brandLabel)
-        Self.style(priceLabel: priceLabel)
+        Styles.apply(shapedImageView: shapedImage)
+        Styles.apply(nameLabel: nameLabel)
+        Styles.apply(brandLabel: brandLabel)
+        Styles.apply(priceLabel: priceLabel)
     }
 }
 
 // MARK: - Layout
+protocol ProductCellLayoutable {
+    static func apply (
+        contentView: UIView,
+        shapedImage: ShapedImageView,
+        nameLabel: UILabel,
+        brandLabel: UILabel,
+        priceLabel: UILabel
+    )
+}
+
 private extension ProductCell {
     func layout() {
-        layout(
+        Layout.apply(
+            contentView: contentView,
             shapedImage: shapedImage,
             nameLabel: nameLabel,
             brandLabel: brandLabel,

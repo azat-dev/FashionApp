@@ -10,7 +10,7 @@ import UIKit
 class ShapedImageView: ShadowView {
     
     var imageView: UIImageView!
-    override weak var delegateShape: ShapeDelegate? {
+    var imageShape: ShapeCallback? {
         didSet {
             updateMask()
         }
@@ -31,7 +31,7 @@ class ShapedImageView: ShadowView {
     
     private func updateMask() {
         guard
-            let shapePath = delegateShape?.shape(view: self)
+            let shapePath = imageShape?(self)
         else {
             imageView.layer.mask = nil
             maskLayer = nil

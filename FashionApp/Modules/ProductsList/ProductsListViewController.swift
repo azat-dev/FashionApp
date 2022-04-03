@@ -7,7 +7,12 @@
 
 import UIKit
 
+
 class ProductsListViewController: UIViewController {
+    typealias Cell = ProductCell<ProductCellLayout, ProductCellStyles>
+    typealias RoundedCell = ProductCell<ProductCellLayout, ProductCellStyles>
+    typealias DetailsViewController = ProductDetailsViewController<ProductDetailsViewControllerLayout, ProductDetailsViewControllerStyles>
+    
     private var collectionView: UICollectionView!
     var viewModel: ProductListViewModel = ProductListViewModel() {
         didSet {
@@ -32,12 +37,12 @@ extension ProductsListViewController {
         )
         
         collectionView.register(
-            ProductCell.self,
-            forCellWithReuseIdentifier: ProductCell.reuseIdentifier
+            Cell.self,
+            forCellWithReuseIdentifier: Cell.reuseIdentifier
         )
         collectionView.register(
-            ProductCellRounded.self,
-            forCellWithReuseIdentifier: ProductCellRounded.reuseIdentifier
+            RoundedCell.self,
+            forCellWithReuseIdentifier: RoundedCell.reuseIdentifier
         )
         
         collectionView.dataSource = self
@@ -64,12 +69,12 @@ extension ProductsListViewController {
 extension ProductsListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let reuseIdentifier = isRoundedCell(index: indexPath) ? ProductCellRounded.reuseIdentifier : ProductCell.reuseIdentifier
+        let reuseIdentifier = isRoundedCell(index: indexPath) ? RoundedCell.reuseIdentifier : Cell.reuseIdentifier
         
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: reuseIdentifier,
             for: indexPath
-        ) as? ProductCell
+        ) as? Cell
         
         guard let cell = cell else {
             fatalError("Can't dequeue cell \(reuseIdentifier)")
@@ -96,7 +101,7 @@ extension ProductsListViewController: UICollectionViewDelegate {
         
         let product = viewModel.getProduct(at: indexPath.row)
         let viewModel = ProductViewModel(product: product)
-        let vc = ProductDetailsViewController(viewModel: viewModel)
+        let vc = DetailsViewController(viewModel: viewModel)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

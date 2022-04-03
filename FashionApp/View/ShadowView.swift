@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 
 
-protocol ShapeDelegate: AnyObject {
-    func shape(view: UIView) -> CGPath?
-}
+typealias ShapeCallback = (_ view: UIView) -> CGPath?
 
 class ShadowView: UIView {
     struct ShadowParams {
@@ -28,7 +26,7 @@ class ShadowView: UIView {
         }
     }
     
-    weak var delegateShape: ShapeDelegate? {
+    var shape: ShapeCallback? {
         didSet {
             updateShadows()
         }
@@ -46,7 +44,7 @@ class ShadowView: UIView {
     }
     
     private func updateShadows() {
-        let path = delegateShape?.shape(view: self) ?? CGPath(rect: bounds, transform: nil)
+        let path = shape?(self) ?? CGPath(rect: bounds, transform: nil)
         
         clipsToBounds = false
         

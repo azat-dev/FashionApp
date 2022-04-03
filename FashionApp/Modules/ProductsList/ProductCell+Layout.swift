@@ -8,8 +8,9 @@
 import Foundation
 import UIKit
 
-extension ProductCell {
-    func layout(
+class ProductCellLayout: ProductCellLayoutable {
+    static func apply (
+        contentView: UIView,
         shapedImage: ShapedImageView,
         nameLabel: UILabel,
         brandLabel: UILabel,

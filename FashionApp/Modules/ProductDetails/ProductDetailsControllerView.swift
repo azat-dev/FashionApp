@@ -8,17 +8,17 @@
 import Foundation
 import UIKit
 
-class ProductDetailsViewController: UIViewController {
+class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles: ProductDetailsViewStylable>: UIViewController {
     
-    private lazy var backButton = UIButton(type: .system)
-    private lazy var scrollView = UIScrollView()
-    private lazy var shapedImageView = ShapedImageView()
-    private lazy var titleLabel = UILabel()
-    private lazy var brandLabel = UILabel()
-    private lazy var descritptionLabel = UILabel()
-    private lazy var cartButton = UIButton(type: .system)
-    private lazy var imageDescriptionButton = UIButton(type: .system)
-    private lazy var contentView = UIView()
+    private var backButton = UIButton(type: .system)
+    private var scrollView = UIScrollView()
+    private var shapedImageView = ShapedImageView()
+    private var titleLabel = UILabel()
+    private var brandLabel = UILabel()
+    private var descriptionLabel = UILabel()
+    private var cartButton = UIButton(type: .system)
+    private var imageDescriptionButton = UIButton(type: .system)
+    private var contentView = UIView()
     
     var viewModel: ProductViewModel!
     
@@ -34,7 +34,7 @@ class ProductDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        styleViews()
+        style()
         layout()
         bindViewModel()
     }
@@ -42,6 +42,10 @@ class ProductDetailsViewController: UIViewController {
     @objc
     private func goBack() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    deinit {
+        print("Deinit details")
     }
 }
 
@@ -56,15 +60,13 @@ private extension ProductDetailsViewController {
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
         
-        shapedImageView.delegateShape = self
-        
         contentView.addSubview(shapedImageView)
         contentView.addSubview(imageDescriptionButton)
-        contentView.addSubview(titleLabel)
+        view.addSubview(titleLabel)
         contentView.addSubview(brandLabel)
-        contentView.addSubview(descritptionLabel)
+        contentView.addSubview(descriptionLabel)
         contentView.addSubview(cartButton)
-        contentView.addSubview(backButton)
+        view.addSubview(backButton)
         
     }
 }
@@ -89,21 +91,37 @@ private extension ProductDetailsViewController {
         
         viewModel.description.bind {
             [weak self] in
-            self?.descritptionLabel.text = $0
+            self?.descriptionLabel.text = $0
         }
     }
 }
 
 // MARK: - Layout
+protocol ProductDetailsViewLayoutable {
+    static func apply(
+        view: UIView,
+        scrollView: UIScrollView,
+        contentView: UIView,
+        shapedImageView: ShapedImageView,
+        titleLabel: UILabel,
+        brandLabel: UILabel,
+        descriptionLabel: UILabel,
+        backButton: UIButton,
+        imageDescriptionButton: UIButton,
+        cartButton: UIButton
+    )
+}
+
 private extension ProductDetailsViewController {
     func layout() {
-        layout(
+        Layout.apply(
+            view: view,
             scrollView: scrollView,
             contentView: contentView,
             shapedImageView: shapedImageView,
             titleLabel: titleLabel,
             brandLabel: brandLabel,
-            descriptionLabel: descritptionLabel,
+            descriptionLabel: descriptionLabel,
             backButton: backButton,
             imageDescriptionButton: imageDescriptionButton,
             cartButton: cartButton
@@ -113,13 +131,13 @@ private extension ProductDetailsViewController {
 
 // MARK: - Assign styles
 private extension ProductDetailsViewController {
-    func styleViews() {
-        style(scrollView: scrollView)
-        style(shapedImageView: shapedImageView)
-        style(titleLabel: titleLabel)
-        style(descritptionLabel: descritptionLabel)
-        style(cartButton: cartButton)
-        style(backButton: backButton)
-        style(imageDescriptionButton: imageDescriptionButton)
+    func style() {
+        Styles.apply(scrollView: scrollView)
+        Styles.apply(shapedImageView: shapedImageView)
+        Styles.apply(titleLabel: titleLabel)
+        Styles.apply(descriptionLabel: descriptionLabel)
+        Styles.apply(cartButton: cartButton)
+        Styles.apply(backButton: backButton)
+        Styles.apply(imageDescriptionButton: imageDescriptionButton)
     }
 }
