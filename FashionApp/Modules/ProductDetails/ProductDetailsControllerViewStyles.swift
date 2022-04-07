@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 protocol ProductDetailsViewStylable {
-    static func apply(shapedImageView: ShapedImageView)
+    static func apply(imageShape: ShapedView)
+    static func apply(imageView: UIImageView)
     static func apply(scrollView: UIScrollView)
     static func apply(titleLabel: UILabel)
     static func apply(brandLabel: UILabel)
@@ -22,10 +23,9 @@ protocol ProductDetailsViewStylable {
 
 // MARK: - Style Views
 class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
-    class func apply(shapedImageView: ShapedImageView) {
-        
-        shapedImageView.imageView.backgroundColor = UIColor(named: "ColorProductCellBackground")
-        shapedImageView.imageShape = { view in
+    class func apply(imageShape: ShapedView) {
+        imageShape.backgroundColor = UIColor(named: "ColorProductCellBackground")
+        imageShape.shape = { view in
             CGPath(
                 roundedRect: view.bounds,
                 cornerWidth: 20,
@@ -33,6 +33,10 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
                 transform: nil
             )
         }
+    }
+    
+    class func apply(imageView: UIImageView) {
+        imageView.contentMode = .scaleAspectFit
     }
     
     class func apply(scrollView: UIScrollView) {

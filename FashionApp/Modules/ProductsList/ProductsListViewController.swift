@@ -97,10 +97,10 @@ extension ProductsListViewController: UICollectionViewDataSource {
 extension ProductsListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
-        
         let product = viewModel.getProduct(at: indexPath.row)
         let viewModel = ProductViewModel(product: product)
         let vc = DetailsViewController(viewModel: viewModel)
-        navigationController?.pushViewController(vc, animated: true)
+        
+        show(vc, sender: self)
     }
 }

@@ -13,7 +13,8 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
         view: UIView,
         scrollView: UIScrollView,
         contentView: UIView,
-        shapedImageView: ShapedImageView,
+        imageShape: ShapedView,
+        imageView: UIImageView,
         titleLabel: UILabel,
         brandLabel: UILabel,
         descriptionLabel: UILabel,
@@ -27,13 +28,17 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         brandLabel.translatesAutoresizingMaskIntoConstraints = false
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        shapedImageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageShape.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         imageDescriptionButton.translatesAutoresizingMaskIntoConstraints = false
 
         imageDescriptionButton.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        imageShape.constraintAll(equalTo: imageView)
+        
+        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
@@ -46,18 +51,18 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
 
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.98),
 
-            shapedImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            shapedImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            shapedImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            shapedImageView.heightAnchor.constraint(equalTo: shapedImageView.widthAnchor, multiplier: 1.37, constant: 0),
+            imageShape.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            imageShape.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            imageShape.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
+            imageShape.heightAnchor.constraint(equalTo: imageShape.widthAnchor, multiplier: 1.37, constant: 0),
 
-            imageDescriptionButton.bottomAnchor.constraint(equalTo: shapedImageView.bottomAnchor, constant: -20),
-            imageDescriptionButton.trailingAnchor.constraint(equalTo: shapedImageView.trailingAnchor, constant: -18),
+            imageDescriptionButton.bottomAnchor.constraint(equalTo: imageShape.bottomAnchor, constant: -20),
+            imageDescriptionButton.trailingAnchor.constraint(equalTo: imageShape.trailingAnchor, constant: -18),
 
-            backButton.topAnchor.constraint(equalTo: shapedImageView.topAnchor, constant: 15),
-            backButton.leadingAnchor.constraint(equalTo: shapedImageView.leadingAnchor, constant: 10),
+            backButton.topAnchor.constraint(equalTo: imageShape.topAnchor, constant: 15),
+            backButton.leadingAnchor.constraint(equalTo: imageShape.leadingAnchor, constant: 10),
 
-            titleLabel.topAnchor.constraint(equalTo: shapedImageView.bottomAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: imageShape.bottomAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 

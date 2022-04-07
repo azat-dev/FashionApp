@@ -12,7 +12,8 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     
     private var backButton = UIButton(type: .system)
     private var scrollView = UIScrollView()
-    private var shapedImageView = ShapedImageView()
+    private var imageShape = ShapedView()
+    private var imageView = UIImageView()
     private var titleLabel = UILabel()
     private var brandLabel = UILabel()
     private var descriptionLabel = UILabel()
@@ -43,10 +44,6 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     private func goBack() {
         navigationController?.popViewController(animated: true)
     }
-    
-    deinit {
-        print("Deinit details")
-    }
 }
 
 // MARK: - Set up views
@@ -60,7 +57,9 @@ private extension ProductDetailsViewController {
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
         
-        contentView.addSubview(shapedImageView)
+        imageShape.addSubview(imageView)
+        contentView.addSubview(imageShape)
+        
         contentView.addSubview(imageDescriptionButton)
         view.addSubview(titleLabel)
         contentView.addSubview(brandLabel)
@@ -76,7 +75,7 @@ private extension ProductDetailsViewController {
     private func bindViewModel() {
         viewModel.image.bind {
             [weak self] in
-            self?.shapedImageView.imageView?.image = $0
+            self?.imageView.image = $0
         }
         
         viewModel.title.bind {
@@ -102,7 +101,8 @@ protocol ProductDetailsViewLayoutable {
         view: UIView,
         scrollView: UIScrollView,
         contentView: UIView,
-        shapedImageView: ShapedImageView,
+        imageShape: ShapedView,
+        imageView: UIImageView,
         titleLabel: UILabel,
         brandLabel: UILabel,
         descriptionLabel: UILabel,
@@ -118,7 +118,8 @@ private extension ProductDetailsViewController {
             view: view,
             scrollView: scrollView,
             contentView: contentView,
-            shapedImageView: shapedImageView,
+            imageShape: imageShape,
+            imageView: imageView,
             titleLabel: titleLabel,
             brandLabel: brandLabel,
             descriptionLabel: descriptionLabel,
@@ -133,7 +134,8 @@ private extension ProductDetailsViewController {
 private extension ProductDetailsViewController {
     func style() {
         Styles.apply(scrollView: scrollView)
-        Styles.apply(shapedImageView: shapedImageView)
+        Styles.apply(imageShape: imageShape)
+        Styles.apply(imageView: imageView)
         Styles.apply(titleLabel: titleLabel)
         Styles.apply(descriptionLabel: descriptionLabel)
         Styles.apply(cartButton: cartButton)

@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		AA053F8527F1860D004DE5B2 /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8427F1860D004DE5B2 /* ProductListViewModel.swift */; };
 		AA053F8827F18EA6004DE5B2 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8727F18EA6004DE5B2 /* ProductViewModel.swift */; };
-		AA053F8A27F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8927F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift */; };
-		AA053F8C27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8B27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift */; };
-		AA053F8E27F1A964004DE5B2 /* ProductCell+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8D27F1A964004DE5B2 /* ProductCell+Styles.swift */; };
-		AA053F9027F1AACA004DE5B2 /* ProductCell+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8F27F1AACA004DE5B2 /* ProductCell+Layout.swift */; };
+		AA053F8A27F19525004DE5B2 /* ProductDetailsControllerViewStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8927F19525004DE5B2 /* ProductDetailsControllerViewStyles.swift */; };
+		AA053F8C27F195A5004DE5B2 /* ProductDetailsControllerViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8B27F195A5004DE5B2 /* ProductDetailsControllerViewLayout.swift */; };
+		AA053F8E27F1A964004DE5B2 /* ProductCellStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8D27F1A964004DE5B2 /* ProductCellStyles.swift */; };
+		AA053F9027F1AACA004DE5B2 /* ProductCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F8F27F1AACA004DE5B2 /* ProductCellLayout.swift */; };
 		AA053F9227F1B29A004DE5B2 /* ProductCellRounded+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F9127F1B29A004DE5B2 /* ProductCellRounded+Styles.swift */; };
 		AA053F9427F1D69E004DE5B2 /* ProductListViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA053F9327F1D69E004DE5B2 /* ProductListViewController+Layout.swift */; };
 		AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */; };
@@ -49,8 +49,10 @@
 		AADDDDAB27C4505700E893E1 /* FashionAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDDAA27C4505700E893E1 /* FashionAppTests.swift */; };
 		AADDDDB527C4505700E893E1 /* FashionAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDDB427C4505700E893E1 /* FashionAppUITests.swift */; };
 		AADDDDB727C4505700E893E1 /* FashionAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDDB627C4505700E893E1 /* FashionAppUITestsLaunchTests.swift */; };
-		AAF38CC327DF63FD00211DFC /* ShapedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF38CC227DF63FD00211DFC /* ShapedImageView.swift */; };
+		AAE3E20027FCA7AD001C7F4F /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE3E1FF27FCA7AD001C7F4F /* UIView+Constraints.swift */; };
+		AAF38CC327DF63FD00211DFC /* ShapedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF38CC227DF63FD00211DFC /* ShapedView.swift */; };
 		AAF38CC527DF755400211DFC /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF38CC427DF755400211DFC /* ShadowView.swift */; };
+		AAF4DA9827FED0F100118264 /* UIImageViewAlignedSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AAF4DA9727FED0F100118264 /* UIImageViewAlignedSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,10 +75,10 @@
 /* Begin PBXFileReference section */
 		AA053F8427F1860D004DE5B2 /* ProductListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewModel.swift; sourceTree = "<group>"; };
 		AA053F8727F18EA6004DE5B2 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
-		AA053F8927F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailsControllerView+Styles.swift"; sourceTree = "<group>"; };
-		AA053F8B27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductDetailsControllerView+Layout.swift"; sourceTree = "<group>"; };
-		AA053F8D27F1A964004DE5B2 /* ProductCell+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductCell+Styles.swift"; sourceTree = "<group>"; };
-		AA053F8F27F1AACA004DE5B2 /* ProductCell+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductCell+Layout.swift"; sourceTree = "<group>"; };
+		AA053F8927F19525004DE5B2 /* ProductDetailsControllerViewStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsControllerViewStyles.swift; sourceTree = "<group>"; };
+		AA053F8B27F195A5004DE5B2 /* ProductDetailsControllerViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsControllerViewLayout.swift; sourceTree = "<group>"; };
+		AA053F8D27F1A964004DE5B2 /* ProductCellStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellStyles.swift; sourceTree = "<group>"; };
+		AA053F8F27F1AACA004DE5B2 /* ProductCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellLayout.swift; sourceTree = "<group>"; };
 		AA053F9127F1B29A004DE5B2 /* ProductCellRounded+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductCellRounded+Styles.swift"; sourceTree = "<group>"; };
 		AA053F9327F1D69E004DE5B2 /* ProductListViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProductListViewController+Layout.swift"; sourceTree = "<group>"; };
 		AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellRounded.swift; sourceTree = "<group>"; };
@@ -117,7 +119,8 @@
 		AADDDDB027C4505700E893E1 /* FashionAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FashionAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AADDDDB427C4505700E893E1 /* FashionAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionAppUITests.swift; sourceTree = "<group>"; };
 		AADDDDB627C4505700E893E1 /* FashionAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		AAF38CC227DF63FD00211DFC /* ShapedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapedImageView.swift; sourceTree = "<group>"; };
+		AAE3E1FF27FCA7AD001C7F4F /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		AAF38CC227DF63FD00211DFC /* ShapedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapedView.swift; sourceTree = "<group>"; };
 		AAF38CC427DF755400211DFC /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAF4DA9827FED0F100118264 /* UIImageViewAlignedSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,8 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				AA06BCCA27E22F5C003CFF77 /* ProductDetailsControllerView.swift */,
-				AA053F8927F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift */,
-				AA053F8B27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift */,
+				AA053F8927F19525004DE5B2 /* ProductDetailsControllerViewStyles.swift */,
+				AA053F8B27F195A5004DE5B2 /* ProductDetailsControllerViewLayout.swift */,
 			);
 			path = ProductDetails;
 			sourceTree = "<group>";
@@ -191,6 +195,7 @@
 				AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */,
 				AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */,
 				AA0A520727EB3C30009B3BF2 /* UIFont+Preferred.swift */,
+				AAE3E1FF27FCA7AD001C7F4F /* UIView+Constraints.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -200,7 +205,7 @@
 			children = (
 				AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */,
 				AAF38CC427DF755400211DFC /* ShadowView.swift */,
-				AAF38CC227DF63FD00211DFC /* ShapedImageView.swift */,
+				AAF38CC227DF63FD00211DFC /* ShapedView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -244,8 +249,8 @@
 			isa = PBXGroup;
 			children = (
 				AA8C542C27D26D8200B36D97 /* ProductCell.swift */,
-				AA053F8D27F1A964004DE5B2 /* ProductCell+Styles.swift */,
-				AA053F8F27F1AACA004DE5B2 /* ProductCell+Layout.swift */,
+				AA053F8D27F1A964004DE5B2 /* ProductCellStyles.swift */,
+				AA053F8F27F1AACA004DE5B2 /* ProductCellLayout.swift */,
 				AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */,
 				AA053F9127F1B29A004DE5B2 /* ProductCellRounded+Styles.swift */,
 				AADDDD9427C4505600E893E1 /* ProductsListViewController.swift */,
@@ -328,6 +333,9 @@
 			dependencies = (
 			);
 			name = FashionApp;
+			packageProductDependencies = (
+				AAF4DA9727FED0F100118264 /* UIImageViewAlignedSwift */,
+			);
 			productName = FashionApp;
 			productReference = AADDDD8D27C4505600E893E1 /* FashionApp.app */;
 			productType = "com.apple.product-type.application";
@@ -400,6 +408,9 @@
 				Base,
 			);
 			mainGroup = AADDDD8427C4505600E893E1;
+			packageReferences = (
+				AAF4DA9627FED0F100118264 /* XCRemoteSwiftPackageReference "UIImageViewAlignedSwift" */,
+			);
 			productRefGroup = AADDDD8E27C4505600E893E1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -457,20 +468,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA0A520A27EB3C7A009B3BF2 /* CGFloat+Radians.swift in Sources */,
-				AA053F8E27F1A964004DE5B2 /* ProductCell+Styles.swift in Sources */,
+				AA053F8E27F1A964004DE5B2 /* ProductCellStyles.swift in Sources */,
 				AA053F9427F1D69E004DE5B2 /* ProductListViewController+Layout.swift in Sources */,
+				AAE3E20027FCA7AD001C7F4F /* UIView+Constraints.swift in Sources */,
 				AADDDD9B27C4505600E893E1 /* FashionApp.xcdatamodeld in Sources */,
 				AAAE49E627F1009300F3FBD1 /* ProductCellViewModel.swift in Sources */,
 				AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */,
 				AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */,
-				AA053F8C27F195A5004DE5B2 /* ProductDetailsControllerView+Layout.swift in Sources */,
-				AA053F8A27F19525004DE5B2 /* ProductDetailsControllerView+Styles.swift in Sources */,
-				AA053F9027F1AACA004DE5B2 /* ProductCell+Layout.swift in Sources */,
+				AA053F8C27F195A5004DE5B2 /* ProductDetailsControllerViewLayout.swift in Sources */,
+				AA053F8A27F19525004DE5B2 /* ProductDetailsControllerViewStyles.swift in Sources */,
+				AA053F9027F1AACA004DE5B2 /* ProductCellLayout.swift in Sources */,
 				AA053F8827F18EA6004DE5B2 /* ProductViewModel.swift in Sources */,
 				AA06BCEB27E2555C003CFF77 /* Fonts.swift in Sources */,
 				AA053F9227F1B29A004DE5B2 /* ProductCellRounded+Styles.swift in Sources */,
 				AADDDD9527C4505600E893E1 /* ProductsListViewController.swift in Sources */,
-				AAF38CC327DF63FD00211DFC /* ShapedImageView.swift in Sources */,
+				AAF38CC327DF63FD00211DFC /* ShapedView.swift in Sources */,
 				AAF38CC527DF755400211DFC /* ShadowView.swift in Sources */,
 				AA06BCCB27E22F5C003CFF77 /* ProductDetailsControllerView.swift in Sources */,
 				AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */,
@@ -814,6 +826,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AAF4DA9627FED0F100118264 /* XCRemoteSwiftPackageReference "UIImageViewAlignedSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sochalewski/UIImageViewAlignedSwift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AAF4DA9727FED0F100118264 /* UIImageViewAlignedSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAF4DA9627FED0F100118264 /* XCRemoteSwiftPackageReference "UIImageViewAlignedSwift" */;
+			productName = UIImageViewAlignedSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		AADDDD9927C4505600E893E1 /* FashionApp.xcdatamodeld */ = {

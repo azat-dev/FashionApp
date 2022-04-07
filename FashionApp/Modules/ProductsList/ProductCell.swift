@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UIImageViewAlignedSwift
 
 protocol ProductCellWithViewModel: AnyObject {
     var viewModel: ProductCellViewModel? { get set }
@@ -16,7 +17,9 @@ class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: U
     private var nameLabel: UILabel = UILabel()
     private var brandLabel: UILabel = UILabel()
     private var priceLabel: UILabel = UILabel()
-    private var shapedImage: ShapedImageView = ShapedImageView()
+    private var imageShadow = ShadowView()
+    private var imageView = UIImageViewAligned()
+    private var imageContainer = ShapedView()
 
     class var reuseIdentifier: String {
         "ProductCell"
@@ -49,10 +52,14 @@ class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: U
 // MARK: - Set up views
 extension ProductCell {
     func setupViews() {
-        contentView.addSubview(shapedImage)
+        imageContainer.addSubview(imageView)
+        imageShadow.addSubview(imageContainer)
+
+        contentView.addSubview(imageShadow)
         contentView.addSubview(nameLabel)
         contentView.addSubview(brandLabel)
         contentView.addSubview(priceLabel)
+        contentView.addSubview(imageContainer)
     }
 }
 
@@ -80,22 +87,17 @@ private extension ProductCell {
         
         viewModel.image.bind {
             [weak self] in
-            self?.shapedImage.imageView.image = $0
+            self?.imageView.image = $0
         }
     }
 }
 
 // MARK: - Assign styles
-protocol ProductCellStylable {
-    static func apply(nameLabel: UILabel)
-    static func apply(brandLabel: UILabel)
-    static func apply(priceLabel: UILabel)
-    static func apply(shapedImageView: ShapedImageView)
-}
-
 private extension ProductCell {
     func style() {
-        Styles.apply(shapedImageView: shapedImage)
+        Styles.apply(imageShadow: imageShadow)
+        Styles.apply(imageContainer: imageContainer)
+        Styles.apply(imageView: imageView)
         Styles.apply(nameLabel: nameLabel)
         Styles.apply(brandLabel: brandLabel)
         Styles.apply(priceLabel: priceLabel)
@@ -103,21 +105,13 @@ private extension ProductCell {
 }
 
 // MARK: - Layout
-protocol ProductCellLayoutable {
-    static func apply (
-        contentView: UIView,
-        shapedImage: ShapedImageView,
-        nameLabel: UILabel,
-        brandLabel: UILabel,
-        priceLabel: UILabel
-    )
-}
-
 private extension ProductCell {
     func layout() {
         Layout.apply(
             contentView: contentView,
-            shapedImage: shapedImage,
+            imageShadow: imageShadow,
+            imageContainer: imageContainer,
+            imageView: imageView,
             nameLabel: nameLabel,
             brandLabel: brandLabel,
             priceLabel: priceLabel
