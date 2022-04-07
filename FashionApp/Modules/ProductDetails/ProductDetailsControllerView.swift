@@ -7,13 +7,15 @@
 
 import Foundation
 import UIKit
+import UIImageViewAlignedSwift
 
 class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles: ProductDetailsViewStylable>: UIViewController {
     
     private var backButton = UIButton(type: .system)
     private var scrollView = UIScrollView()
-    private var imageShape = ShapedView()
-    private var imageView = UIImageView()
+    private var imageShadow = ShadowView()
+    private var imageContainer = ShapedView()
+    private var imageView = UIImageViewAligned()
     private var titleLabel = UILabel()
     private var brandLabel = UILabel()
     private var descriptionLabel = UILabel()
@@ -54,19 +56,20 @@ private extension ProductDetailsViewController {
         
         backButton.addTarget(self, action: #selector(Self.goBack), for: .touchUpInside)
         
-        scrollView.addSubview(contentView)
-        view.addSubview(scrollView)
-        
-        imageShape.addSubview(imageView)
-        contentView.addSubview(imageShape)
+        imageContainer.addSubview(imageView)
+        imageShadow.addSubview(imageContainer)
+        contentView.addSubview(imageShadow)
         
         contentView.addSubview(imageDescriptionButton)
-        view.addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
+        
         contentView.addSubview(brandLabel)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(cartButton)
-        view.addSubview(backButton)
+        imageContainer.addSubview(backButton)
         
+        scrollView.addSubview(contentView)
+        view.addSubview(scrollView)
     }
 }
 
@@ -96,29 +99,14 @@ private extension ProductDetailsViewController {
 }
 
 // MARK: - Layout
-protocol ProductDetailsViewLayoutable {
-    static func apply(
-        view: UIView,
-        scrollView: UIScrollView,
-        contentView: UIView,
-        imageShape: ShapedView,
-        imageView: UIImageView,
-        titleLabel: UILabel,
-        brandLabel: UILabel,
-        descriptionLabel: UILabel,
-        backButton: UIButton,
-        imageDescriptionButton: UIButton,
-        cartButton: UIButton
-    )
-}
-
 private extension ProductDetailsViewController {
     func layout() {
         Layout.apply(
             view: view,
             scrollView: scrollView,
             contentView: contentView,
-            imageShape: imageShape,
+            imageShadow: imageShadow,
+            imageContainer: imageContainer,
             imageView: imageView,
             titleLabel: titleLabel,
             brandLabel: brandLabel,
@@ -134,9 +122,12 @@ private extension ProductDetailsViewController {
 private extension ProductDetailsViewController {
     func style() {
         Styles.apply(scrollView: scrollView)
-        Styles.apply(imageShape: imageShape)
+        Styles.apply(contentView: contentView)
+        Styles.apply(imageShadow: imageShadow)
+        Styles.apply(imageContainer: imageContainer)
         Styles.apply(imageView: imageView)
         Styles.apply(titleLabel: titleLabel)
+        Styles.apply(brandLabel: brandLabel)
         Styles.apply(descriptionLabel: descriptionLabel)
         Styles.apply(cartButton: cartButton)
         Styles.apply(backButton: backButton)

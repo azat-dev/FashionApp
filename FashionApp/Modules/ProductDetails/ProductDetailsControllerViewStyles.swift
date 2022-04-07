@@ -7,10 +7,12 @@
 
 import Foundation
 import UIKit
+import UIImageViewAlignedSwift
 
 protocol ProductDetailsViewStylable {
-    static func apply(imageShape: ShapedView)
-    static func apply(imageView: UIImageView)
+    static func apply(imageShadow: ShadowView)
+    static func apply(imageContainer: ShapedView)
+    static func apply(imageView: UIImageViewAligned)
     static func apply(scrollView: UIScrollView)
     static func apply(titleLabel: UILabel)
     static func apply(brandLabel: UILabel)
@@ -23,42 +25,98 @@ protocol ProductDetailsViewStylable {
 
 // MARK: - Style Views
 class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
-    class func apply(imageShape: ShapedView) {
-        imageShape.backgroundColor = UIColor(named: "ColorProductCellBackground")
-        imageShape.shape = { view in
-            CGPath(
-                roundedRect: view.bounds,
-                cornerWidth: 20,
-                cornerHeight: 20,
-                transform: nil
-            )
+    class var cornerRadius: CGFloat {
+        15
+    }
+    
+    class var imageShape: ShapeCallback {
+        get {
+            let callback: ShapeCallback = {
+                CGPath(
+                    roundedRect: $0.bounds,
+                    cornerWidth: cornerRadius,
+                    cornerHeight: cornerRadius,
+                    transform: nil
+                )
+            }
+            
+            return callback
         }
     }
     
-    class func apply(imageView: UIImageView) {
+    class var imageShadowShape: ShapeCallback {
+        get {
+            let callback: ShapeCallback = { view in
+                let width = view.frame.width * 0.6
+                let height =  view.frame.height * 0.05
+                
+                let rect = CGRect(
+                    origin: CGPoint(
+                        x: view.frame.midX - width / 2,
+                        y: view.frame.maxY - height * 0.9
+                    ),
+                    size: CGSize(
+                        width: width,
+                        height: height
+                    )
+                )
+                
+                return CGPath(
+                    roundedRect: rect,
+                    cornerWidth: cornerRadius,
+                    cornerHeight: cornerRadius,
+                    transform: nil
+                )
+            }
+            
+            return callback
+        }
+    }
+    
+    class func apply(imageShadow: ShadowView) {
+        imageShadow.shape = imageShadowShape
+        
+        let shadowColor = UIColor(red: 0.094, green: 0.153, blue: 0.3, alpha: 1).cgColor
+        imageShadow.shadows = [
+            ShadowView.ShadowParams(
+                color: shadowColor,
+                opacity: 0.25,
+                radius: 15,
+                offset: CGSize(width: 0, height: 8)
+            ),
+        ]
+    }
+    
+    class func apply(imageContainer: ShapedView) {
+        imageContainer.backgroundColor = UIColor(named: "ColorProductCellBackground")
+        imageContainer.shape = imageShape
+    }
+    
+    class func apply(imageView: UIImageViewAligned) {
         imageView.contentMode = .scaleAspectFit
+        imageView.alignBottom = true
     }
     
     class func apply(scrollView: UIScrollView) {
-        
         scrollView.backgroundColor = UIColor.systemBackground
     }
     
+    class func apply(contentView: UIView) {
+        
+    }
+    
     class func apply(titleLabel: UILabel) {
-
         titleLabel.font = Fonts.RedHatDisplay.medium.preferred(with: .largeTitle)
         titleLabel.textAlignment = .left
     }
     
     class func apply(brandLabel: UILabel) {
-        
         brandLabel.font = Fonts.RedHatDisplay.medium.preferred(with: .body)
         brandLabel.textAlignment = .left
         brandLabel.textColor = UIColor(named: "ColorBrandLabel")
     }
     
     class func apply(descriptionLabel: UILabel) {
-        
         descriptionLabel.font = Fonts.RedHatDisplay.medium.preferred(with: .subheadline)
         descriptionLabel.textAlignment = .left
         descriptionLabel.textColor = UIColor(named: "ColorProductDescription")
@@ -67,7 +125,6 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     }
     
     class func apply(cartButton: UIButton) {
-        
         let cartButtonCornerRadius: CGFloat = 12
         let cartButtonImage = UIImage(systemName: "cart")
         let cartButtonBackgroundColor = UIColor(named: "ColorProductCellBackground")
@@ -111,7 +168,6 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     }
     
     class func apply(imageDescriptionButton: UIButton) {
-        
         if #available(iOS 15, *) {
             let imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .bold)
             let image = UIImage(systemName: "viewfinder", withConfiguration: imageConfig)
@@ -131,7 +187,6 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     }
     
     class func apply(backButton: UIButton) {
-        
         let backButtonImageConfig = UIImage.SymbolConfiguration(
             pointSize: 16,
             weight: .medium
@@ -148,9 +203,5 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
             backButton.setImage(backButtonImage, for: .normal)
             backButton.tintColor = .black
         }
-    }
-    
-    class func apply(contentView: UIView) {
-        
     }
 }

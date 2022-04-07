@@ -1,5 +1,5 @@
 //
-//  ProductCellRounded+Styles.swift
+//  ProductCellRoundedStyles.swift
 //  FashionApp
 //
 //  Created by Azat Kaiumov on 28.03.22.

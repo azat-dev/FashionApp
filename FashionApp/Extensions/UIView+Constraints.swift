@@ -17,4 +17,10 @@ extension UIView {
             self.bottomAnchor.constraint(equalTo: equalTo.bottomAnchor),
         ])
     }
+    
+    static func disableAutoresizingMaskIntoConstraints(views: [UIView]) {
+        for view in views {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
 }

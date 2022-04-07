@@ -1,5 +1,5 @@
 //
-//  ProductDetailsControllerView+Layout.swift
+//  ProductDetailsControllerViewLayout.swift
 //  FashionApp
 //
 //  Created by Azat Kaiumov on 28.03.22.
@@ -7,14 +7,33 @@
 
 import Foundation
 import UIKit
+import UIImageViewAlignedSwift
+
+protocol ProductDetailsViewLayoutable {
+    static func apply(
+        view: UIView,
+        scrollView: UIScrollView,
+        contentView: UIView,
+        imageShadow: ShadowView,
+        imageContainer: ShapedView,
+        imageView: UIImageViewAligned,
+        titleLabel: UILabel,
+        brandLabel: UILabel,
+        descriptionLabel: UILabel,
+        backButton: UIButton,
+        imageDescriptionButton: UIButton,
+        cartButton: UIButton
+    )
+}
 
 class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
     class func apply(
         view: UIView,
         scrollView: UIScrollView,
         contentView: UIView,
-        imageShape: ShapedView,
-        imageView: UIImageView,
+        imageShadow: ShadowView,
+        imageContainer: ShapedView,
+        imageView: UIImageViewAligned,
         titleLabel: UILabel,
         brandLabel: UILabel,
         descriptionLabel: UILabel,
@@ -23,21 +42,22 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
         cartButton: UIButton
     ) {
         scrollView.frame = view.frame
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        cartButton.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        brandLabel.translatesAutoresizingMaskIntoConstraints = false
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageShape.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        imageDescriptionButton.translatesAutoresizingMaskIntoConstraints = false
-
-        imageDescriptionButton.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        imageShape.constraintAll(equalTo: imageView)
         
+        UIView.disableAutoresizingMaskIntoConstraints(views: [
+            scrollView,
+            cartButton,
+            contentView,
+            brandLabel,
+            backButton,
+            imageShadow,
+            imageView,
+            imageContainer,
+            titleLabel,
+            imageDescriptionButton,
+            descriptionLabel
+        ])
+        
+        imageShadow.constraintAll(equalTo: imageContainer)
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
@@ -50,19 +70,30 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
             contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
 
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.98),
+        ])
+        
+        NSLayoutConstraint.activate([
+            imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            imageContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
+            imageContainer.heightAnchor.constraint(equalTo: imageContainer.widthAnchor, multiplier: 1.37, constant: 0),
+            
+            imageView.topAnchor.constraint(greaterThanOrEqualTo: imageContainer.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor),
+            imageView.widthAnchor.constraint(lessThanOrEqualTo: imageContainer.widthAnchor),
+            imageView.heightAnchor.constraint(lessThanOrEqualTo: imageContainer.heightAnchor, multiplier: 0.97),
+        ])
+        
+        NSLayoutConstraint.activate([
+            imageDescriptionButton.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor, constant: -20),
+            imageDescriptionButton.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: -18),
+        ])
+        
+        NSLayoutConstraint.activate([
+            backButton.topAnchor.constraint(equalTo: imageContainer.topAnchor, constant: 15),
+            backButton.leadingAnchor.constraint(equalTo: imageContainer.leadingAnchor, constant: 10),
 
-            imageShape.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            imageShape.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            imageShape.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            imageShape.heightAnchor.constraint(equalTo: imageShape.widthAnchor, multiplier: 1.37, constant: 0),
-
-            imageDescriptionButton.bottomAnchor.constraint(equalTo: imageShape.bottomAnchor, constant: -20),
-            imageDescriptionButton.trailingAnchor.constraint(equalTo: imageShape.trailingAnchor, constant: -18),
-
-            backButton.topAnchor.constraint(equalTo: imageShape.topAnchor, constant: 15),
-            backButton.leadingAnchor.constraint(equalTo: imageShape.leadingAnchor, constant: 10),
-
-            titleLabel.topAnchor.constraint(equalTo: imageShape.bottomAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: imageContainer.bottomAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 
@@ -83,4 +114,3 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
         ])
     }
 }
-
