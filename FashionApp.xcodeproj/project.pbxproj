@@ -53,6 +53,9 @@
 		AAF38CC327DF63FD00211DFC /* ShapedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF38CC227DF63FD00211DFC /* ShapedView.swift */; };
 		AAF38CC527DF755400211DFC /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF38CC427DF755400211DFC /* ShadowView.swift */; };
 		AAF4DA9827FED0F100118264 /* UIImageViewAlignedSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AAF4DA9727FED0F100118264 /* UIImageViewAlignedSwift */; };
+		AAF4DA9B27FF6CB700118264 /* ProductDetailsFullScreenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF4DA9A27FF6CB700118264 /* ProductDetailsFullScreenImage.swift */; };
+		AAF4DA9D27FF6CED00118264 /* ProductDetailsFullScreenImageStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF4DA9C27FF6CED00118264 /* ProductDetailsFullScreenImageStyles.swift */; };
+		AAF4DA9F27FF6DFF00118264 /* ProductDetailsFullScreenImageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF4DA9E27FF6DFF00118264 /* ProductDetailsFullScreenImageLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +125,9 @@
 		AAE3E1FF27FCA7AD001C7F4F /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		AAF38CC227DF63FD00211DFC /* ShapedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapedView.swift; sourceTree = "<group>"; };
 		AAF38CC427DF755400211DFC /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
+		AAF4DA9A27FF6CB700118264 /* ProductDetailsFullScreenImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsFullScreenImage.swift; sourceTree = "<group>"; };
+		AAF4DA9C27FF6CED00118264 /* ProductDetailsFullScreenImageStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsFullScreenImageStyles.swift; sourceTree = "<group>"; };
+		AAF4DA9E27FF6DFF00118264 /* ProductDetailsFullScreenImageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsFullScreenImageLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +245,7 @@
 		AA0A521427EB60E5009B3BF2 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				AAF4DA9927FF6C9300118264 /* ProductDetailsFullScreenImage */,
 				AA053F8627F18870004DE5B2 /* ProductDetails */,
 				AA0A521527EB60F2009B3BF2 /* ProductsList */,
 			);
@@ -315,6 +322,16 @@
 				AADDDDB627C4505700E893E1 /* FashionAppUITestsLaunchTests.swift */,
 			);
 			path = FashionAppUITests;
+			sourceTree = "<group>";
+		};
+		AAF4DA9927FF6C9300118264 /* ProductDetailsFullScreenImage */ = {
+			isa = PBXGroup;
+			children = (
+				AAF4DA9A27FF6CB700118264 /* ProductDetailsFullScreenImage.swift */,
+				AAF4DA9C27FF6CED00118264 /* ProductDetailsFullScreenImageStyles.swift */,
+				AAF4DA9E27FF6DFF00118264 /* ProductDetailsFullScreenImageLayout.swift */,
+			);
+			path = ProductDetailsFullScreenImage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,8 +486,10 @@
 			files = (
 				AA0A520A27EB3C7A009B3BF2 /* CGFloat+Radians.swift in Sources */,
 				AA053F8E27F1A964004DE5B2 /* ProductCellStyles.swift in Sources */,
+				AAF4DA9B27FF6CB700118264 /* ProductDetailsFullScreenImage.swift in Sources */,
 				AA053F9427F1D69E004DE5B2 /* ProductListViewControllerLayout.swift in Sources */,
 				AAE3E20027FCA7AD001C7F4F /* UIView+Constraints.swift in Sources */,
+				AAF4DA9D27FF6CED00118264 /* ProductDetailsFullScreenImageStyles.swift in Sources */,
 				AADDDD9B27C4505600E893E1 /* FashionApp.xcdatamodeld in Sources */,
 				AAAE49E627F1009300F3FBD1 /* ProductCellViewModel.swift in Sources */,
 				AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */,
@@ -483,6 +502,7 @@
 				AA053F9227F1B29A004DE5B2 /* ProductCellRoundedStyles.swift in Sources */,
 				AADDDD9527C4505600E893E1 /* ProductsListViewController.swift in Sources */,
 				AAF38CC327DF63FD00211DFC /* ShapedView.swift in Sources */,
+				AAF4DA9F27FF6DFF00118264 /* ProductDetailsFullScreenImageLayout.swift in Sources */,
 				AAF38CC527DF755400211DFC /* ShadowView.swift in Sources */,
 				AA06BCCB27E22F5C003CFF77 /* ProductDetailsControllerView.swift in Sources */,
 				AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */,

@@ -36,6 +36,10 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+    }
+    
+    private func setup() {
         setupViews()
         style()
         layout()
@@ -44,7 +48,24 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     
     @objc
     private func goBack() {
-        navigationController?.popViewController(animated: true)
+        guard let navigationController = navigationController else {
+            dismiss(animated: true)
+            return
+        }
+        
+        
+        navigationController.popViewController(animated: true)
+    }
+    
+    @objc
+    private func openImage() {
+        
+        let vc = ProductDetailsFullScreenImage<
+            ProductDetailsFullScreenImageStyles,
+            ProductDetailsFullScreenImageLayout
+        >(viewModel: viewModel)
+        
+        show(vc, sender: self)
     }
 }
 
@@ -55,7 +76,7 @@ private extension ProductDetailsViewController {
         view.backgroundColor = UIColor.systemBackground
         
         backButton.addTarget(self, action: #selector(Self.goBack), for: .touchUpInside)
-        
+        imageDescriptionButton.addTarget(self, action: #selector(Self.openImage), for: .touchUpInside)
         imageContainer.addSubview(imageView)
         imageShadow.addSubview(imageContainer)
         contentView.addSubview(imageShadow)

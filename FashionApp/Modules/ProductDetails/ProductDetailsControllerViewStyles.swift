@@ -134,29 +134,8 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         let cartButtonImageInset: CGFloat = 10
         let cartButtonContentInsets = UIEdgeInsets(top: 25, left: 0, bottom: 25, right: 0)
         
-        if #available(iOS 15, *) {
-            var cartButtonConfig = UIButton.Configuration.filled();
-            
-            var attString = AttributedString.init("Add to cart")
-            attString.font = cartButtonFont
-            
-            cartButtonConfig.attributedTitle = attString
-            cartButtonConfig.baseForegroundColor = UIColor.black
-            cartButtonConfig.baseBackgroundColor = cartButtonBackgroundColor
-            cartButtonConfig.cornerStyle = .fixed
-            cartButtonConfig.background.cornerRadius = cartButtonCornerRadius
-            
-            cartButtonConfig.contentInsets.top = cartButtonContentInsets.top
-            cartButtonConfig.contentInsets.bottom = cartButtonContentInsets.bottom
-            cartButtonConfig.contentInsets.leading = cartButtonContentInsets.left
-            cartButtonConfig.contentInsets.trailing = cartButtonContentInsets.right
-            
-            cartButtonConfig.image = cartButtonImage
-            cartButtonConfig.imagePadding = cartButtonImageInset
-            cartButton.configuration = cartButtonConfig
-            
-        } else {
-            
+        guard #available(iOS 15, *) else {
+
             cartButton.tintColor = cartButtonForegroundColor
             cartButton.backgroundColor = cartButtonBackgroundColor
             cartButton.setTitle("Add to cart", for: .normal)
@@ -164,7 +143,28 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
             cartButton.contentEdgeInsets = cartButtonContentInsets
             cartButton.titleLabel?.font = cartButtonFont
             cartButton.layer.cornerRadius = cartButtonCornerRadius
+            return
         }
+        
+        var cartButtonConfig = UIButton.Configuration.filled();
+        
+        var attString = AttributedString("Add to cart")
+        attString.font = cartButtonFont
+        
+        cartButtonConfig.attributedTitle = attString
+        cartButtonConfig.baseForegroundColor = UIColor.black
+        cartButtonConfig.baseBackgroundColor = cartButtonBackgroundColor
+        cartButtonConfig.cornerStyle = .fixed
+        cartButtonConfig.background.cornerRadius = cartButtonCornerRadius
+        
+        cartButtonConfig.contentInsets.top = cartButtonContentInsets.top
+        cartButtonConfig.contentInsets.bottom = cartButtonContentInsets.bottom
+        cartButtonConfig.contentInsets.leading = cartButtonContentInsets.left
+        cartButtonConfig.contentInsets.trailing = cartButtonContentInsets.right
+        
+        cartButtonConfig.image = cartButtonImage
+        cartButtonConfig.imagePadding = cartButtonImageInset
+        cartButton.configuration = cartButtonConfig
     }
     
     class func apply(imageDescriptionButton: UIButton) {
@@ -187,21 +187,23 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     }
     
     class func apply(backButton: UIButton) {
+        
         let backButtonImageConfig = UIImage.SymbolConfiguration(
             pointSize: 16,
             weight: .medium
         )
         let backButtonImage = UIImage(systemName: "arrow.left")?.withConfiguration(backButtonImageConfig)
         
-        if #available(iOS 15, *) {
-            var backButtonConfig = UIButton.Configuration.plain()
-            backButtonConfig.baseForegroundColor = .black
-            backButtonConfig.image = backButtonImage
-            
-            backButton.configuration = backButtonConfig
-        } else {
+        guard #available(iOS 15, *) else {
             backButton.setImage(backButtonImage, for: .normal)
             backButton.tintColor = .black
+            return
         }
+        
+        var backButtonConfig = UIButton.Configuration.plain()
+        backButtonConfig.baseForegroundColor = .black
+        backButtonConfig.image = backButtonImage
+        
+        backButton.configuration = backButtonConfig
     }
 }
