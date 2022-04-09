@@ -72,7 +72,7 @@ extension ProductDetailsFullScreenImage {
 extension ProductDetailsFullScreenImage {
     private func bindViewModel() {
         viewModel?.image.bind { [weak self] newImage in
-            self?.imageView.image = newImage
+            self?.imageView.image = newImage?.cropAlpha()
         }
     }
 }
