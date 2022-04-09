@@ -35,7 +35,7 @@ class ProductDetailsFullScreenImageLayout: ProductDetailsFullScreenImageLayoutab
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.98),
-            imageView.heightAnchor.constraint(lessThanOrEqualTo: view.layoutMarginsGuide.heightAnchor, multiplier: 0.9),
+            imageView.heightAnchor.constraint(lessThanOrEqualTo: view.layoutMarginsGuide.heightAnchor, multiplier: 0.95),
             imageView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
         ])
         

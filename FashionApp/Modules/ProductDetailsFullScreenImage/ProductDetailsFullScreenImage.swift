@@ -61,9 +61,11 @@ extension ProductDetailsFullScreenImage {
         
         backButton.addTarget(self, action: #selector(Self.goBack), for: .touchUpInside)
         
-        view.addSubview(backButton)
+        buyButton.addTarget(self, action: #selector(Self.goBack), for: .touchUpInside)
+        
         view.addSubview(imageView)
         view.addSubview(buyButton)
+        view.addSubview(backButton)
     }
 }
 

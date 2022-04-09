@@ -188,21 +188,21 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     
     class func apply(backButton: UIButton) {
         
-        let backButtonImageConfig = UIImage.SymbolConfiguration(
+        let imageConfig = UIImage.SymbolConfiguration(
             pointSize: 16,
             weight: .medium
         )
-        let backButtonImage = UIImage(systemName: "arrow.left")?.withConfiguration(backButtonImageConfig)
+        let image = UIImage(systemName: "arrow.left")?.withConfiguration(imageConfig)
         
         guard #available(iOS 15, *) else {
-            backButton.setImage(backButtonImage, for: .normal)
+            backButton.setImage(image, for: .normal)
             backButton.tintColor = .black
             return
         }
         
         var backButtonConfig = UIButton.Configuration.plain()
         backButtonConfig.baseForegroundColor = .black
-        backButtonConfig.image = backButtonImage
+        backButtonConfig.image = image
         
         backButton.configuration = backButtonConfig
     }

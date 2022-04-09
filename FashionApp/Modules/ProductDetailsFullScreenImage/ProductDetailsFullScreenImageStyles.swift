@@ -29,10 +29,11 @@ class ProductDetailsFullScreenImageStyles: ProductDetailsFullScreenImageStylable
             weight: .medium
         )
 
-        let image = UIImage(systemName: "arrow.backward")?.withConfiguration(imageConfig)
+        let image = UIImage(systemName: "arrow.left")?.withConfiguration(imageConfig)
         
         guard #available(iOS 15, *) else {
             backButton.setImage(image, for: .normal)
+            backButton.tintColor = .black
             return
         }
         
@@ -40,9 +41,7 @@ class ProductDetailsFullScreenImageStyles: ProductDetailsFullScreenImageStylable
         
         configuration.baseForegroundColor = .black
         configuration.image = image
-        
-        backButton.layer.borderColor = UIColor.red.cgColor
-        backButton.layer.borderWidth = 3
+        backButton.configuration = configuration
     }
     
     class func apply(buyButton: UIButton) {
