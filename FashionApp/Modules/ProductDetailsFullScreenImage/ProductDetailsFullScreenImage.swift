@@ -11,9 +11,12 @@ import UIImageViewAlignedSwift
 
 class ProductDetailsFullScreenImage<Styles: ProductDetailsFullScreenImageStylable, Layout: ProductDetailsFullScreenImageLayout>: UIViewController {
     
+    typealias PriceTagView = PriceTag<PriceTagLayout, PriceTagStyles>
+    
     private var imageView = UIImageViewAligned()
     private var backButton = UIButton()
     private var buyButton = UIButton()
+    private var priceTags = [PriceTagView]()
     
     var viewModel: ProductViewModel! {
         didSet {
@@ -53,6 +56,18 @@ class ProductDetailsFullScreenImage<Styles: ProductDetailsFullScreenImageStylabl
         
         navigationController.popViewController(animated: true)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        var delayStep: Double = 0.5
+        var delay: Double = 0
+        
+        priceTags.forEach { priceTag in
+            priceTag.animateAppearance(delay: delay)
+            delay += delayStep
+        }
+    }
 }
 
 // MARK: - Setup views
@@ -67,11 +82,26 @@ extension ProductDetailsFullScreenImage {
         view.addSubview(buyButton)
         view.addSubview(backButton)
         
-        let priceTag = PriceTag<PriceTagLayout, PriceTagStyles>(frame: .zero)
+        let priceTag1 = PriceTagView(frame: .zero)
+        priceTag1.viewModel = PriceTagViewModel(
+            product: product1,
+            point: .init(x: 0.5, y: 0.5)
+        )
+        priceTag1.center = .init(x: 100, y: 100)
+        view.addSubview(priceTag1)
+        
+        priceTags.append(priceTag1)
+        
+        let priceTag2 = PriceTagView(frame: .zero)
 
-        priceTag.viewModel = PriceTagViewModel(product: product1, point: .init(x: 0.5, y: 0.5))
-        priceTag.center = .init(x: 100, y: 100)
-        view.addSubview(priceTag)
+        priceTag2.viewModel = PriceTagViewModel(
+            product: product1,
+            point: .init(x: 0.5, y: 0.7)
+        )
+        priceTag2.center = .init(x: 80, y: 300)
+        view.addSubview(priceTag2)
+        
+        priceTags.append(priceTag2)
     }
 }
 

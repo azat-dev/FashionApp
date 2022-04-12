@@ -40,6 +40,28 @@ class PriceTag<Layout: PriceTagLayoutable, Styles: PriceTagStylable>: UIView {
     private func onTapButton() {
         
     }
+    
+    func animateAppearance(delay: Double = 0) {
+        
+        self.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        self.alpha = 0
+        self.layoutIfNeeded()
+        
+        UIView.animate(
+            withDuration: 1.5,
+            delay: delay,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0,
+            options: [],
+            animations: { [weak self] in
+                
+                self?.transform = .identity
+                self?.alpha = 1
+                self?.layoutIfNeeded()
+            },
+            completion: nil
+        )
+    }
 }
 
 // MARK: - Setup Views
