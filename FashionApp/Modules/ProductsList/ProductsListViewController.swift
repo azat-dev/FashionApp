@@ -26,6 +26,17 @@ class ProductsListViewController: UIViewController {
         layout()
         bindViewModel()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
+//            let product = viewModel.getProduct(at: indexPath.row)
+            let viewModel = ProductViewModel(product: product1)
+            let vc = DetailsViewController(viewModel: viewModel)
+            
+            show(vc, sender: self)
+    }
 }
 
 // MARK: - Set up views

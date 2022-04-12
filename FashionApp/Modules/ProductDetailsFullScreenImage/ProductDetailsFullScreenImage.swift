@@ -66,6 +66,12 @@ extension ProductDetailsFullScreenImage {
         view.addSubview(imageView)
         view.addSubview(buyButton)
         view.addSubview(backButton)
+        
+        let priceTag = PriceTag<PriceTagLayout, PriceTagStyles>(frame: .zero)
+
+        priceTag.viewModel = PriceTagViewModel(product: product1, point: .init(x: 0.5, y: 0.5))
+        priceTag.center = .init(x: 100, y: 100)
+        view.addSubview(priceTag)
     }
 }
 

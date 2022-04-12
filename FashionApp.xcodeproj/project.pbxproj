@@ -41,6 +41,13 @@
 		AAA6C3DD2801783C0046F477 /* UIImage+Crop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA6C3DC2801783C0046F477 /* UIImage+Crop.swift */; };
 		AAAE49E627F1009300F3FBD1 /* ProductCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE49E527F1009300F3FBD1 /* ProductCellViewModel.swift */; };
 		AAAE49E827F100B700F3FBD1 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE49E727F100B700F3FBD1 /* Observable.swift */; };
+		AADC300628041976004488E1 /* PriceTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC300528041976004488E1 /* PriceTag.swift */; };
+		AADC300C28041A8D004488E1 /* ProductDetailsFullScreenImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC300B28041A8D004488E1 /* ProductDetailsFullScreenImageViewModel.swift */; };
+		AADC300E28041D78004488E1 /* PriceTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC300D28041D78004488E1 /* PriceTagViewModel.swift */; };
+		AADC301028042015004488E1 /* PriceTagStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC300F28042015004488E1 /* PriceTagStyles.swift */; };
+		AADC30122804201F004488E1 /* PriceTagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC30112804201F004488E1 /* PriceTagLayout.swift */; };
+		AADC301428042ABC004488E1 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC301328042ABC004488E1 /* ImageData.swift */; };
+		AADC301628043728004488E1 /* Basket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC301528043728004488E1 /* Basket.swift */; };
 		AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9027C4505600E893E1 /* AppDelegate.swift */; };
 		AADDDD9327C4505600E893E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9227C4505600E893E1 /* SceneDelegate.swift */; };
 		AADDDD9527C4505600E893E1 /* ProductsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9427C4505600E893E1 /* ProductsListViewController.swift */; };
@@ -111,6 +118,13 @@
 		AAA6C3DC2801783C0046F477 /* UIImage+Crop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Crop.swift"; sourceTree = "<group>"; };
 		AAAE49E527F1009300F3FBD1 /* ProductCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellViewModel.swift; sourceTree = "<group>"; };
 		AAAE49E727F100B700F3FBD1 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		AADC300528041976004488E1 /* PriceTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTag.swift; sourceTree = "<group>"; };
+		AADC300B28041A8D004488E1 /* ProductDetailsFullScreenImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsFullScreenImageViewModel.swift; sourceTree = "<group>"; };
+		AADC300D28041D78004488E1 /* PriceTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTagViewModel.swift; sourceTree = "<group>"; };
+		AADC300F28042015004488E1 /* PriceTagStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTagStyles.swift; sourceTree = "<group>"; };
+		AADC30112804201F004488E1 /* PriceTagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTagLayout.swift; sourceTree = "<group>"; };
+		AADC301328042ABC004488E1 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
+		AADC301528043728004488E1 /* Basket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basket.swift; sourceTree = "<group>"; };
 		AADDDD8D27C4505600E893E1 /* FashionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FashionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AADDDD9027C4505600E893E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AADDDD9227C4505600E893E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +238,8 @@
 			children = (
 				AAAE49E527F1009300F3FBD1 /* ProductCellViewModel.swift */,
 				AA053F8427F1860D004DE5B2 /* ProductListViewModel.swift */,
+				AADC300B28041A8D004488E1 /* ProductDetailsFullScreenImageViewModel.swift */,
+				AADC300D28041D78004488E1 /* PriceTagViewModel.swift */,
 				AA053F8727F18EA6004DE5B2 /* ProductViewModel.swift */,
 			);
 			path = ViewModel;
@@ -273,8 +289,20 @@
 			isa = PBXGroup;
 			children = (
 				AA8C542E27D26E1500B36D97 /* Product.swift */,
+				AADC301328042ABC004488E1 /* ImageData.swift */,
+				AADC301528043728004488E1 /* Basket.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		AADC300428041961004488E1 /* PriceTag */ = {
+			isa = PBXGroup;
+			children = (
+				AADC300528041976004488E1 /* PriceTag.swift */,
+				AADC300F28042015004488E1 /* PriceTagStyles.swift */,
+				AADC30112804201F004488E1 /* PriceTagLayout.swift */,
+			);
+			path = PriceTag;
 			sourceTree = "<group>";
 		};
 		AADDDD8427C4505600E893E1 = {
@@ -330,6 +358,7 @@
 		AAF4DA9927FF6C9300118264 /* ProductDetailsFullScreenImage */ = {
 			isa = PBXGroup;
 			children = (
+				AADC300428041961004488E1 /* PriceTag */,
 				AAF4DA9A27FF6CB700118264 /* ProductDetailsFullScreenImage.swift */,
 				AAF4DA9C27FF6CED00118264 /* ProductDetailsFullScreenImageStyles.swift */,
 				AAF4DA9E27FF6DFF00118264 /* ProductDetailsFullScreenImageLayout.swift */,
@@ -503,15 +532,22 @@
 				AA053F8827F18EA6004DE5B2 /* ProductViewModel.swift in Sources */,
 				AA06BCEB27E2555C003CFF77 /* Fonts.swift in Sources */,
 				AA053F9227F1B29A004DE5B2 /* ProductCellRoundedStyles.swift in Sources */,
+				AADC300E28041D78004488E1 /* PriceTagViewModel.swift in Sources */,
+				AADC301428042ABC004488E1 /* ImageData.swift in Sources */,
 				AADDDD9527C4505600E893E1 /* ProductsListViewController.swift in Sources */,
 				AAF38CC327DF63FD00211DFC /* ShapedView.swift in Sources */,
 				AAF4DA9F27FF6DFF00118264 /* ProductDetailsFullScreenImageLayout.swift in Sources */,
+				AADC301028042015004488E1 /* PriceTagStyles.swift in Sources */,
 				AAF38CC527DF755400211DFC /* ShadowView.swift in Sources */,
+				AADC30122804201F004488E1 /* PriceTagLayout.swift in Sources */,
+				AADC300628041976004488E1 /* PriceTag.swift in Sources */,
 				AA06BCCB27E22F5C003CFF77 /* ProductDetailsControllerView.swift in Sources */,
 				AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */,
 				AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */,
+				AADC301628043728004488E1 /* Basket.swift in Sources */,
 				AAA6C3DD2801783C0046F477 /* UIImage+Crop.swift in Sources */,
 				AAAE49E827F100B700F3FBD1 /* Observable.swift in Sources */,
+				AADC300C28041A8D004488E1 /* ProductDetailsFullScreenImageViewModel.swift in Sources */,
 				AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */,
 				AA053F8527F1860D004DE5B2 /* ProductListViewModel.swift in Sources */,
 				AA0A520827EB3C30009B3BF2 /* UIFont+Preferred.swift in Sources */,

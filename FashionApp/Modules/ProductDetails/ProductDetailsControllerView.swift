@@ -67,6 +67,17 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
         
         show(vc, sender: self)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let vc = ProductDetailsFullScreenImage<
+            ProductDetailsFullScreenImageStyles,
+            ProductDetailsFullScreenImageLayout
+        >(viewModel: viewModel)
+        
+        show(vc, sender: self)
+    }
 }
 
 // MARK: - Set up views

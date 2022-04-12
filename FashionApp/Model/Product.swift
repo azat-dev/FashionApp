@@ -13,4 +13,5 @@ struct Product {
     var name: String
     var price: Float
     var description: String
+    var imageData: ImageData
 }

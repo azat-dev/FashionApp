@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 private let defaultDescription = """
 Short sleeve silk shirt with Hawaiian print. Classic
@@ -14,14 +15,134 @@ monogram, spread collar and corozo buttons.
 """
 
 
+let productShirt = Product(
+    id: "1",
+    brand: "NIKE",
+    name: "Comfort Jacket",
+    price: 450,
+    description: defaultDescription,
+    imageData: ImageData(
+        name: "ImageTestHoodie",
+        showedProducts: nil
+    )
+)
+
+let product1 = Product(
+    id: "1",
+    brand: "NIKE",
+    name: "Comfort Jacket",
+    price: 450,
+    description: defaultDescription,
+    imageData: ImageData(
+        name: "ImageTestHoodie",
+        showedProducts: [
+            ShowedProduct(
+                point: CGPoint(x: 0.5, y: 0.5),
+                product: productShirt
+            )
+        ]
+    )
+)
+
 class ProductListViewModel {
     private var data: [Product] = [
-        Product(id: "1", brand: "NIKE", name: "Comfort Jacket", price: 450, description: defaultDescription),
-        Product(id: "2", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription),
-        Product(id: "3", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription),
-        Product(id: "4", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription),
-        Product(id: "5", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription),
-        Product(id: "6", brand: "NIKE", name: "Fleming Jacket", price: 450, description: defaultDescription)
+        product1,
+        Product(
+            id: "2",
+            brand: "NIKE",
+            name: "Comfort Jacket",
+            price: 450,
+            description: defaultDescription,
+            imageData: ImageData(
+                name: "ImageTestHoodie",
+                showedProducts: [
+                    ShowedProduct(
+                        point: CGPoint(x: 0.5, y: 0.5),
+                        product: productShirt
+                    )
+                ]
+            )
+        ),
+        Product(
+            id: "3",
+            brand: "NIKE",
+            name: "Comfort Jacket",
+            price: 450,
+            description: defaultDescription,
+            imageData: ImageData(
+                name: "ImageTestHoodie",
+                showedProducts: [
+                    ShowedProduct(
+                        point: CGPoint(x: 0.5, y: 0.5),
+                        product: productShirt
+                    )
+                ]
+            )
+        ),
+        Product(
+            id: "4",
+            brand: "NIKE",
+            name: "Comfort Jacket",
+            price: 450,
+            description: defaultDescription,
+            imageData: ImageData(
+                name: "ImageTestHoodie",
+                showedProducts: [
+                    ShowedProduct(
+                        point: CGPoint(x: 0.5, y: 0.5),
+                        product: productShirt
+                    )
+                ]
+            )
+        ),
+        Product(
+            id: "5",
+            brand: "NIKE",
+            name: "Comfort Jacket",
+            price: 450,
+            description: defaultDescription,
+            imageData: ImageData(
+                name: "ImageTestHoodie",
+                showedProducts: [
+                    ShowedProduct(
+                        point: CGPoint(x: 0.5, y: 0.5),
+                        product: productShirt
+                    )
+                ]
+            )
+        ),
+        Product(
+            id: "6",
+            brand: "NIKE",
+            name: "Comfort Jacket",
+            price: 450,
+            description: defaultDescription,
+            imageData: ImageData(
+                name: "ImageTestHoodie",
+                showedProducts: [
+                    ShowedProduct(
+                        point: CGPoint(x: 0.5, y: 0.5),
+                        product: productShirt
+                    )
+                ]
+            )
+        ),
+        Product(
+            id: "7",
+            brand: "NIKE",
+            name: "Comfort Jacket",
+            price: 450,
+            description: defaultDescription,
+            imageData: ImageData(
+                name: "ImageTestHoodie",
+                showedProducts: [
+                    ShowedProduct(
+                        point: CGPoint(x: 0.5, y: 0.5),
+                        product: productShirt
+                    )
+                ]
+            )
+        ),
     ]
     
     var numberOfItems: Int {
