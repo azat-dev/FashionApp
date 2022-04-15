@@ -10,6 +10,7 @@ import UIKit
 import UIImageViewAlignedSwift
 
 class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles: ProductDetailsViewStylable>: UIViewController {
+    typealias FullScreenImageViewController = ProductDetailsFullScreenImage<ProductDetailsFullScreenImageStyles, ProductDetailsFullScreenImageLayout>
     
     private var backButton = UIButton(type: .system)
     private var scrollView = UIScrollView()
@@ -22,9 +23,19 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     private var cartButton = UIButton(type: .system)
     private var imageDescriptionButton = UIButton(type: .system)
     private var contentView = UIView()
+
+    private var fullScreenImageTransitionDelegate = FullScreenImageTransitionDelegate()
     
     var viewModel: ProductViewModel!
-    
+    var openedImage: UIImageView?
+    var openedImageFrame: CGRect? {
+        guard let openedImage = openedImage else {
+            return nil
+        }
+        
+        return view.convert(openedImage.frame, to: nil)
+    }
+
     init(viewModel: ProductViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -59,24 +70,17 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     
     @objc
     private func openImage() {
+        let vc = FullScreenImageViewController(viewModel: viewModel)
         
-        let vc = ProductDetailsFullScreenImage<
-            ProductDetailsFullScreenImageStyles,
-            ProductDetailsFullScreenImageLayout
-        >(viewModel: viewModel)
+        openedImage = imageView
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = fullScreenImageTransitionDelegate
+        present(vc, animated: true)
         
-        show(vc, sender: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        let vc = ProductDetailsFullScreenImage<
-            ProductDetailsFullScreenImageStyles,
-            ProductDetailsFullScreenImageLayout
-        >(viewModel: viewModel)
-        
-        show(vc, sender: self)
     }
 }
 
@@ -164,5 +168,80 @@ private extension ProductDetailsViewController {
         Styles.apply(cartButton: cartButton)
         Styles.apply(backButton: backButton)
         Styles.apply(imageDescriptionButton: imageDescriptionButton)
+    }
+}
+
+// MARK: - ProductDetailsFullScreenImage Transition
+private extension ProductDetailsViewController {
+    
+    private class FullScreenImageTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
+        func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            return FullScreenImageAnimatorOpen()
+        }
+        
+        func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            return nil
+        }
+    }
+    
+    private class FullScreenImageAnimatorOpen: NSObject, UIViewControllerAnimatedTransitioning {
+        private var duration: TimeInterval = 0.3
+        
+        func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+            return duration
+        }
+        
+        func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+            guard transitionContext.isAnimated else {
+                transitionContext.completeTransition(true)
+                return
+            }
+
+            let container = transitionContext.containerView
+            let fromVC = transitionContext.viewController(forKey: .from)
+            let navigationVC = fromVC as? UINavigationController
+                
+            guard
+                let fromVC = (navigationVC?.topViewController ?? fromVC) as? ProductDetailsViewController<Layout, Styles>,
+                let toVC = transitionContext.viewController(forKey: .to),
+                let toView = transitionContext.view(forKey: .to)
+            else {
+                transitionContext.completeTransition(true)
+                return
+            }
+
+            guard
+                let window = container.window,
+                let originalOpenedImageFrame = fromVC.openedImageFrame
+            else {
+                transitionContext.completeTransition(true)
+                return
+            }
+
+            
+            let targetPosition = toView.center
+
+            let openedImageFrame = window.convert(originalOpenedImageFrame, to: container)
+            let initialScaleX = openedImageFrame.width / toView.frame.width
+            let initialScaleY = openedImageFrame.height / toView.frame.height
+
+
+            container.addSubview(toView)
+            toView.transform = CGAffineTransform(scaleX: initialScaleX, y: initialScaleY)
+            toView.frame.origin = openedImageFrame.origin
+            toView.layer.cornerRadius = 20
+
+            UIView.animate(
+                withDuration: duration,
+                delay: 0,
+                options: .curveEaseInOut,
+                animations: {
+                    toView.transform = .identity
+                    toView.center = targetPosition
+                },
+                completion: { _ in
+                    transitionContext.completeTransition(true)
+                })
+        }
     }
 }
