@@ -13,7 +13,7 @@ class ProductDetailsFullScreenImage<Styles: ProductDetailsFullScreenImageStylabl
     
     typealias PriceTagView = PriceTag<PriceTagLayout, PriceTagStyles>
     
-    private var imageView = UIImageViewAligned()
+    private(set) var imageView = UIImageViewAligned()
     private var backButton = UIButton()
     private var buyButton = UIButton()
     private var priceTags = [PriceTagView]()
@@ -42,8 +42,8 @@ class ProductDetailsFullScreenImage<Styles: ProductDetailsFullScreenImageStylabl
     private func setup() {
         setupViews()
         bindViewModel()
-        style()
         layout()
+        style()
     }
     
     @objc
@@ -59,14 +59,13 @@ class ProductDetailsFullScreenImage<Styles: ProductDetailsFullScreenImageStylabl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        var delayStep: Double = 0.5
-        var delay: Double = 0
-        
-        priceTags.forEach { priceTag in
-            priceTag.animateAppearance(delay: delay)
-            delay += delayStep
-        }
+        addPriceTags()
+        animatePriceTags()
     }
 }
 
@@ -75,18 +74,22 @@ extension ProductDetailsFullScreenImage {
     private func setupViews() {
         
         backButton.addTarget(self, action: #selector(Self.goBack), for: .touchUpInside)
-        
         buyButton.addTarget(self, action: #selector(Self.goBack), for: .touchUpInside)
-        
+        imageView.tag = 1111
         view.addSubview(imageView)
         view.addSubview(buyButton)
         view.addSubview(backButton)
-        
+    }
+}
+
+extension ProductDetailsFullScreenImage {
+    private func addPriceTags() {
         let priceTag1 = PriceTagView(frame: .zero)
         priceTag1.viewModel = PriceTagViewModel(
             product: product1,
             point: .init(x: 0.5, y: 0.5)
         )
+        
         priceTag1.center = .init(x: 100, y: 100)
         view.addSubview(priceTag1)
         
@@ -102,6 +105,16 @@ extension ProductDetailsFullScreenImage {
         view.addSubview(priceTag2)
         
         priceTags.append(priceTag2)
+    }
+    
+    private func animatePriceTags() {
+        let delayStep: Double = 0.5
+        var delay: Double = 0
+        
+        priceTags.forEach { priceTag in
+            priceTag.animateAppearance(delay: delay)
+            delay += delayStep
+        }
     }
 }
 

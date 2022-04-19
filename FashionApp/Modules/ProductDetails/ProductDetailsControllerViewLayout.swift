@@ -14,9 +14,7 @@ protocol ProductDetailsViewLayoutable {
         view: UIView,
         scrollView: UIScrollView,
         contentView: UIView,
-        imageShadow: ShadowView,
-        imageContainer: ShapedView,
-        imageView: UIImageViewAligned,
+        imageView: ImageViewShadowed,
         titleLabel: UILabel,
         brandLabel: UILabel,
         descriptionLabel: UILabel,
@@ -31,9 +29,7 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
         view: UIView,
         scrollView: UIScrollView,
         contentView: UIView,
-        imageShadow: ShadowView,
-        imageContainer: ShapedView,
-        imageView: UIImageViewAligned,
+        imageView: ImageViewShadowed,
         titleLabel: UILabel,
         brandLabel: UILabel,
         descriptionLabel: UILabel,
@@ -49,15 +45,14 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
             contentView,
             brandLabel,
             backButton,
-            imageShadow,
             imageView,
-            imageContainer,
             titleLabel,
             imageDescriptionButton,
-            descriptionLabel
+            descriptionLabel,
+            contentView
         ])
         
-        imageShadow.constraintAll(equalTo: imageContainer)
+        contentView.layoutMargins = .zero
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
@@ -65,52 +60,53 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
             scrollView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
 
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            contentView.layoutMarginsGuide.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.layoutMarginsGuide.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
 
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.98),
+            contentView.layoutMarginsGuide.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.98),
         ])
         
+        NSLayoutConstraint.deactivate(imageView.imageView.constraints)
+        
+        
         NSLayoutConstraint.activate([
-            imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            imageContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            imageContainer.heightAnchor.constraint(equalTo: imageContainer.widthAnchor, multiplier: 1.37, constant: 0),
+            imageView.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor, constant: 10),
+            imageView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor, constant: 0),
+            imageView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: 0),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.37, constant: 0),
             
-            imageView.topAnchor.constraint(greaterThanOrEqualTo: imageContainer.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor),
-            imageView.widthAnchor.constraint(lessThanOrEqualTo: imageContainer.widthAnchor),
-            imageView.heightAnchor.constraint(lessThanOrEqualTo: imageContainer.heightAnchor, multiplier: 0.97),
+//            imageView.imageView.bottomAnchor.constraint(equalTo: imageView.containerView.bottomAnchor),
+//            imageView.imageView.heightAnchor.constraint(equalTo: imageView.containerView.heightAnchor, multiplier: 0.97),
+//            imageView.imageView.widthAnchor.constraint(lessThanOrEqualTo: imageView.containerView.widthAnchor),
         ])
         
         NSLayoutConstraint.activate([
-            imageDescriptionButton.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor, constant: -20),
-            imageDescriptionButton.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: -18),
+            imageDescriptionButton.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -20),
+            imageDescriptionButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -18),
         ])
         
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: imageContainer.topAnchor, constant: 15),
-            backButton.leadingAnchor.constraint(equalTo: imageContainer.leadingAnchor, constant: 10),
+            backButton.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 15),
+            backButton.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 10),
 
-            titleLabel.topAnchor.constraint(equalTo: imageContainer.bottomAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
 
             brandLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            brandLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            brandLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            brandLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            brandLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
 
             descriptionLabel.topAnchor.constraint(equalTo: brandLabel.bottomAnchor, constant: 10),
-            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
 
             cartButton.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor),
             cartButton.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor),
 
-            cartButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            cartButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+            cartButton.centerXAnchor.constraint(equalTo: contentView.layoutMarginsGuide.centerXAnchor),
+            cartButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
         ])
     }
 }

@@ -10,9 +10,7 @@ import UIKit
 import UIImageViewAlignedSwift
 
 protocol ProductDetailsViewStylable {
-    static func apply(imageShadow: ShadowView)
-    static func apply(imageContainer: ShapedView)
-    static func apply(imageView: UIImageViewAligned)
+    static func apply(imageView: ImageViewShadowed)
     static func apply(scrollView: UIScrollView)
     static func apply(titleLabel: UILabel)
     static func apply(brandLabel: UILabel)
@@ -25,23 +23,8 @@ protocol ProductDetailsViewStylable {
 
 // MARK: - Style Views
 class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
-    class var cornerRadius: CGFloat {
+    class var imageCornerRadius: CGFloat {
         15
-    }
-    
-    class var imageShape: ShapeCallback {
-        get {
-            let callback: ShapeCallback = {
-                CGPath(
-                    roundedRect: $0.bounds,
-                    cornerWidth: cornerRadius,
-                    cornerHeight: cornerRadius,
-                    transform: nil
-                )
-            }
-            
-            return callback
-        }
     }
     
     class var imageShadowShape: ShapeCallback {
@@ -63,8 +46,8 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
                 
                 return CGPath(
                     roundedRect: rect,
-                    cornerWidth: cornerRadius,
-                    cornerHeight: cornerRadius,
+                    cornerWidth: imageCornerRadius,
+                    cornerHeight: imageCornerRadius,
                     transform: nil
                 )
             }
@@ -73,11 +56,11 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         }
     }
     
-    class func apply(imageShadow: ShadowView) {
-        imageShadow.shape = imageShadowShape
+    class func apply(imageView: ImageViewShadowed) {
+        imageView.shadowView.shape = imageShadowShape
         
         let shadowColor = UIColor(red: 0.094, green: 0.153, blue: 0.3, alpha: 1).cgColor
-        imageShadow.shadows = [
+        imageView.shadowView.shadows = [
             ShadowView.ShadowParams(
                 color: shadowColor,
                 opacity: 0.25,
@@ -85,16 +68,12 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
                 offset: CGSize(width: 0, height: 8)
             ),
         ]
-    }
-    
-    class func apply(imageContainer: ShapedView) {
-        imageContainer.backgroundColor = UIColor(named: "ColorProductCellBackground")
-        imageContainer.shape = imageShape
-    }
-    
-    class func apply(imageView: UIImageViewAligned) {
-        imageView.contentMode = .scaleAspectFit
-        imageView.alignBottom = true
+        
+        imageView.imageView.contentMode = .scaleAspectFit
+        imageView.imageView.alignBottom = true
+        
+        imageView.containerView.backgroundColor = UIColor(named: "ColorProductCellBackground")
+        imageView.containerView.layer.cornerRadius = imageCornerRadius
     }
     
     class func apply(scrollView: UIScrollView) {
