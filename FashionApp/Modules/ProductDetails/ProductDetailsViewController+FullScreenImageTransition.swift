@@ -1,5 +1,5 @@
 //
-//  ProductDetailsControllerView+Transition.swift
+//  ProductDetailsViewController+FullScreenImageTransition.swift
 //  FashionApp
 //
 //  Created by Azat Kaiumov on 19.04.22.
@@ -14,24 +14,11 @@ private func extractViewController<T>(viewController: UIViewController) -> T? {
     return (navigationVC?.topViewController ?? viewController) as? T
 }
 
-// MARK: - ProductDetailsFullScreenImage Transition
 extension ProductDetailsViewController {
-    class FullScreenImageTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
-        func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            return FullScreenImageAnimator(present: true)
-        }
-        
-        func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            return FullScreenImageAnimator(present: false)
-        }
-    }
-}
-
-extension ProductDetailsViewController {
-    private class FullScreenImageAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    class FullScreenImageTransition: NSObject, UIViewControllerAnimatedTransitioning {
         typealias DetailsViewController = ProductDetailsViewController<Layout, Styles>
         
-        private var duration: TimeInterval = 0.7
+        private var duration: TimeInterval = 0.5
         
         private var imageBackgroundView = UIView()
         private var backgroundView = UIView()
@@ -43,6 +30,7 @@ extension ProductDetailsViewController {
         private var detailsVC: DetailsViewController!
         private var fullscreenImageVC: FullScreenImageViewController!
         private var fullscreenRootView: UIView!
+        private var detailsRootView: UIView!
         
         var isPresenting: Bool
         
@@ -65,8 +53,7 @@ extension ProductDetailsViewController {
             
             guard
                 let detailsVC: DetailsViewController = extractViewController(viewController: isPresenting ? fromVC : toVC),
-                let fullscreenImageVC: FullScreenImageViewController = extractViewController(viewController: isPresenting ? toVC : fromVC),
-                let fullscreenRootView = transitionContext.view(forKey: isPresenting ? .to : .from)
+                let fullscreenImageVC: FullScreenImageViewController = extractViewController(viewController: isPresenting ? toVC : fromVC)
             else {
                 return false
             }
@@ -74,34 +61,42 @@ extension ProductDetailsViewController {
             self.container = transitionContext.containerView
             self.detailsVC = detailsVC
             self.fullscreenImageVC = fullscreenImageVC
-            self.fullscreenRootView = fullscreenRootView
+            self.fullscreenRootView = fullscreenImageVC.view
+            self.detailsRootView = detailsVC.view
             
             return true
         }
         
         private func setupTransitionViews(using transitionContext: UIViewControllerContextTransitioning) -> Bool {
-            
-            fullscreenRootView.alpha = isPresenting ? 0 : 1
-            container.addSubview(fullscreenRootView)
+
+            if isPresenting {
+                fullscreenRootView.alpha = 0
+                container.addSubview(fullscreenRootView)
+                fullscreenRootView.frame = transitionContext.finalFrame(for: fullscreenImageVC)
+            } else {
+                detailsRootView.frame = transitionContext.finalFrame(for: detailsVC)
+                container.addSubview(detailsRootView)
+            }
+
             fullscreenRootView.layoutIfNeeded()
-            
             fullscreenImage = fullscreenImageVC.imageView
-            
+
             guard
                 let sourceImage = detailsVC.openedImage,
                 let targetImageSnapshot = fullscreenImage.snapshotView(afterScreenUpdates: true)
             else {
                 return false
             }
-            
+
             targetImageSnapshot.translatesAutoresizingMaskIntoConstraints = false
-            
+
             self.originalImage = sourceImage
             self.fullscreenImageSnapshot = targetImageSnapshot
-            
-            container.insertSubview(backgroundView, at: 0)
-            container.insertSubview(imageBackgroundView, at: 1)
-            container.insertSubview(fullscreenImageSnapshot, at: 2)
+
+            container.addSubview(backgroundView)
+            container.addSubview(imageBackgroundView)
+            container.addSubview(fullscreenImageSnapshot)
+            container.bringSubviewToFront(fullscreenRootView)
             return true
         }
         
@@ -127,8 +122,6 @@ extension ProductDetailsViewController {
             backgroundView.backgroundColor = detailsVC.view.backgroundColor
             backgroundView.frame = container.frame
             imageBackgroundView.backgroundColor = originalImage.containerView.backgroundColor
-//            imageBackgroundView.layer.borderWidth = 3
-//            imageBackgroundView.layer.borderColor = UIColor.red.cgColor
             
             if isPresenting {
                 fullscreenImageSnapshot.alpha = opaque
@@ -196,7 +189,6 @@ extension ProductDetailsViewController {
                             withRelativeStartTime: 0.6,
                             relativeDuration: 0.4,
                             animations: {
-    //                            self.fullscreenRootView.alpha = opaque
                                 self.fullscreenImageSnapshot.alpha = transparent
                             },
                             reversedAnimations: {
@@ -209,7 +201,7 @@ extension ProductDetailsViewController {
                     }
                 },
                 completion: { _ in
-                  self.fullscreenRootView.alpha = opaque
+                    self.fullscreenRootView.alpha = opaque
                     self.backgroundView.removeFromSuperview()
                     self.imageBackgroundView.removeFromSuperview()
                     self.fullscreenImageSnapshot.removeFromSuperview()
@@ -217,9 +209,7 @@ extension ProductDetailsViewController {
                 }
             )
         }
-        
-        
-        
+            
         func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
             guard transitionContext.isAnimated else {
                 transitionContext.completeTransition(true)

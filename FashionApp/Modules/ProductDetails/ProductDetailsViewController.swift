@@ -22,7 +22,7 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     private var contentView = UIView()
     private var imageView = ImageViewShadowed()
     
-    private var fullScreenImageTransitionDelegate = FullScreenImageTransitionDelegate()
+    private var navigationDelegate = NavigationDelegate()
     
     var viewModel: ProductViewModel!
     var openedImage: ImageViewShadowed?
@@ -71,20 +71,15 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
         let vc = FullScreenImageViewController(viewModel: viewModel)
         
         openedImage = imageView
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = fullScreenImageTransitionDelegate
-        present(vc, animated: true)
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        show(vc, sender: self)
     }
 }
 
 // MARK: - Set up views
 private extension ProductDetailsViewController {
     private func setupViews() {
+        navigationController?.delegate = navigationDelegate
+        
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = UIColor.systemBackground
         
