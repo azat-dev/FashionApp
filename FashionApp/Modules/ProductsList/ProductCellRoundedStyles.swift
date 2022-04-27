@@ -18,7 +18,7 @@ class ProductCellRoundedStyles: ProductCellStyles {
             let height = containerView.bounds.maxY
             let radius = width / 2
 
-            let origin = containerView.frame.origin
+            let origin = containerView.bounds.origin
             
             let path = CGMutablePath()
 

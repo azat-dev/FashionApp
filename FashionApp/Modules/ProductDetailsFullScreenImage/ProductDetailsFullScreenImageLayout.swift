@@ -21,28 +21,22 @@ protocol ProductDetailsFullScreenImageLayoutable {
 class ProductDetailsFullScreenImageLayout: ProductDetailsFullScreenImageLayoutable {
     static func apply(view: UIView, backButton: UIButton, imageView: UIImageViewAligned, buyButton: UIButton) {
         
-        UIView.disableAutoresizingMaskIntoConstraints(views: [
-            imageView,
-            backButton,
-            buyButton
-        ])
+        backButton.snp.makeConstraints { make in
+            make.left.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+        }
         
-        NSLayoutConstraint.activate([
-            backButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-        ])
+        imageView.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.width.lessThanOrEqualTo(view).multipliedBy(0.98)
+            make.height.lessThanOrEqualTo(view).multipliedBy(0.95)
+            make.bottom.equalTo(view.snp.bottomMargin)
+        }
         
-        NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.98),
-            imageView.heightAnchor.constraint(lessThanOrEqualTo: view.layoutMarginsGuide.heightAnchor, multiplier: 0.95),
-            imageView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            buyButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -10),
-            buyButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            buyButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor)
-        ])
+        buyButton.snp.makeConstraints { make in
+            make.bottomMargin.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+            make.left.equalTo(view.snp.leftMargin)
+            make.right.equalTo(view.snp.rightMargin)
+        }
     }
 }

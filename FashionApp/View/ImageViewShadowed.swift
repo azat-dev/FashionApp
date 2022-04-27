@@ -42,14 +42,17 @@ extension ImageViewShadowed {
 // MARK: - Layout
 extension ImageViewShadowed {
     private func layout() {
-        UIView.disableAutoresizingMaskIntoConstraints(views: [
-            shadowView,
-            containerView,
-            imageView
-        ])
         
-        shadowView.constraintAll(equalTo: self)
-        containerView.constraintAll(equalTo: shadowView)
-        imageView.constraintAll(equalTo: containerView)
+        shadowView.snp.makeConstraints { make in
+            make.edges.equalTo(self)
+        }
+        
+        containerView.snp.makeConstraints { make in
+            make.edges.equalTo(shadowView)
+        }
+        
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }

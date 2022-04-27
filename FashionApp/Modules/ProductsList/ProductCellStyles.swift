@@ -39,7 +39,7 @@ class ProductCellStyles: ProductCellStylable {
         get {
             let callback: ShapeCallback = {
                 CGPath(
-                    roundedRect: $0.frame,
+                    roundedRect: $0.bounds,
                     cornerWidth: cornerRadius,
                     cornerHeight: cornerRadius,
                     transform: nil
@@ -57,12 +57,12 @@ class ProductCellStyles: ProductCellStylable {
                 
                 let rect = CGRect(
                     origin: CGPoint(
-                        x: view.frame.midX - width / 2,
-                        y: view.frame.maxY - 10
+                        x: view.bounds.midX - width / 2,
+                        y: view.bounds.maxY - 10
                     ),
                     size: CGSize(
                         width: width,
-                        height: view.frame.height * 0.05
+                        height: view.bounds.height * 0.05
                     )
                 )
                 

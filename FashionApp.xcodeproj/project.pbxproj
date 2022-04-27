@@ -36,6 +36,7 @@
 		AA0A520A27EB3C7A009B3BF2 /* CGFloat+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */; };
 		AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */; };
 		AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */; };
+		AA5B16B7281449F900B12EEC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA5B16B6281449F900B12EEC /* SnapKit */; };
 		AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542C27D26D8200B36D97 /* ProductCell.swift */; };
 		AA8C542F27D26E1500B36D97 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542E27D26E1500B36D97 /* Product.swift */; };
 		AA9F7AA2280D7DFF0073DCA9 /* ImageViewShadowed.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9F7AA1280D7DFF0073DCA9 /* ImageViewShadowed.swift */; };
@@ -164,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AAF4DA9827FED0F100118264 /* UIImageViewAlignedSwift in Frameworks */,
+				AA5B16B7281449F900B12EEC /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +404,7 @@
 			name = FashionApp;
 			packageProductDependencies = (
 				AAF4DA9727FED0F100118264 /* UIImageViewAlignedSwift */,
+				AA5B16B6281449F900B12EEC /* SnapKit */,
 			);
 			productName = FashionApp;
 			productReference = AADDDD8D27C4505600E893E1 /* FashionApp.app */;
@@ -477,6 +480,7 @@
 			mainGroup = AADDDD8427C4505600E893E1;
 			packageReferences = (
 				AAF4DA9627FED0F100118264 /* XCRemoteSwiftPackageReference "UIImageViewAlignedSwift" */,
+				AA5B16B5281449F900B12EEC /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = AADDDD8E27C4505600E893E1 /* Products */;
 			projectDirPath = "";
@@ -912,6 +916,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AA5B16B5281449F900B12EEC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		AAF4DA9627FED0F100118264 /* XCRemoteSwiftPackageReference "UIImageViewAlignedSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sochalewski/UIImageViewAlignedSwift";
@@ -923,6 +935,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AA5B16B6281449F900B12EEC /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA5B16B5281449F900B12EEC /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		AAF4DA9727FED0F100118264 /* UIImageViewAlignedSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AAF4DA9627FED0F100118264 /* XCRemoteSwiftPackageReference "UIImageViewAlignedSwift" */;

@@ -16,6 +16,12 @@ extension ProductDetailsViewController {
             from fromVC: UIViewController,
             to toVC: UIViewController
         ) -> UIViewControllerAnimatedTransitioning? {
+            guard
+                let fromVC = fromVC as? ProductDetailsViewController,
+                let toVC = toVC as? FullScreenImageViewController
+            else {
+                return nil
+            }
             
             switch operation {
             case .push:

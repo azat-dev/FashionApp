@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SnapKit",
+        "repositoryURL": "https://github.com/SnapKit/SnapKit.git",
+        "state": {
+          "branch": null,
+          "revision": "f222cbdf325885926566172f6f5f06af95473158",
+          "version": "5.6.0"
+        }
+      },
+      {
+        "package": "UIImageViewAlignedSwift",
+        "repositoryURL": "https://github.com/sochalewski/UIImageViewAlignedSwift",
+        "state": {
+          "branch": "master",
+          "revision": "1a00473f25cbc498dab19b82677e77d4b63b5925",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

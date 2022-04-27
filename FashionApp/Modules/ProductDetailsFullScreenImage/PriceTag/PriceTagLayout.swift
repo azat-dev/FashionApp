@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 protocol PriceTagLayoutable {
     static func apply(
@@ -28,34 +29,29 @@ class PriceTagLayout: PriceTagLayoutable {
     ) {
         
         UIView.disableAutoresizingMaskIntoConstraints(views: [
-            button,
-            priceLabel,
             labelShape,
-            nameLabel
         ])
         
         let spaceBetweenButtonAndLabel: CGFloat = 8
         
-        labelShape.layoutMargins = .zero
         nameLabel.layoutMargins = .init(top: -10, left: -15, bottom: 0, right: -15)
         priceLabel.layoutMargins = .init(top: 0, left: -5, bottom: -3, right: -10)
         
-        NSLayoutConstraint.activate([
-            labelShape.leftAnchor.constraint(equalTo: button.rightAnchor, constant: spaceBetweenButtonAndLabel),
-            nameLabel.centerYAnchor.constraint(equalTo: button.centerYAnchor),
-        ])
+        button.snp.makeConstraints { make in
+            make.right.equalTo(labelShape.snp.left).offset(-spaceBetweenButtonAndLabel).labeled("labelToButtonLeft")
+            make.centerY.equalTo(nameLabel.snp.centerY).labeled("nameLabelToButtonVertical")
+        }
         
-        NSLayoutConstraint.activate([
-            nameLabel.layoutMarginsGuide.topAnchor.constraint(equalTo: labelShape.topAnchor),
-            nameLabel.layoutMarginsGuide.leftAnchor.constraint(equalTo: labelShape.leftAnchor),
-            nameLabel.layoutMarginsGuide.rightAnchor.constraint(equalTo: labelShape.rightAnchor),
-        ])
+        nameLabel.snp.makeConstraints { make in
+            make.topMargin.equalTo(labelShape.snp.top).labeled("nameLabelToShapeTop")
+            make.leftMargin.equalTo(labelShape.snp.leftMargin).labeled("nameLabelToLeft")
+            make.rightMargin.equalTo(labelShape.snp.rightMargin).labeled("nameLabelToRight")
+        }
         
-        NSLayoutConstraint.activate([
-            priceLabel.layoutMarginsGuide.topAnchor.constraint(equalTo: nameLabel.layoutMarginsGuide.bottomAnchor),
-            priceLabel.layoutMarginsGuide.rightAnchor.constraint(equalTo: nameLabel.layoutMarginsGuide.rightAnchor, constant: -20),
-            priceLabel.layoutMarginsGuide.bottomAnchor.constraint(equalTo: labelShape.layoutMarginsGuide.bottomAnchor),
-        
-        ])
+        priceLabel.snp.makeConstraints { make in
+            make.topMargin.equalTo(nameLabel.snp.bottom).labeled("priceLabelToNameLabelBottom")
+            make.rightMargin.equalTo(nameLabel.snp.rightMargin).offset(-20).labeled("priceLabelToRightNameLabel")
+            make.bottomMargin.equalTo(labelShape.snp.bottomMargin).labeled("priceLabelToShapeBottom")
+        }
     }
 }
