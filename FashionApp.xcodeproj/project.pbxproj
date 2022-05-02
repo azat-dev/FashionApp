@@ -35,8 +35,10 @@
 		AA0A520827EB3C30009B3BF2 /* UIFont+Preferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520727EB3C30009B3BF2 /* UIFont+Preferred.swift */; };
 		AA0A520A27EB3C7A009B3BF2 /* CGFloat+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */; };
 		AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */; };
+		AA204B9D282024840076576C /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA204B9C282024840076576C /* AsyncOperation.swift */; };
 		AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */; };
 		AA5B16B7281449F900B12EEC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA5B16B6281449F900B12EEC /* SnapKit */; };
+		AA7C84DB281D4DE5001BEA59 /* ProductsListViewControllerStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7C84DA281D4DE5001BEA59 /* ProductsListViewControllerStyles.swift */; };
 		AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542C27D26D8200B36D97 /* ProductCell.swift */; };
 		AA8C542F27D26E1500B36D97 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8C542E27D26E1500B36D97 /* Product.swift */; };
 		AA9F7AA2280D7DFF0073DCA9 /* ImageViewShadowed.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9F7AA1280D7DFF0073DCA9 /* ImageViewShadowed.swift */; };
@@ -119,7 +121,9 @@
 		AA0A520727EB3C30009B3BF2 /* UIFont+Preferred.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Preferred.swift"; sourceTree = "<group>"; };
 		AA0A520927EB3C7A009B3BF2 /* CGFloat+Radians.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Radians.swift"; sourceTree = "<group>"; };
 		AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDirectionalEdgeInsets+Init.swift"; sourceTree = "<group>"; };
+		AA204B9C282024840076576C /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
+		AA7C84DA281D4DE5001BEA59 /* ProductsListViewControllerStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListViewControllerStyles.swift; sourceTree = "<group>"; };
 		AA8C542C27D26D8200B36D97 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		AA8C542E27D26E1500B36D97 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		AA9F7AA1280D7DFF0073DCA9 /* ImageViewShadowed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewShadowed.swift; sourceTree = "<group>"; };
@@ -300,9 +304,18 @@
 				AA06BCC627E22603003CFF77 /* ProductCellRounded.swift */,
 				AA053F9127F1B29A004DE5B2 /* ProductCellRoundedStyles.swift */,
 				AADDDD9427C4505600E893E1 /* ProductsListViewController.swift */,
+				AA7C84DA281D4DE5001BEA59 /* ProductsListViewControllerStyles.swift */,
 				AA053F9327F1D69E004DE5B2 /* ProductListViewControllerLayout.swift */,
 			);
 			path = ProductsList;
+			sourceTree = "<group>";
+		};
+		AA204B9B282024730076576C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				AA204B9C282024840076576C /* AsyncOperation.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		AA8C543027D26E1D00B36D97 /* Model */ = {
@@ -353,6 +366,7 @@
 				AA0A521127EB49F9009B3BF2 /* View */,
 				AA0A521227EB4A27009B3BF2 /* ViewModel */,
 				AA0A521327EB5981009B3BF2 /* SupportFiles */,
+				AA204B9B282024730076576C /* Utils */,
 				AA0A520627EB3C00009B3BF2 /* Extensions */,
 			);
 			path = FashionApp;
@@ -546,6 +560,7 @@
 				AA9F7AA2280D7DFF0073DCA9 /* ImageViewShadowed.swift in Sources */,
 				AAF4DA9D27FF6CED00118264 /* ProductDetailsFullScreenImageStyles.swift in Sources */,
 				AADDDD9B27C4505600E893E1 /* FashionApp.xcdatamodeld in Sources */,
+				AA7C84DB281D4DE5001BEA59 /* ProductsListViewControllerStyles.swift in Sources */,
 				AAAE49E627F1009300F3FBD1 /* ProductCellViewModel.swift in Sources */,
 				AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */,
 				AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */,
@@ -580,6 +595,7 @@
 				AA053F8527F1860D004DE5B2 /* ProductListViewModel.swift in Sources */,
 				AA0A520827EB3C30009B3BF2 /* UIFont+Preferred.swift in Sources */,
 				AADDDD9327C4505600E893E1 /* SceneDelegate.swift in Sources */,
+				AA204B9D282024840076576C /* AsyncOperation.swift in Sources */,
 				AA8C542F27D26E1500B36D97 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

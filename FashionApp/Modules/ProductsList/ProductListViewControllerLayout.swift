@@ -8,14 +8,20 @@
 import Foundation
 import UIKit
 
+protocol ProductsListViewControllerLayoutable {
+    static func apply(view: UIView, activityIndicator: UIActivityIndicatorView, collectionView: UICollectionView)
+    static func isRoundedCell(index: IndexPath) -> Bool
+    static var collectionViewLayout: UICollectionViewLayout { get }
+}
+
 // MARK: - Layout
-extension ProductsListViewController {
+class ProductsListViewControllerLayout: ProductsListViewControllerLayoutable {
     private struct CellPattern {
         var ratio: CGFloat
         var isRounded: Bool
     }
     
-    private var cellsPatterns: [CellPattern] {
+    class private var cellsPatterns: [CellPattern] {
         [
             .init(ratio: 2.0, isRounded: false),
             .init(ratio: 1.8, isRounded: true),
@@ -24,18 +30,26 @@ extension ProductsListViewController {
         ]
     }
     
-    private var numberOfColumns: Int { 2 }
-    private var horizontalSpacing: CGFloat { 20 }
-    private var verticalSpacing: CGFloat { 20 }
+    class private var numberOfColumns: Int { 2 }
+    class private var horizontalSpacing: CGFloat { 20 }
+    class private var verticalSpacing: CGFloat { 20 }
     
-    func layout(
+    class func apply(
+        view: UIView,
+        activityIndicator: UIActivityIndicatorView,
         collectionView: UICollectionView
     ) {
-        collectionView.translatesAutoresizingMaskIntoConstraints = true
-        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalTo(collectionView)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view)
+        }
     }
     
-    func isRoundedCell(index: IndexPath) -> Bool {
+    class func isRoundedCell(index: IndexPath) -> Bool {
         let interval = cellsPatterns.count
         
         for (patternOffset, cellPattern) in cellsPatterns.enumerated() {
@@ -51,21 +65,20 @@ extension ProductsListViewController {
         return false
     }
     
-    func createLayout() -> UICollectionViewLayout {
+    class var collectionViewLayout: UICollectionViewLayout {
         let layout = CustomLayout()
         let insets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         
-        layout.prepareLayoutParams = {
-            [unowned self] collectionViewSize in
+        layout.prepareLayoutParams = { collectionViewSize in
             
-            let width = (collectionViewSize.width - insets.left - CGFloat(self.numberOfColumns - 1) * self.horizontalSpacing - insets.right) / CGFloat(numberOfColumns)
+            let width = (collectionViewSize.width - insets.left - CGFloat(numberOfColumns - 1) * horizontalSpacing - insets.right) / CGFloat(numberOfColumns)
             
             return CustomLayout.LayoutParams(
-                numberOfColumns: self.numberOfColumns,
-                horizontalSpacing: self.horizontalSpacing,
-                verticalSpacing: self.verticalSpacing,
+                numberOfColumns: numberOfColumns,
+                horizontalSpacing: horizontalSpacing,
+                verticalSpacing: verticalSpacing,
                 cellWidth: width,
-                cellsHeights: self.cellsPatterns.map {
+                cellsHeights: cellsPatterns.map {
                     cellPattern in
                     cellPattern.ratio * width
                 },

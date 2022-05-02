@@ -33,6 +33,8 @@ class ProductCellLayout: ProductCellLayoutable {
         priceLabel: UILabel
     ) {
         let inset = CGFloat(0)
+        
+        URLSessionConfiguration.background(withIdentifier: "session1")
 
         imageShadow.translatesAutoresizingMaskIntoConstraints = false
         imageContainer.translatesAutoresizingMaskIntoConstraints = false

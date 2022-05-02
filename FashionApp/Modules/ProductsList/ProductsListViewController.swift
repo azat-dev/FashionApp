@@ -8,12 +8,27 @@
 import UIKit
 
 
-class ProductsListViewController: UIViewController {
+class ProductsListViewController<
+    Layout: ProductsListViewControllerLayoutable,
+    Styles: ProductsListViewControllerStylable
+>: UIViewController, UICollectionViewDelegate {
+    
     typealias Cell = ProductCell<ProductCellLayout, ProductCellStyles>
     typealias RoundedCell = ProductCellRounded<ProductCellLayout, ProductCellRoundedStyles>
+    
     typealias DetailsViewController = ProductDetailsViewController<ProductDetailsViewControllerLayout, ProductDetailsViewControllerStyles>
     
     private var collectionView: UICollectionView!
+    private var activityIndicator = UIActivityIndicatorView()
+    
+    private lazy var dataSource: DataSource = {
+        return DataSource(viewModel: viewModel)
+    } ()
+    
+    private lazy var prefetchDelegate: PrefetchDelegate = {
+        return PrefetchDelegate(viewModel: viewModel)
+    } ()
+    
     var viewModel: ProductListViewModel = ProductListViewModel() {
         didSet {
             bindViewModel()
@@ -25,19 +40,33 @@ class ProductsListViewController: UIViewController {
         setupViews()
         layout()
         bindViewModel()
+        style()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.loadPage(at: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let product = viewModel.getProduct(at: indexPath.row) else {
+            return
+        }
+        
+        let viewModel = ProductViewModel(product: product)
+        let vc = DetailsViewController(viewModel: viewModel)
+        
+        show(vc, sender: self)
     }
 }
 
 // MARK: - Set up views
 extension ProductsListViewController {
     func setupViews() {
+        
         collectionView = UICollectionView(
             frame: view.frame,
-            collectionViewLayout: createLayout()
+            collectionViewLayout: Layout.collectionViewLayout
         )
         
         collectionView.register(
@@ -49,62 +78,110 @@ extension ProductsListViewController {
             forCellWithReuseIdentifier: RoundedCell.reuseIdentifier
         )
         
-        collectionView.dataSource = self
+        collectionView.dataSource = dataSource
         collectionView.delegate = self
+        collectionView.prefetchDataSource = prefetchDelegate
         
         view.addSubview(collectionView)
+        view.addSubview(activityIndicator)
     }
 }
 
 // MARK: - Bind ViewModel
 extension ProductsListViewController {
     func bindViewModel() {
+        viewModel.isLoading.bind { isLoading in
+            self.activityIndicator.isHidden = !isLoading
+            if isLoading {
+                self.activityIndicator.startAnimating()
+            } else {
+                self.activityIndicator.stopAnimating()
+            }
+            
+            self.collectionView.isHidden = isLoading
+        }
         
+        viewModel.items.bind { _ in
+            self.collectionView.reloadData()
+        }
+        
+        viewModel.numberOfItems.bind { _ in
+            self.collectionView.reloadData()
+        }
     }
 }
 
 // MARK: - Layout
 extension ProductsListViewController {
     func layout() {
-        layout(collectionView: collectionView)
-    }
-}
-
-extension ProductsListViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let isRounded = isRoundedCell(index: indexPath)
-        let reuseIdentifier = isRounded ? RoundedCell.reuseIdentifier : Cell.reuseIdentifier
-        
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: reuseIdentifier,
-            for: indexPath
+        Layout.apply(
+            view: view,
+            activityIndicator: activityIndicator,
+            collectionView: collectionView
         )
-        
-        
-        let product = viewModel.getProduct(at: indexPath.row)
-        let viewModel = ProductCellViewModel(product: product)
-        
-        (cell as? ProductCellWithViewModel)?.viewModel = viewModel
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.numberOfItems
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
     }
 }
 
-extension ProductsListViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
-        let product = viewModel.getProduct(at: indexPath.row)
-        let viewModel = ProductViewModel(product: product)
-        let vc = DetailsViewController(viewModel: viewModel)
+// MARK: - Styles
+extension ProductsListViewController {
+    func style() {
+        Styles.apply(view: view)
+        Styles.apply(collectionView: collectionView)
+    }
+}
+
+// MARK: - DataSource
+extension ProductsListViewController {
+    class DataSource: NSObject, UICollectionViewDataSource {
+        var viewModel: ProductListViewModel
         
-        show(vc, sender: self)
+        init(viewModel: ProductListViewModel) {
+            self.viewModel = viewModel
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            
+            let isRounded = Layout.isRoundedCell(index: indexPath)
+            let reuseIdentifier = isRounded ? RoundedCell.reuseIdentifier : Cell.reuseIdentifier
+            
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: reuseIdentifier,
+                for: indexPath
+            )
+            
+            
+            let product = viewModel.getProduct(at: indexPath.row) ?? Product(id: "loading", brand: "Loading", name: "Loading", price: 0, description: "")
+            let viewModel = ProductCellViewModel(product: product)
+            
+            (cell as? ProductCellWithViewModel)?.viewModel = viewModel
+            return cell
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            return viewModel.numberOfItems.value
+        }
+        
+        func numberOfSections(in collectionView: UICollectionView) -> Int {
+            return 1
+        }
+    }
+}
+
+extension ProductsListViewController {
+    class PrefetchDelegate: NSObject, UICollectionViewDataSourcePrefetching {
+        var viewModel: ProductListViewModel!
+        
+        init(viewModel: ProductListViewModel) {
+            self.viewModel = viewModel
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+            for index in indexPaths {
+                viewModel.loadPage(at: index.row)
+            }
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        }
     }
 }

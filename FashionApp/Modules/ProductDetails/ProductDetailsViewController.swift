@@ -10,7 +10,7 @@ import UIKit
 import UIImageViewAlignedSwift
 
 class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles: ProductDetailsViewStylable>: UIViewController {
-    typealias FullScreenImageViewController = ProductDetailsFullScreenImage<ProductDetailsFullScreenImageStyles, ProductDetailsFullScreenImageLayout>
+    typealias FullScreenImageViewController = ProductDetailsFullScreenImage<ProductDetailsFullScreenImageLayout, ProductDetailsFullScreenImageStyles>
     
     private var backButton = UIButton(type: .system)
     private var scrollView = UIScrollView()

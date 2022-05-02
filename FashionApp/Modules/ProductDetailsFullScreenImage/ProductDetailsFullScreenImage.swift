@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import UIImageViewAlignedSwift
 
-class ProductDetailsFullScreenImage<Styles: ProductDetailsFullScreenImageStylable, Layout: ProductDetailsFullScreenImageLayout>: UIViewController {
+class ProductDetailsFullScreenImage<Layout: ProductDetailsFullScreenImageLayout, Styles: ProductDetailsFullScreenImageStylable>: UIViewController {
     
     typealias PriceTagView = PriceTag<PriceTagLayout, PriceTagStyles>
     
@@ -84,27 +84,27 @@ extension ProductDetailsFullScreenImage {
 
 extension ProductDetailsFullScreenImage {
     private func addPriceTags() {
-        let priceTag1 = PriceTagView(frame: .zero)
-        priceTag1.viewModel = PriceTagViewModel(
-            product: product1,
-            point: .init(x: 0.5, y: 0.5)
-        )
-        
-        priceTag1.center = .init(x: 100, y: 100)
-        view.addSubview(priceTag1)
-        
-        priceTags.append(priceTag1)
-        
-        let priceTag2 = PriceTagView(frame: .zero)
-
-        priceTag2.viewModel = PriceTagViewModel(
-            product: product1,
-            point: .init(x: 0.5, y: 0.7)
-        )
-        priceTag2.center = .init(x: 80, y: 300)
-        view.addSubview(priceTag2)
-        
-        priceTags.append(priceTag2)
+//        let priceTag1 = PriceTagView(frame: .zero)
+//        priceTag1.viewModel = PriceTagViewModel(
+//            product: product1,
+//            point: .init(x: 0.5, y: 0.5)
+//        )
+//        
+//        priceTag1.center = .init(x: 100, y: 100)
+//        view.addSubview(priceTag1)
+//        
+//        priceTags.append(priceTag1)
+//        
+//        let priceTag2 = PriceTagView(frame: .zero)
+//
+//        priceTag2.viewModel = PriceTagViewModel(
+//            product: product1,
+//            point: .init(x: 0.5, y: 0.7)
+//        )
+//        priceTag2.center = .init(x: 80, y: 300)
+//        view.addSubview(priceTag2)
+//        
+//        priceTags.append(priceTag2)
     }
     
     private func animatePriceTags() {

@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-struct ShowedProduct {
+struct ShowedProduct: Codable {
     var point: CGPoint
     var product: Product
 }
 
-struct ImageData {
+struct ImageData: Codable {
     var name: String
     var showedProducts: [ShowedProduct]?
 }
