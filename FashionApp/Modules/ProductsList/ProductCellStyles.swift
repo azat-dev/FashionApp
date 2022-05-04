@@ -9,13 +9,15 @@ import Foundation
 import UIKit
 import UIImageViewAlignedSwift
 
+typealias AsyncImageViewAligned = AsyncImageView<UIImageViewAligned>
+
 protocol ProductCellStylable {
     static func apply(nameLabel: UILabel)
     static func apply(brandLabel: UILabel)
     static func apply(priceLabel: UILabel)
     static func apply(imageShadow: ShadowView)
     static func apply(imageContainer: ShapedView)
-    static func apply(imageView: UIImageViewAligned)
+    static func apply(asyncImageView: AsyncImageViewAligned)
 }
 
 class ProductCellStyles: ProductCellStylable {
@@ -104,9 +106,9 @@ class ProductCellStyles: ProductCellStylable {
         imageContainer.shape = imageShape
     }
     
-    static func apply(imageView: UIImageViewAligned) {
-        imageView.contentMode = .scaleAspectFit
-        imageView.alignBottom = true
+    static func apply(asyncImageView: AsyncImageViewAligned) {
+        asyncImageView.imageView.contentMode = .scaleAspectFit
+        asyncImageView.imageView.alignBottom = true
     }
     
     static func apply(nameLabel: UILabel) {

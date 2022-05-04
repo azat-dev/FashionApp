@@ -8,12 +8,12 @@
 import Foundation
 
 class Observable<T> {
-    typealias Listener = (T) -> Void
+    typealias Listener = (_ value: T, _ oldValue: T?) -> Void
     var listener: Listener?
     
     var value: T {
         didSet {
-            self.listener?(value)
+            self.listener?(value, oldValue)
         }
     }
     
@@ -23,6 +23,6 @@ class Observable<T> {
     
     func bind(listener: Listener?) {
         self.listener = listener
-        listener?(value)
+        listener?(value, nil)
     }
 }

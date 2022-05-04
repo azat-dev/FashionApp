@@ -12,13 +12,16 @@ protocol ProductCellWithViewModel: AnyObject {
     var viewModel: ProductCellViewModel? { get set }
 }
 
+
+extension UIImageViewAligned: ImageSettable {}
+
 class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: UICollectionViewCell, ProductCellWithViewModel {
 
     private var nameLabel: UILabel = UILabel()
     private var brandLabel: UILabel = UILabel()
     private var priceLabel: UILabel = UILabel()
     private var imageShadow = ShadowView()
-    private var imageView = UIImageViewAligned()
+    private var asyncImageView = AsyncImageViewAligned()
     private var imageContainer = ShapedView()
 
     class var reuseIdentifier: String {
@@ -52,7 +55,7 @@ class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: U
 // MARK: - Set up views
 extension ProductCell {
     func setupViews() {
-        imageContainer.addSubview(imageView)
+        imageContainer.addSubview(asyncImageView)
         imageShadow.addSubview(imageContainer)
 
         contentView.addSubview(imageShadow)
@@ -66,28 +69,28 @@ extension ProductCell {
 // MARK: - Bind the ViewModel
 private extension ProductCell {
     func bindViewModel() {
+        
         guard let viewModel = viewModel else {
             return
         }
+        
+        
+        self.asyncImageView.imageLoader = viewModel.imageLoader
             
-        viewModel.name.bind {
-            [weak self] in
-            self?.nameLabel.text = $0
+        viewModel.name.bind { [weak self] name, _ in
+            self?.nameLabel.text = name
         }
         
-        viewModel.brand.bind {
-            [weak self] in
-            self?.brandLabel.text = $0
+        viewModel.brand.bind { [weak self] brand, _ in
+            self?.brandLabel.text = brand
         }
         
-        viewModel.price.bind {
-            [weak self] in
-            self?.priceLabel.text = $0
+        viewModel.price.bind { [weak self] price, _ in
+            self?.priceLabel.text = price
         }
         
-        viewModel.image.bind {
-            [weak self] in
-            self?.imageView.image = $0
+        viewModel.imageUrl.bind { [weak self] imageUrl, _ in
+            self?.asyncImageView.url = imageUrl
         }
     }
 }
@@ -97,7 +100,7 @@ private extension ProductCell {
     func style() {
         Styles.apply(imageShadow: imageShadow)
         Styles.apply(imageContainer: imageContainer)
-        Styles.apply(imageView: imageView)
+        Styles.apply(asyncImageView: asyncImageView)
         Styles.apply(nameLabel: nameLabel)
         Styles.apply(brandLabel: brandLabel)
         Styles.apply(priceLabel: priceLabel)
@@ -111,7 +114,7 @@ private extension ProductCell {
             contentView: contentView,
             imageShadow: imageShadow,
             imageContainer: imageContainer,
-            imageView: imageView,
+            asyncImageView: asyncImageView,
             nameLabel: nameLabel,
             brandLabel: brandLabel,
             priceLabel: priceLabel

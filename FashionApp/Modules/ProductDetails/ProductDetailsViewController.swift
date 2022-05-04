@@ -104,23 +104,23 @@ private extension ProductDetailsViewController {
 private extension ProductDetailsViewController {
     private func bindViewModel() {
         viewModel.image.bind {
-            [weak self] in
-            self?.imageView.imageView.image = $0
+            [weak self] image, _ in
+            self?.imageView.imageView.image = image
         }
         
         viewModel.title.bind {
-            [weak self] in
-            self?.titleLabel.text = $0
+            [weak self] title, _ in
+            self?.titleLabel.text = title
         }
         
         viewModel.brand.bind {
-            [weak self] in
-            self?.brandLabel.text = $0
+            [weak self] brand, _ in
+            self?.brandLabel.text = brand
         }
         
         viewModel.description.bind {
-            [weak self] in
-            self?.descriptionLabel.text = $0
+            [weak self] description, _ in
+            self?.descriptionLabel.text = description
         }
     }
 }

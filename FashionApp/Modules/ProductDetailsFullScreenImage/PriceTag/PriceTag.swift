@@ -81,12 +81,12 @@ extension PriceTag {
 // MARK: - Bind the ViewModel
 extension PriceTag {
     private func bindViewModel(viewModel: PriceTagViewModel) {
-        viewModel.name.bind { newValue in
-            self.nameLabel.text = newValue
+        viewModel.name.bind { name, _ in
+            self.nameLabel.text = name
         }
         
-        viewModel.price.bind { newValue in
-            self.priceLabel.text = newValue
+        viewModel.price.bind { price, _ in
+            self.priceLabel.text = price
         }
     }
 }

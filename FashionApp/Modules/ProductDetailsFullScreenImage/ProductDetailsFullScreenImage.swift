@@ -122,7 +122,7 @@ extension ProductDetailsFullScreenImage {
 // MARK: - Bind ViewModel
 extension ProductDetailsFullScreenImage {
     private func bindViewModel() {
-        viewModel?.image.bind { [weak self] newImage in
+        viewModel?.image.bind { [weak self] newImage, _ in
             self?.imageView.image = newImage?.cropAlpha()
         }
     }

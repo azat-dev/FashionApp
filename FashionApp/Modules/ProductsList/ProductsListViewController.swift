@@ -90,7 +90,7 @@ extension ProductsListViewController {
 // MARK: - Bind ViewModel
 extension ProductsListViewController {
     func bindViewModel() {
-        viewModel.isLoading.bind { isLoading in
+        viewModel.isLoading.bind { isLoading, _ in
             self.activityIndicator.isHidden = !isLoading
             if isLoading {
                 self.activityIndicator.startAnimating()
@@ -101,11 +101,11 @@ extension ProductsListViewController {
             self.collectionView.isHidden = isLoading
         }
         
-        viewModel.items.bind { _ in
+        viewModel.items.bind { _, _ in
             self.collectionView.reloadData()
         }
         
-        viewModel.numberOfItems.bind { _ in
+        viewModel.numberOfItems.bind { _, _ in
             self.collectionView.reloadData()
         }
     }
@@ -150,10 +150,8 @@ extension ProductsListViewController {
             )
             
             
-            let product = viewModel.getProduct(at: indexPath.row) ?? Product(id: "loading", brand: "Loading", name: "Loading", price: 0, description: "")
-            let viewModel = ProductCellViewModel(product: product)
-            
-            (cell as? ProductCellWithViewModel)?.viewModel = viewModel
+            let cellViewModel = viewModel.getCellViewModel(at: indexPath.row)
+            (cell as? ProductCellWithViewModel)?.viewModel = cellViewModel
             return cell
         }
         

@@ -12,7 +12,7 @@ class ProductCellViewModel {
     private var product: Observable<Product> {
         didSet {
             product.bind {
-                [unowned self] product in
+                [unowned self] (product, _) in
                 self.update(from: product)
             }
         }
@@ -21,24 +21,28 @@ class ProductCellViewModel {
     var name = Observable("")
     var price = Observable("")
     var brand = Observable("")
-    var image = Observable(UIImage(named: "ImageTestHoodie"))
+    var imageUrl: Observable<String?> = Observable(nil)
+    var imageLoader: ImageLoader
     
-    
-    init(product: Product) {
+    init(product: Product, imageLoader: ImageLoader) {
+        self.imageLoader = imageLoader
         self.product = Observable(product)
+        
         self.product.bind {
-            [unowned self] product in
+            [unowned self] (product, _) in
             self.update(from: product)
         }
     }
 }
 
 extension ProductCellViewModel {
+
     private func update(from product: Product) {
         self.name.value = product.name
         self.brand.value = "From \(product.brand)"
         let priceText = String(format: "%.0f", product.price)
         self.price.value = "€\(priceText)"
+        self.imageUrl.value = product.image
     }
 }
 

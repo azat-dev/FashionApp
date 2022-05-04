@@ -15,7 +15,7 @@ protocol ProductCellLayoutable {
         contentView: UIView,
         imageShadow: ShadowView,
         imageContainer: ShapedView,
-        imageView: UIImageViewAligned,
+        asyncImageView: AsyncImageViewAligned,
         nameLabel: UILabel,
         brandLabel: UILabel,
         priceLabel: UILabel
@@ -27,7 +27,7 @@ class ProductCellLayout: ProductCellLayoutable {
         contentView: UIView,
         imageShadow: ShadowView,
         imageContainer: ShapedView,
-        imageView: UIImageViewAligned,
+        asyncImageView: AsyncImageViewAligned,
         nameLabel: UILabel,
         brandLabel: UILabel,
         priceLabel: UILabel
@@ -38,14 +38,14 @@ class ProductCellLayout: ProductCellLayoutable {
 
         imageShadow.translatesAutoresizingMaskIntoConstraints = false
         imageContainer.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         brandLabel.translatesAutoresizingMaskIntoConstraints = false
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
     
-        imageView.contentMode = .scaleAspectFill
-        imageView.alignBottom = true
+        asyncImageView.imageView.contentMode = .scaleAspectFill
+        asyncImageView.imageView.alignBottom = true
     
         imageShadow.snp.makeConstraints { make in
             make.top.equalTo(contentView.layoutMarginsGuide)
@@ -56,7 +56,7 @@ class ProductCellLayout: ProductCellLayoutable {
             make.edges.equalTo(imageShadow)
         }
         
-        imageView.snp.makeConstraints { make in
+        asyncImageView.snp.makeConstraints { make in
             make.width.equalTo(imageContainer)
             make.height.equalTo(imageContainer).multipliedBy(0.97)
             make.bottom.equalTo(imageContainer)

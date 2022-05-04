@@ -24,6 +24,7 @@ class ProductListViewModel {
     private let pageSize = 10
     private var statesOfPages = [Int: PageState]()
     private var pagesQueue = OperationQueue()
+    private var imageLoader = ImageLoader(baseUrl: "http://localhost:8080")
     
     init() {
         pagesQueue = OperationQueue()
@@ -81,6 +82,13 @@ class ProductListViewModel {
     func getProduct(at index: Int) -> Product? {
         return items.value[index]
     }
+    
+    func getCellViewModel(at index: Int) -> ProductCellViewModel {
+        let loadingProduct = Product(id: "loading", brand: "Loading", name: "Loading", price: 0, description: "", image: "")
+        let product = items.value[index] ?? loadingProduct
+        
+        return ProductCellViewModel(product: product, imageLoader: imageLoader)
+    }
 }
 
 // MARK: - Load products
@@ -116,7 +124,7 @@ class LoadProductsOperation: AsyncOperation {
         }
     }
     
-    private func load(from: Int, limit: Int, completion: @escaping (_ error: NSError?, _ response: ResponseProductsList?) -> Void) {
+    func load(from: Int, limit: Int, completion: @escaping (_ error: NSError?, _ response: ResponseProductsList?) -> Void) {
     
         guard let url = URL(string: "\(baseUrl)?from=\(from)&limit=\(limit)") else {
             print("Wrong url string")
