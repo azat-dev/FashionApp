@@ -16,8 +16,13 @@ class ProductListViewModel {
         case loaded
     }
     
-    var items = Observable([Int: Product]())
-    var numberOfItems = Observable(0)
+    struct CellsData {
+        var items = [Int: Product]()
+        var updatedItems = [Int]()
+        var total = 0
+    }
+    
+    var cells = Observable(CellsData())
     var isLoading = Observable(true)
     var connectionError = Observable(false)
     
@@ -62,16 +67,21 @@ class ProductListViewModel {
             }
             
             DispatchQueue.main.async {
-                var newItems = self.items.value
+                var newCells = self.cells.value
+                newCells.updatedItems = []
                 
                 for index in 0..<loadedItems.count {
                     let item = loadedItems[index]
-                    newItems[pageStart + index] = item
+                    let cellIndex = pageStart + index
+                    
+                    
+                    newCells.items[cellIndex] = item
+                    newCells.updatedItems.append(cellIndex)
                 }
                 
+                newCells.total = loadedTotal
                 self.statesOfPages[page] = .loading
-                self.items.value = newItems
-                self.numberOfItems.value = loadedTotal
+                self.cells.value = newCells
                 self.isLoading.value = false
             }
         }
@@ -80,12 +90,12 @@ class ProductListViewModel {
     }
     
     func getProduct(at index: Int) -> Product? {
-        return items.value[index]
+        return cells.value.items[index]
     }
     
     func getCellViewModel(at index: Int) -> ProductCellViewModel {
         let loadingProduct = Product(id: "loading", brand: "Loading", name: "Loading", price: 0, description: "", image: "")
-        let product = items.value[index] ?? loadingProduct
+        let product = cells.value.items[index] ?? loadingProduct
         
         return ProductCellViewModel(product: product, imageLoader: imageLoader)
     }

@@ -101,12 +101,13 @@ extension ProductsListViewController {
             self.collectionView.isHidden = isLoading
         }
         
-        viewModel.items.bind { _, _ in
-            self.collectionView.reloadData()
-        }
-        
-        viewModel.numberOfItems.bind { _, _ in
-            self.collectionView.reloadData()
+        viewModel.cells.bind { cells, prevCells in
+            if prevCells?.total != cells.total {
+                self.collectionView.reloadData()
+                return
+            }
+            
+            self.collectionView.reloadItems(at: cells.updatedItems.map { IndexPath(item: $0, section: 0) })
         }
     }
 }
@@ -156,7 +157,7 @@ extension ProductsListViewController {
         }
         
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return viewModel.numberOfItems.value
+            return viewModel.cells.value.total
         }
         
         func numberOfSections(in collectionView: UICollectionView) -> Int {

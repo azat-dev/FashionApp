@@ -32,7 +32,6 @@ class ProductCellLayout: ProductCellLayoutable {
         brandLabel: UILabel,
         priceLabel: UILabel
     ) {
-        let inset = CGFloat(0)
         
         URLSessionConfiguration.background(withIdentifier: "session1")
 

@@ -249,7 +249,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		AA0A521127EB49F9009B3BF2 /* View */ = {
+		AA0A521127EB49F9009B3BF2 /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
 				AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */,
@@ -259,7 +259,7 @@
 				AAFEEF2A280F3291006E63E7 /* CustomIntensityVisualEffect.swift */,
 				AAD1EE0B282256DF00D87C3E /* AsyncImageView.swift */,
 			);
-			path = View;
+			path = CommonViews;
 			sourceTree = "<group>";
 		};
 		AA0A521227EB4A27009B3BF2 /* ViewModel */ = {
@@ -290,14 +290,14 @@
 			path = SupportFiles;
 			sourceTree = "<group>";
 		};
-		AA0A521427EB60E5009B3BF2 /* Modules */ = {
+		AA0A521427EB60E5009B3BF2 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				AAF4DA9927FF6C9300118264 /* ProductDetailsFullScreenImage */,
 				AA053F8627F18870004DE5B2 /* ProductDetails */,
 				AA0A521527EB60F2009B3BF2 /* ProductsList */,
 			);
-			path = Modules;
+			path = View;
 			sourceTree = "<group>";
 		};
 		AA0A521527EB60F2009B3BF2 /* ProductsList */ = {
@@ -368,9 +368,9 @@
 			isa = PBXGroup;
 			children = (
 				AA8C543027D26E1D00B36D97 /* Model */,
-				AA0A521427EB60E5009B3BF2 /* Modules */,
-				AA0A521127EB49F9009B3BF2 /* View */,
+				AA0A521427EB60E5009B3BF2 /* View */,
 				AA0A521227EB4A27009B3BF2 /* ViewModel */,
+				AA0A521127EB49F9009B3BF2 /* CommonViews */,
 				AA0A521327EB5981009B3BF2 /* SupportFiles */,
 				AA204B9B282024730076576C /* Utils */,
 				AA0A520627EB3C00009B3BF2 /* Extensions */,
