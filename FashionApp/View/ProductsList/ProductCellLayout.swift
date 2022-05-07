@@ -32,17 +32,6 @@ class ProductCellLayout: ProductCellLayoutable {
         brandLabel: UILabel,
         priceLabel: UILabel
     ) {
-        
-        URLSessionConfiguration.background(withIdentifier: "session1")
-
-        imageShadow.translatesAutoresizingMaskIntoConstraints = false
-        imageContainer.translatesAutoresizingMaskIntoConstraints = false
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        brandLabel.translatesAutoresizingMaskIntoConstraints = false
-        priceLabel.translatesAutoresizingMaskIntoConstraints = false
-    
         asyncImageView.imageView.contentMode = .scaleAspectFill
         asyncImageView.imageView.alignBottom = true
     
@@ -63,18 +52,21 @@ class ProductCellLayout: ProductCellLayoutable {
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageContainer.snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(imageContainer)
+            make.top.equalTo(imageContainer.snp.bottom).offset(8)
+            make.left.equalTo(imageContainer)
+            make.right.lessThanOrEqualTo(imageContainer)
         }
         
         brandLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom)
-            make.horizontalEdges.equalTo(imageContainer)
+            make.top.equalTo(nameLabel.snp.bottom).offset(2)
+            make.left.equalTo(imageContainer)
+            make.right.lessThanOrEqualTo(imageContainer)
         }
         
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(brandLabel.snp.bottom).offset(5)
-            make.horizontalEdges.equalTo(imageContainer)
+            make.left.equalTo(imageContainer)
+            make.right.lessThanOrEqualTo(imageContainer)
             make.bottom.equalTo(contentView.layoutMarginsGuide)
         }
     }

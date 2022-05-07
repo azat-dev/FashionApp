@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class ProductCellViewModel {
-    private var product: Observable<Product> {
+    private var product: Observable<Product?> = Observable(nil) {
         didSet {
             product.bind {
                 [unowned self] (product, _) in
@@ -18,15 +18,16 @@ class ProductCellViewModel {
         }
     }
     
+    var isLoading = Observable(true)
     var name = Observable("")
     var price = Observable("")
     var brand = Observable("")
     var imageUrl: Observable<String?> = Observable(nil)
-    var imageLoader: ImageLoader
+    var imageLoader: ImageLoader!
     
-    init(product: Product, imageLoader: ImageLoader) {
+    init(imageLoader: ImageLoader, product: Product? = nil) {
         self.imageLoader = imageLoader
-        self.product = Observable(product)
+        self.product.value = product
         
         self.product.bind {
             [unowned self] (product, _) in
@@ -36,13 +37,28 @@ class ProductCellViewModel {
 }
 
 extension ProductCellViewModel {
-
-    private func update(from product: Product) {
+    private func update(from product: Product?) {
+        
+        guard let product = product else {
+            self.name.value = "Loading product"
+            self.brand.value = "Brand Name"
+            self.price.value = "€000"
+            self.imageUrl.value = nil
+            self.isLoading.value = true
+            return
+        }
+        
+        
         self.name.value = product.name
         self.brand.value = "From \(product.brand)"
         let priceText = String(format: "%.0f", product.price)
         self.price.value = "€\(priceText)"
         self.imageUrl.value = product.image
+        self.isLoading.value = false
+    }
+    
+    func getProduct() -> Product? {
+        return product.value
     }
 }
 

@@ -8,17 +8,44 @@
 import Foundation
 import UIKit
 
+struct Size {
+    var width: Int
+    var height: Int
+}
+
 class ImageLoader {
     private let baseUrl: String
-    private var session = URLSession(configuration: URLSessionConfiguration.default)
+    private lazy var session: URLSession = {
+        var config = URLSessionConfiguration.default
+        config.waitsForConnectivity = true
+        return URLSession(configuration: config)
+    } ()
     
     init(baseUrl: String) {
         self.baseUrl = baseUrl
     }
     
 
-    func load(url: String, completionHandler: @escaping (_ error: Error?, _ image: UIImage?) -> Void) {
-        guard let imageUrl = URL(string: "\(baseUrl)\(url)") else {
+    func load(url: String, size: Size?, completionHandler: @escaping (_ error: Error?, _ image: UIImage?) -> Void) {
+        
+        
+        guard var urlComponents = URLComponents(string: "\(baseUrl)\(url)") else {
+            let wrongUrlError = NSError(domain: "WrongUrl", code: 0)
+            completionHandler(wrongUrlError, nil)
+            return
+        }
+        
+        if let size = size {
+            var queryItems = urlComponents.queryItems ?? []
+            queryItems += [
+                URLQueryItem(name: "width", value: String(size.width)),
+                URLQueryItem(name: "height", value: String(size.height))
+            ]
+            
+            urlComponents.queryItems = queryItems
+        }
+        
+        guard let imageUrl = urlComponents.url else {
             let wrongUrlError = NSError(domain: "WrongUrl", code: 0)
             completionHandler(wrongUrlError, nil)
             return

@@ -17,7 +17,7 @@ class ProductListViewModel {
     }
     
     struct CellsData {
-        var items = [Int: Product]()
+        var items = [Int: ProductCellViewModel]()
         var updatedItems = [Int]()
         var total = 0
     }
@@ -26,10 +26,10 @@ class ProductListViewModel {
     var isLoading = Observable(true)
     var connectionError = Observable(false)
     
-    private let pageSize = 10
+    private let pageSize = 1
     private var statesOfPages = [Int: PageState]()
     private var pagesQueue = OperationQueue()
-    private var imageLoader = ImageLoader(baseUrl: "http://localhost:8080")
+    private var imageLoader = ImageLoader(baseUrl: "http://192.168.0.102:8080")
     
     init() {
         pagesQueue = OperationQueue()
@@ -71,11 +71,14 @@ class ProductListViewModel {
                 newCells.updatedItems = []
                 
                 for index in 0..<loadedItems.count {
-                    let item = loadedItems[index]
+                    let product = loadedItems[index]
                     let cellIndex = pageStart + index
                     
                     
-                    newCells.items[cellIndex] = item
+                    newCells.items[cellIndex] = ProductCellViewModel(
+                        imageLoader: self.imageLoader,
+                        product: product
+                    )
                     newCells.updatedItems.append(cellIndex)
                 }
                 
@@ -89,15 +92,19 @@ class ProductListViewModel {
         pagesQueue.addOperation(loadOperation)
     }
     
-    func getProduct(at index: Int) -> Product? {
-        return cells.value.items[index]
+    func getCellViewModel(at index: Int) -> ProductCellViewModel? {
+        let loadingViewModel = ProductCellViewModel(imageLoader: imageLoader)
+        
+        guard index < cells.value.items.count else {
+            return loadingViewModel
+        }
+        
+        return cells.value.items[index] ?? loadingViewModel
     }
     
-    func getCellViewModel(at index: Int) -> ProductCellViewModel {
-        let loadingProduct = Product(id: "loading", brand: "Loading", name: "Loading", price: 0, description: "", image: "")
-        let product = cells.value.items[index] ?? loadingProduct
-        
-        return ProductCellViewModel(product: product, imageLoader: imageLoader)
+    func getProduct(at index: Int) -> Product? {
+        let cellViewModel = getCellViewModel(at: index)
+        return cellViewModel?.getProduct()
     }
 }
 
@@ -108,7 +115,7 @@ class LoadProductsOperation: AsyncOperation {
         var items: [Product]
     }
 
-    let baseUrl = "http://localhost:8080/products"
+    let baseUrl = "http://192.168.0.102:8080/products"
     
     var from: Int
     var limit: Int

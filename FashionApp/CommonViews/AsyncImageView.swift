@@ -109,19 +109,22 @@ extension AsyncImageView {
         
         init() {
             url.bind { [weak self] (url, _) in
-                self?.updateImage(url: url)
+                guard let self = self else {
+                    return
+                }
+                
+                self.updateImage(url: url)
             }
             
             imageLoader.bind { [weak self] (imageLoader, _) in
                 guard
                     let self = self,
-                    let _ = self.image.value,
-                    let url = self.url.value
+                    self.image.value == nil
                 else {
                     return
                 }
                 
-                self.updateImage(url: url)
+                self.updateImage(url: self.url.value)
             }
         }
         
@@ -134,8 +137,8 @@ extension AsyncImageView {
             else {
                 return
             }
-
-            loader.load(url: url) { [weak self] error, image in
+            
+            loader.load(url: url, size: nil) { [weak self] error, image in
                 DispatchQueue.main.async {
                     self?.image.value = image
                 }

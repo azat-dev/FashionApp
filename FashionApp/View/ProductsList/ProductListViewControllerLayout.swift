@@ -57,7 +57,7 @@ class ProductsListViewControllerLayout: ProductsListViewControllerLayoutable {
                 continue
             }
             
-            if (index.row - patternOffset) % interval == 0 {
+            if (index.item - patternOffset) % interval == 0 {
                 return true
             }
         }

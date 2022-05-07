@@ -74,7 +74,6 @@ private extension ProductCell {
             return
         }
         
-        
         self.asyncImageView.imageLoader = viewModel.imageLoader
             
         viewModel.name.bind { [weak self] name, _ in
@@ -91,6 +90,23 @@ private extension ProductCell {
         
         viewModel.imageUrl.bind { [weak self] imageUrl, _ in
             self?.asyncImageView.url = imageUrl
+        }
+        
+        viewModel.isLoading.bind { [weak self] isLoading, _ in
+            guard let self = self else {
+                return
+            }
+            
+            if isLoading {
+                Styles.apply(nameLabelLoading: self.nameLabel)
+                Styles.apply(brandLabelLoading: self.brandLabel)
+                Styles.apply(priceLabelLoading: self.priceLabel)
+                return
+            }
+            
+            Styles.apply(nameLabel: self.nameLabel)
+            Styles.apply(brandLabel: self.brandLabel)
+            Styles.apply(priceLabel: self.priceLabel)
         }
     }
 }

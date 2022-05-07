@@ -43,13 +43,36 @@ class ProductsListViewController<
         style()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        viewModel.loadPage(at: 0)
+//    override func viewWillAppear(_ animated: Bool) {
+//        viewModel.loadPage(at: 0)
+//    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let maxY = collectionView.frame.maxY
+        var maxIndex = 0
+        
+        for index in 0... {
+            let cellAttributes = collectionView.layoutAttributesForItem(at: IndexPath(item: index, section: 0))
+            
+            guard let cellAttributes = cellAttributes else {
+                maxIndex = 15
+                break
+            }
+
+            maxIndex += 1
+            if cellAttributes.frame.maxY > maxY {
+                break
+            }
+        }
+        
+        for index in 0...maxIndex {
+            viewModel.loadPage(at: index)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let product = viewModel.getProduct(at: indexPath.row) else {
+        guard let product = viewModel.getProduct(at: indexPath.item) else {
             return
         }
         
@@ -98,7 +121,7 @@ extension ProductsListViewController {
                 self.activityIndicator.stopAnimating()
             }
             
-            self.collectionView.isHidden = isLoading
+            self.collectionView.isOpaque = !isLoading
         }
         
         viewModel.cells.bind { cells, prevCells in
@@ -151,7 +174,7 @@ extension ProductsListViewController {
             )
             
             
-            let cellViewModel = viewModel.getCellViewModel(at: indexPath.row)
+            let cellViewModel = viewModel.getCellViewModel(at: indexPath.item)
             (cell as? ProductCellWithViewModel)?.viewModel = cellViewModel
             return cell
         }
@@ -175,8 +198,9 @@ extension ProductsListViewController {
         }
         
         func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+            print("Prefetch \(indexPaths)")
             for index in indexPaths {
-                viewModel.loadPage(at: index.row)
+                viewModel.loadPage(at: index.item)
             }
         }
         

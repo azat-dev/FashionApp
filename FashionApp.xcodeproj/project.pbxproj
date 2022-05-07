@@ -66,6 +66,7 @@
 		AADDDDB527C4505700E893E1 /* FashionAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDDB427C4505700E893E1 /* FashionAppUITests.swift */; };
 		AADDDDB727C4505700E893E1 /* FashionAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDDB627C4505700E893E1 /* FashionAppUITestsLaunchTests.swift */; };
 		AAE3E20027FCA7AD001C7F4F /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE3E1FF27FCA7AD001C7F4F /* UIView+Constraints.swift */; };
+		AAEEA4C82825356700FCB837 /* CGFloat+Pixels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEEA4C72825356700FCB837 /* CGFloat+Pixels.swift */; };
 		AAF38CC327DF63FD00211DFC /* ShapedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF38CC227DF63FD00211DFC /* ShapedView.swift */; };
 		AAF38CC527DF755400211DFC /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF38CC427DF755400211DFC /* ShadowView.swift */; };
 		AAF4DA9827FED0F100118264 /* UIImageViewAlignedSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AAF4DA9727FED0F100118264 /* UIImageViewAlignedSwift */; };
@@ -157,6 +158,7 @@
 		AADDDDB427C4505700E893E1 /* FashionAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionAppUITests.swift; sourceTree = "<group>"; };
 		AADDDDB627C4505700E893E1 /* FashionAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AAE3E1FF27FCA7AD001C7F4F /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		AAEEA4C72825356700FCB837 /* CGFloat+Pixels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Pixels.swift"; sourceTree = "<group>"; };
 		AAF38CC227DF63FD00211DFC /* ShapedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapedView.swift; sourceTree = "<group>"; };
 		AAF38CC427DF755400211DFC /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		AAF4DA9A27FF6CB700118264 /* ProductDetailsFullScreenImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsFullScreenImage.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				AAE3E1FF27FCA7AD001C7F4F /* UIView+Constraints.swift */,
 				AA9F7AA3280DE3C00073DCA9 /* CGRect+Utils.swift */,
 				AAFEEF28280EDE1D006E63E7 /* UIView+Animation.swift */,
+				AAEEA4C72825356700FCB837 /* CGFloat+Pixels.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -588,6 +591,7 @@
 				AAFEEF27280EB203006E63E7 /* ProductDetailsViewController+FullScreenImageTransition.swift in Sources */,
 				AADC30122804201F004488E1 /* PriceTagLayout.swift in Sources */,
 				AADC300628041976004488E1 /* PriceTag.swift in Sources */,
+				AAEEA4C82825356700FCB837 /* CGFloat+Pixels.swift in Sources */,
 				AAFEEF29280EDE1D006E63E7 /* UIView+Animation.swift in Sources */,
 				AA06BCCB27E22F5C003CFF77 /* ProductDetailsViewController.swift in Sources */,
 				AA06BCC727E22603003CFF77 /* ProductCellRounded.swift in Sources */,

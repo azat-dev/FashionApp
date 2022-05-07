@@ -132,7 +132,7 @@ class CustomLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return getCellAttributes(index: indexPath.row)
+        return getCellAttributes(index: indexPath.item)
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {

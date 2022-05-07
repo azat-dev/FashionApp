@@ -13,8 +13,11 @@ typealias AsyncImageViewAligned = AsyncImageView<UIImageViewAligned>
 
 protocol ProductCellStylable {
     static func apply(nameLabel: UILabel)
+    static func apply(nameLabelLoading: UILabel)
     static func apply(brandLabel: UILabel)
+    static func apply(brandLabelLoading: UILabel)
     static func apply(priceLabel: UILabel)
+    static func apply(priceLabelLoading: UILabel)
     static func apply(imageShadow: ShadowView)
     static func apply(imageContainer: ShapedView)
     static func apply(asyncImageView: AsyncImageViewAligned)
@@ -112,18 +115,120 @@ class ProductCellStyles: ProductCellStylable {
     }
     
     static func apply(nameLabel: UILabel) {
+        removeLoadingAnimation(view: nameLabel)
+        
         nameLabel.textAlignment = .left
         nameLabel.font = Self.nameLabelFont
+        nameLabel.backgroundColor = .clear
+        nameLabel.textColor = .black
     }
     
     static func apply(brandLabel: UILabel) {
+        removeLoadingAnimation(view: brandLabel)
+        
         brandLabel.textColor = UIColor(named: "ColorBrandLabel")
         brandLabel.textAlignment = .left
         brandLabel.font = Self.brandLabelFont
+        brandLabel.backgroundColor = .clear
+        
     }
     
     static func apply(priceLabel: UILabel) {
+        removeLoadingAnimation(view: priceLabel)
+        
         priceLabel.textAlignment = .left
         priceLabel.font = Self.priceLabelFont
+        priceLabel.backgroundColor = .clear
+        priceLabel.textColor = .black
+    }
+
+    static func getLoadingAnimationLayer(view: UIView) -> CALayer? {
+        return (view.layer.sublayers ?? []).first { sublayer in
+            guard let layer = sublayer as? CAGradientLayer else {
+                return false
+            }
+            
+            return layer.animation(forKey: "loadingAnimation") != nil
+        }
+    }
+    
+    static func removeLoadingAnimation(view: UIView) {
+        guard let loadingLayer = getLoadingAnimationLayer(view: view) else {
+            return
+        }
+
+        loadingLayer.removeFromSuperlayer()
+    }
+    
+    static func getRect(size: CGSize, angle: CGFloat) -> CGSize {
+        return CGSize(
+            width: size.height * cos(angle.radians) + size.width * sin(angle.radians),
+            height: size.height * sin(angle.radians) + size.width * cos(angle.radians)
+        )
+    }
+    
+    static func addLoadingAnimation(view: UILabel) {
+        guard getLoadingAnimationLayer(view: view) == nil else {
+            return
+        }
+        
+        let gradientLayer = CAGradientLayer()
+        
+        gradientLayer.bounds = view.bounds
+        gradientLayer.anchorPoint = .init(x: 0, y: 0)
+        gradientLayer.startPoint = .init(x: 1, y: 0)
+        gradientLayer.endPoint = .init(x: 0, y: 1)
+        gradientLayer.locations = [
+            0.2,
+            0.6,
+            1
+        ]
+        gradientLayer.colors = [
+            UIColor.white.withAlphaComponent(0).cgColor,
+            UIColor.white.withAlphaComponent(0.5).cgColor,
+            UIColor.white.withAlphaComponent(0).cgColor,
+        ]
+
+        let animation = CABasicAnimation(keyPath: "transform.translation.x")
+        animation.duration = 1
+        animation.fromValue = -view.bounds.width
+        animation.toValue = view.bounds.width
+        animation.repeatCount = Float.infinity
+
+        gradientLayer.add(animation, forKey: "loadingAnimation")
+        view.layer.addSublayer(gradientLayer)
+    }
+    
+    static func apply(loadingLabel: UILabel) {
+        loadingLabel.textColor = .clear
+        loadingLabel.backgroundColor = UIColor(named: "ColorProductCellBackground")
+        loadingLabel.layer.cornerRadius = 5
+        loadingLabel.clipsToBounds = true
+        
+        addLoadingAnimation(view: loadingLabel)
+//        let animation = CABasicAnimation(keyPath: "opacity")
+//
+//        animation.fromValue = 0.2
+//        animation.toValue = 0.9
+//        animation.duration = 1
+//        animation.repeatCount = .infinity
+//        animation.autoreverses = true
+//
+//        loadingLabel.layer.add(animation, forKey: "loadingAnimation")
+    }
+    
+    static func apply(priceLabelLoading priceLabel: UILabel) {
+        apply(priceLabel: priceLabel)
+        apply(loadingLabel: priceLabel)
+    }
+    
+    static func apply(nameLabelLoading nameLabel: UILabel) {
+        apply(nameLabel: nameLabel)
+        apply(loadingLabel: nameLabel)
+    }
+    
+    static func apply(brandLabelLoading brandLabel: UILabel) {
+        apply(brandLabel: brandLabel)
+        apply(loadingLabel: brandLabel)
     }
 }
