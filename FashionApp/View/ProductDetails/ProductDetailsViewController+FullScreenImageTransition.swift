@@ -28,7 +28,7 @@ extension ProductDetailsViewController {
         private var fullscreenImage: UIView!
         private var fullscreenImageSnapshot: UIView!
         private var detailsVC: DetailsViewController!
-        private var fullscreenImageVC: FullScreenImageViewController!
+        private var fullscreenImageVC: ProductDetailsFullScreenImageViewControllerStyled!
         private var fullscreenRootView: UIView!
         private var detailsRootView: UIView!
         
@@ -53,7 +53,7 @@ extension ProductDetailsViewController {
             
             guard
                 let detailsVC: DetailsViewController = extractViewController(viewController: isPresenting ? fromVC : toVC),
-                let fullscreenImageVC: FullScreenImageViewController = extractViewController(viewController: isPresenting ? toVC : fromVC)
+                let fullscreenImageVC: ProductDetailsFullScreenImageViewControllerStyled = extractViewController(viewController: isPresenting ? toVC : fromVC)
             else {
                 return false
             }

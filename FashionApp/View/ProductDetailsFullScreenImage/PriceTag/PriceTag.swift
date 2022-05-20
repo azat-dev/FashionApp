@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+typealias PriceTagStyled = PriceTag<PriceTagLayout, PriceTagStyles>
+
 class PriceTag<Layout: PriceTagLayoutable, Styles: PriceTagStylable>: UIView {
     private var button = UIButton()
     private var labelShape = ShapedView()

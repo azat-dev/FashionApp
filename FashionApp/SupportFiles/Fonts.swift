@@ -25,6 +25,7 @@ class Fonts {
     enum RedHatDisplay: FontFileName, Font {
         case regular = "RedHatDisplay-Regular"
         case medium = "RedHatDisplay-Medium"
+        case semiBold = "RedHatDisplay-SemiBold"
         case bold = "RedHatDisplay-Bold"
     }
 }

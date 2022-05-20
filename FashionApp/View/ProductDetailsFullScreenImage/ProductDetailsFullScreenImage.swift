@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 import UIImageViewAlignedSwift
 
+typealias ProductDetailsFullScreenImageViewControllerStyled = ProductDetailsFullScreenImage<ProductDetailsFullScreenImageLayout, ProductDetailsFullScreenImageStyles>
+
 class ProductDetailsFullScreenImage<Layout: ProductDetailsFullScreenImageLayout, Styles: ProductDetailsFullScreenImageStylable>: UIViewController {
-    
-    typealias PriceTagView = PriceTag<PriceTagLayout, PriceTagStyles>
     
     private(set) var imageView = UIImageViewAligned()
     private var backButton = UIButton()
     private var buyButton = UIButton()
-    private var priceTags = [PriceTagView]()
+    private var priceTags = [PriceTagStyled]()
     
     var viewModel: ProductViewModel! {
         didSet {
@@ -122,7 +122,7 @@ extension ProductDetailsFullScreenImage {
 // MARK: - Bind ViewModel
 extension ProductDetailsFullScreenImage {
     private func bindViewModel() {
-        viewModel?.image.bind { [weak self] newImage, _ in
+        viewModel?.loadedImage.bind { [weak self] newImage, _ in
             self?.imageView.image = newImage?.cropAlpha()
         }
     }

@@ -85,13 +85,11 @@ class ProductsListViewController<
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let product = viewModel.getProduct(at: indexPath.item) else {
+        guard let productViewModel = viewModel.getProductViewModel(at: indexPath.item) else {
             return
         }
         
-        let viewModel = ProductViewModel(product: product)
-        let vc = ProductDetailsViewControllerStyled(viewModel: viewModel)
-        
+        let vc = ProductDetailsViewControllerStyled(viewModel: productViewModel)
         show(vc, sender: self)
     }
 }

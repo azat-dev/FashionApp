@@ -9,7 +9,12 @@ import Foundation
 import UIKit
 
 class AsyncImageView<ImageView: ImageSettable & UIView>: UIView {
-    private var viewModel = AsyncImageViewModel()
+    var viewModel = AsyncImageViewModel() {
+        didSet {
+            bindViewModel()
+        }
+    }
+    
     var imageView = ImageView()
     var activityIndicator = UIActivityIndicatorView()
     

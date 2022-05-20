@@ -12,7 +12,7 @@ import UIImageViewAlignedSwift
 class ImageViewShadowed: UIView {
     var shadowView = ShadowView()
     var containerView = ShapedView()
-    var imageView = UIImageViewAligned()
+    var imageView = AsyncImageViewAligned()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

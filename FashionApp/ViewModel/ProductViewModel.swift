@@ -14,9 +14,11 @@ class ProductViewModel {
     var title = Observable("")
     var brand = Observable("")
     var description = Observable("")
-    var image = Observable(UIImage(named: "ImageTestHoodie"))
+    var isDescriptionButtonVisible = Observable(false)
+    var image = AsyncImageViewModel()
+    var loadedImage: Observable<UIImage?> = Observable(nil)
     
-    init(product: Product) {
+    init(product: Product, loadImage: @escaping LoadImageFunction) {
         self.product = Observable(product)
         self.product.bind {
             [weak self] product, _ in
@@ -28,6 +30,16 @@ class ProductViewModel {
             self.title.value = product.name
             self.brand.value = "FROM \(product.brand)"
             self.description.value = product.description
+
+            self.image.loadImage.value = loadImage
+            self.image.url.value = product.image
+        }
+        
+        self.image.didLoadImage = { [weak self] image in
+            DispatchQueue.main.async {
+                self?.loadedImage.value = image
+                self?.isDescriptionButtonVisible.value = image != nil
+            }
         }
     }
 }

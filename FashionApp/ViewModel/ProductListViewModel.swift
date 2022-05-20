@@ -67,6 +67,15 @@ class ProductListViewModel {
         return cellViewModel?.getProduct()
     }
     
+    func getProductViewModel(at index: Int) -> ProductViewModel? {
+        guard let product = getProduct(at: index) else {
+            return nil
+        }
+        
+        let viewModel = ProductViewModel(product: product, loadImage: loadImage)
+        return viewModel
+    }
+    
     func reload() {
         isLoading.value = true
         connectionError.value = false

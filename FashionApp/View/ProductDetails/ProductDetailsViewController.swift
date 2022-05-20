@@ -12,7 +12,7 @@ import UIImageViewAlignedSwift
 typealias ProductDetailsViewControllerStyled = ProductDetailsViewController<ProductDetailsViewControllerLayout, ProductDetailsViewControllerStyles>
 
 class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles: ProductDetailsViewStylable>: UIViewController {
-    typealias FullScreenImageViewController = ProductDetailsFullScreenImage<ProductDetailsFullScreenImageLayout, ProductDetailsFullScreenImageStyles>
+    
     
     private var backButton = UIButton(type: .system)
     private var scrollView = UIScrollView()
@@ -70,7 +70,7 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     
     @objc
     private func openImage() {
-        let vc = FullScreenImageViewController(viewModel: viewModel)
+        let vc = ProductDetailsFullScreenImageViewControllerStyled(viewModel: viewModel)
         
         openedImage = imageView
         show(vc, sender: self)
@@ -99,15 +99,16 @@ private extension ProductDetailsViewController {
         
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
-    }
+    } 
 }
 
 // MARK: - Bind ViewModel
 private extension ProductDetailsViewController {
     private func bindViewModel() {
-        viewModel.image.bind {
-            [weak self] image, _ in
-            self?.imageView.imageView.image = image
+        imageView.imageView.viewModel = viewModel.image
+        
+        viewModel.isDescriptionButtonVisible.bind { [weak self] isVisible, _ in
+            self?.imageDescriptionButton.isHidden = !isVisible
         }
         
         viewModel.title.bind {

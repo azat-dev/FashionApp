@@ -81,7 +81,7 @@ class ProductDetailsViewControllerLayout: ProductDetailsViewLayoutable {
         }
 
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(brandLabel.snp.bottom).offset(10)
+            make.top.equalTo(brandLabel.snp.bottom).offset(15)
             make.horizontalEdges.equalTo(contentView.layoutMarginsGuide)
             make.bottom.equalTo(contentView.layoutMarginsGuide)
         }

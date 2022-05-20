@@ -15,6 +15,7 @@ class AsyncImageViewModel {
     var progress = Observable(0.0)
     var isLoading = Observable(false)
     var isFailed = Observable(false)
+    var didLoadImage: ((_ image: UIImage?) -> Void)?
     
     init() {
         url.bind { [weak self] (url, _) in
@@ -67,6 +68,7 @@ class AsyncImageViewModel {
                     self?.image.value = image
                     self?.isLoading.value = false
                     self?.isFailed.value = error != nil
+                    self?.didLoadImage?(image)
                 }
             },
             {

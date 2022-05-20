@@ -57,6 +57,7 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     }
     
     class func apply(imageView: ImageViewShadowed) {
+        imageView.imageView.activityIndicator.style = .large
         imageView.shadowView.shape = imageShadowShape
         
         let shadowColor = UIColor(red: 0.094, green: 0.153, blue: 0.3, alpha: 1).cgColor
@@ -69,8 +70,8 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
             ),
         ]
         
-        imageView.imageView.contentMode = .scaleAspectFit
-        imageView.imageView.alignBottom = true
+        imageView.imageView.imageView.contentMode = .scaleAspectFit
+        imageView.imageView.imageView.alignBottom = true
         
         imageView.containerView.backgroundColor = UIColor(named: "ColorProductCellBackground")
         imageView.containerView.layer.cornerRadius = imageCornerRadius
@@ -90,7 +91,7 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     }
     
     class func apply(brandLabel: UILabel) {
-        brandLabel.font = Fonts.RedHatDisplay.medium.preferred(with: .body)
+        brandLabel.font = Fonts.RedHatDisplay.semiBold.preferred(with: .body)
         brandLabel.textAlignment = .left
         brandLabel.textColor = UIColor(named: "ColorBrandLabel")
     }
