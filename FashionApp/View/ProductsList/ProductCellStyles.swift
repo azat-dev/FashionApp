@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 import UIImageViewAlignedSwift
 
-typealias AsyncImageViewAligned = AsyncImageView<UIImageViewAligned>
-
 protocol ProductCellStylable {
     static func apply(nameLabel: UILabel)
     static func apply(nameLabelLoading: UILabel)

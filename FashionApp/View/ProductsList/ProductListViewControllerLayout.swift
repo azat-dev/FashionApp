@@ -12,6 +12,7 @@ protocol ProductsListViewControllerLayoutable {
     static func apply(view: UIView, activityIndicator: UIActivityIndicatorView, collectionView: UICollectionView)
     static func isRoundedCell(index: IndexPath) -> Bool
     static var collectionViewLayout: UICollectionViewLayout { get }
+    static func apply(view: UIView, connectionErrorView: ConnectionErrorViewStyled)
 }
 
 // MARK: - Layout
@@ -87,5 +88,12 @@ class ProductsListViewControllerLayout: ProductsListViewControllerLayoutable {
         }
         
         return layout
+    }
+    
+    class func apply(view: UIView, connectionErrorView: ConnectionErrorViewStyled) {
+        connectionErrorView.snp.makeConstraints { make in
+            make.centerY.equalTo(view.snp.centerY)
+            make.centerX.equalTo(view.snp.centerX)
+        }
     }
 }

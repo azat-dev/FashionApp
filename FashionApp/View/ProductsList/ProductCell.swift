@@ -8,12 +8,7 @@
 import UIKit
 import UIImageViewAlignedSwift
 
-protocol ProductCellWithViewModel: AnyObject {
-    var viewModel: ProductCellViewModel? { get set }
-}
-
-
-extension UIImageViewAligned: ImageSettable {}
+typealias ProductCellStyled = ProductCell<ProductCellLayout, ProductCellStyles>
 
 class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: UICollectionViewCell, ProductCellWithViewModel {
 
@@ -74,7 +69,7 @@ private extension ProductCell {
             return
         }
         
-        self.asyncImageView.imageLoader = viewModel.imageLoader
+        asyncImageView.loadImage = viewModel.loadImage
             
         viewModel.name.bind { [weak self] name, _ in
             self?.nameLabel.text = name

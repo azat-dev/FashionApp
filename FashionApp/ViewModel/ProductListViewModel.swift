@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-
+import Alamofire
 
 class ProductListViewModel {
 
@@ -26,74 +26,34 @@ class ProductListViewModel {
     var isLoading = Observable(true)
     var connectionError = Observable(false)
     
-    private let pageSize = 1
+    private let pageSize = 10
     private var statesOfPages = [Int: PageState]()
     private var pagesQueue = OperationQueue()
-    private var imageLoader = ImageLoader(baseUrl: "http://192.168.0.102:8080")
+    private var networkRepository: NetworkRepository
     
-    init() {
+    private var loadImage: LoadImageFunction!
+    
+    init(networkRepository: NetworkRepository) {
         pagesQueue = OperationQueue()
         pagesQueue.maxConcurrentOperationCount = 5
+        self.networkRepository = networkRepository
+        
+        loadImage = { (url, size, completion, progress) in
+            NetworkRepository.loadImage(
+                url: networkRepository.baseUrl + url,
+                size: size,
+                completion: completion,
+                progress: progress
+            )
+        }
     }
     
     private func page(at index: Int) -> Int {
         return (index - index % pageSize) / pageSize
     }
     
-    func loadPage(at index: Int) {
-        
-        let page = page(at: index)
-        let pageStart = page * pageSize
-        
-        guard statesOfPages[page] == nil else {
-            return
-        }
-        
-        statesOfPages[page] = .loading
-        let loadOperation = LoadProductsOperation(from: pageStart, limit: pageSize)
-        
-        loadOperation.completionBlock = {
-            
-            guard
-                loadOperation.error == nil,
-                let loadedItems = loadOperation.items,
-                let loadedTotal = loadOperation.total
-            else {
-                DispatchQueue.main.async {
-                    self.connectionError.value = true
-                    self.isLoading.value = false
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                var newCells = self.cells.value
-                newCells.updatedItems = []
-                
-                for index in 0..<loadedItems.count {
-                    let product = loadedItems[index]
-                    let cellIndex = pageStart + index
-                    
-                    
-                    newCells.items[cellIndex] = ProductCellViewModel(
-                        imageLoader: self.imageLoader,
-                        product: product
-                    )
-                    newCells.updatedItems.append(cellIndex)
-                }
-                
-                newCells.total = loadedTotal
-                self.statesOfPages[page] = .loading
-                self.cells.value = newCells
-                self.isLoading.value = false
-            }
-        }
-        
-        pagesQueue.addOperation(loadOperation)
-    }
-    
     func getCellViewModel(at index: Int) -> ProductCellViewModel? {
-        let loadingViewModel = ProductCellViewModel(imageLoader: imageLoader)
+        let loadingViewModel = ProductCellViewModel(product: nil, loadImage: loadImage)
         
         guard index < cells.value.items.count else {
             return loadingViewModel
@@ -106,104 +66,70 @@ class ProductListViewModel {
         let cellViewModel = getCellViewModel(at: index)
         return cellViewModel?.getProduct()
     }
+    
+    func reload() {
+        isLoading.value = true
+        connectionError.value = false
+        
+        loadPage(at: 0)
+    }
 }
 
-// MARK: - Load products
-class LoadProductsOperation: AsyncOperation {
-    struct ResponseProductsList: Codable {
-        var total: Int
-        var items: [Product]
-    }
-
-    let baseUrl = "http://192.168.0.102:8080/products"
-    
-    var from: Int
-    var limit: Int
-    var error: NSError?
-    
-    var total: Int?
-    var items: [Product]?
-    
-    init(from: Int, limit: Int) {
-        self.from = from
-        self.limit = limit
-    }
-    
-    override func main() {
-        load(from: from, limit: limit) { error, response in
-            if let error = error {
-                self.error = error
-                return
-            }
-            
-            self.items = response?.items
-            self.total = response?.total
-        }
-    }
-    
-    func load(from: Int, limit: Int, completion: @escaping (_ error: NSError?, _ response: ResponseProductsList?) -> Void) {
-    
-        guard let url = URL(string: "\(baseUrl)?from=\(from)&limit=\(limit)") else {
-            print("Wrong url string")
+// MARK: - Networking
+extension ProductListViewModel {
+    func loadPage(at index: Int) {
+        
+        let page = page(at: index)
+        let pageStart = page * pageSize
+        
+        guard statesOfPages[page] == nil else {
             return
         }
         
-        let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
-            
-            defer { self.state = .finished }
-            
-            if let error = error {
-                let err = NSError(
-                    domain: "RequestError",
-                    code: 0,
-                    userInfo: ["error": error]
-                )
-                completion(err, nil)
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                let error = NSError(
-                    domain: "WrongResponse",
-                    code: 0,
-                    userInfo: ["response": response as Any]
-                )
-                
-                completion(error, nil)
-                return
-            }
-            
-            guard
-                httpResponse.statusCode == 200,
-                httpResponse.mimeType == "application/json"
-            else {
-                let error = NSError(
-                    domain: "OperationFailed",
-                    code: 0,
-                    userInfo: ["httpResponse": httpResponse]
-                )
-                
-                completion(error, nil)
-                return
-            }
-            
-            guard let data = data else {
-                let error = NSError(
-                    domain: "WrongData",
-                    code: 0,
-                    userInfo: ["data": data as Any]
-                )
-                
-                completion(error, nil)
-                return
-            }
-            
-            
-            let decoder = JSONDecoder()
-            let decodedResponse = try! decoder.decode(ResponseProductsList.self, from: data)
-            completion(nil, decodedResponse)
-        }
+        statesOfPages[page] = .loading
         
-        dataTask.resume()
+        networkRepository.getItems(
+            endpoint: .products,
+            from: pageStart,
+            limit: pageSize
+        ) {
+            [weak self] (error: NSError?, response: NetworkRepository.ResponseGetItems<Product>?) -> Void in
+            
+            guard let self = self else {
+                return
+            }
+        
+            if let _ = error {
+                self.connectionError.value = true
+                self.isLoading.value = false
+                return
+            }
+            
+            guard let response = response else {
+                self.connectionError.value = true
+                self.isLoading.value = false
+                return
+            }
+
+            var newCells = self.cells.value
+            newCells.updatedItems = []
+            
+            for index in 0..<response.items.count {
+                let product = response.items[index]
+                let cellIndex = pageStart + index
+                
+                
+                newCells.items[cellIndex] = ProductCellViewModel(
+                    product: product,
+                    loadImage: self.loadImage
+                )
+                newCells.updatedItems.append(cellIndex)
+            }
+            
+            newCells.total = response.total
+            self.statesOfPages[page] = .loading
+            self.cells.value = newCells
+            self.isLoading.value = false
+        }
     }
 }

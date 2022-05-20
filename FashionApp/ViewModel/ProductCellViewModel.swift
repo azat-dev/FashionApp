@@ -23,10 +23,10 @@ class ProductCellViewModel {
     var price = Observable("")
     var brand = Observable("")
     var imageUrl: Observable<String?> = Observable(nil)
-    var imageLoader: ImageLoader!
+    var loadImage: LoadImageFunction!
     
-    init(imageLoader: ImageLoader, product: Product? = nil) {
-        self.imageLoader = imageLoader
+    init(product: Product?, loadImage: @escaping LoadImageFunction) {
+        self.loadImage = loadImage
         self.product.value = product
         
         self.product.bind {

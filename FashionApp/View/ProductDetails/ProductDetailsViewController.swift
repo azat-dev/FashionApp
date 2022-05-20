@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 import UIImageViewAlignedSwift
 
+typealias ProductDetailsViewControllerStyled = ProductDetailsViewController<ProductDetailsViewControllerLayout, ProductDetailsViewControllerStyles>
+
 class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles: ProductDetailsViewStylable>: UIViewController {
     typealias FullScreenImageViewController = ProductDetailsFullScreenImage<ProductDetailsFullScreenImageLayout, ProductDetailsFullScreenImageStyles>
     
