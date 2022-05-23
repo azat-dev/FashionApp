@@ -350,6 +350,15 @@
 			path = ProductsList;
 			sourceTree = "<group>";
 		};
+		AA13C597283B5D51007B83D2 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				AA0A521427EB60E5009B3BF2 /* View */,
+				AA0A521227EB4A27009B3BF2 /* ViewModel */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		AA204B9B282024730076576C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,11 +486,10 @@
 		AADDDD8F27C4505600E893E1 /* FashionApp */ = {
 			isa = PBXGroup;
 			children = (
+				AA13C597283B5D51007B83D2 /* Presentation */,
 				AAA7E117283A2D5900865350 /* Domain */,
 				AAA7E112283A26F400865350 /* Data */,
 				AA8C543027D26E1D00B36D97 /* Model */,
-				AA0A521427EB60E5009B3BF2 /* View */,
-				AA0A521227EB4A27009B3BF2 /* ViewModel */,
 				AA0A521127EB49F9009B3BF2 /* CommonViews */,
 				AA0A521327EB5981009B3BF2 /* SupportFiles */,
 				AA204B9B282024730076576C /* Utils */,
