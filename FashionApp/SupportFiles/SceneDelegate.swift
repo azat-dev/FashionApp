@@ -10,15 +10,14 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var networkRepository = NetworkRepository(baseUrl: "http://192.168.0.102:8080")
+    var networkManager = NetworkManager(baseUrl: "http://192.168.0.102:8080")
+    private lazy var productsRepository: ProductsRepository = {
+        DefaultProductsRepository(networkManager: networkManager)
+    } ()
 
     private func setupInitialVC(window: UIWindow) {
-        let listViewModel = ProductListViewModel(networkRepository: networkRepository)
-        
-        let listVC = ProductListViewControllerStyled(
-            viewModel: listViewModel,
-            networkRepository: networkRepository
-        )
+        let listViewModel = ProductListViewModel(productsRepository: productsRepository)
+        let listVC = ProductsListViewControllerStyled(viewModel: listViewModel)
         
         let navigationController = UINavigationController(rootViewController: listVC)
         navigationController.isNavigationBarHidden = false

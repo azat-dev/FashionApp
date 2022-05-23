@@ -7,7 +7,7 @@
 
 import UIKit
 
-typealias ProductListViewControllerStyled = ProductsListViewController<
+typealias ProductsListViewControllerStyled = ProductsListViewController<
     ProductsListViewControllerLayout, ProductsListViewControllerStyles
 >
 
@@ -15,8 +15,6 @@ class ProductsListViewController<
     Layout: ProductsListViewControllerLayoutable,
     Styles: ProductsListViewControllerStylable
 >: UIViewController, UICollectionViewDelegate {
-    
-    private var networkRepository: NetworkRepository!
     
     private var collectionView: UICollectionView!
     private var activityIndicator = UIActivityIndicatorView()
@@ -38,10 +36,9 @@ class ProductsListViewController<
         }
     }
         
-    init(viewModel: ProductListViewModel, networkRepository: NetworkRepository) {
+    init(viewModel: ProductListViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        self.networkRepository = networkRepository
     }
     
     required init?(coder: NSCoder) {
@@ -85,7 +82,7 @@ class ProductsListViewController<
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let productViewModel = viewModel.getProductViewModel(at: indexPath.item) else {
+        guard let productViewModel = viewModel.viewModel(at: indexPath.item) else {
             return
         }
         

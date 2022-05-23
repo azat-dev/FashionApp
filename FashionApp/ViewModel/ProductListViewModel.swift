@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class ProductListViewModel {
-
+    
     enum PageState {
         case loading
         case loaded
@@ -29,22 +29,23 @@ class ProductListViewModel {
     private let pageSize = 10
     private var statesOfPages = [Int: PageState]()
     private var pagesQueue = OperationQueue()
-    private var networkRepository: NetworkRepository
+    private var productsRepository: ProductsRepository
     
     private var loadImage: LoadImageFunction!
     
-    init(networkRepository: NetworkRepository) {
+    init(productsRepository: ProductsRepository) {
         pagesQueue = OperationQueue()
         pagesQueue.maxConcurrentOperationCount = 5
-        self.networkRepository = networkRepository
+        self.productsRepository = productsRepository
         
         loadImage = { (url, size, completion, progress) in
-            NetworkRepository.loadImage(
-                url: networkRepository.baseUrl + url,
-                size: size,
-                completion: completion,
-                progress: progress
-            )
+            // FIXME: ADD LOAD IMAGE
+            //            NetworkRepository.loadImage(
+            //                url: networkRepository.baseUrl + url,
+            //                size: size,
+            //                completion: completion,
+            //                progress: progress
+            //            )
         }
     }
     
@@ -62,17 +63,20 @@ class ProductListViewModel {
         return cells.value.items[index] ?? loadingViewModel
     }
     
-    func getProduct(at index: Int) -> Product? {
+    private func product(at index: Int) -> Product? {
         let cellViewModel = getCellViewModel(at: index)
         return cellViewModel?.getProduct()
     }
     
-    func getProductViewModel(at index: Int) -> ProductViewModel? {
-        guard let product = getProduct(at: index) else {
+    func viewModel(at index: Int) -> ProductViewModel? {
+        guard let product = product(at: index) else {
             return nil
         }
         
-        let viewModel = ProductViewModel(product: product, loadImage: loadImage)
+        let viewModel = ProductViewModel(
+            productId: product.id,
+            productsRepository: productsRepository
+        )
         return viewModel
     }
     
@@ -97,48 +101,41 @@ extension ProductListViewModel {
         
         statesOfPages[page] = .loading
         
-        networkRepository.getItems(
-            endpoint: .products,
-            from: pageStart,
-            limit: pageSize
-        ) {
-            [weak self] (error: NSError?, response: NetworkRepository.ResponseGetItems<Product>?) -> Void in
-            
+        productsRepository.fetchProducts(from: pageStart, limit: pageSize) { [weak self] result in
             guard let self = self else {
                 return
             }
-        
-            if let _ = error {
+            
+            switch result {
+            case .failure(_):
                 self.connectionError.value = true
                 self.isLoading.value = false
-                return
+            case .success(let pageData):
+                self.append(pageData: pageData, at: page)
             }
-            
-            guard let response = response else {
-                self.connectionError.value = true
-                self.isLoading.value = false
-                return
-            }
-
-            var newCells = self.cells.value
-            newCells.updatedItems = []
-            
-            for index in 0..<response.items.count {
-                let product = response.items[index]
-                let cellIndex = pageStart + index
-                
-                
-                newCells.items[cellIndex] = ProductCellViewModel(
-                    product: product,
-                    loadImage: self.loadImage
-                )
-                newCells.updatedItems.append(cellIndex)
-            }
-            
-            newCells.total = response.total
-            self.statesOfPages[page] = .loading
-            self.cells.value = newCells
-            self.isLoading.value = false
         }
+    }
+    
+    private func append(pageData: Page<Product>, at page: Int) {
+        let pageStart = page * pageSize
+        var newCells = self.cells.value
+        newCells.updatedItems = []
+        
+        for index in 0..<pageData.items.count {
+            let product = pageData.items[index]
+            let cellIndex = pageStart + index
+            
+            
+            newCells.items[cellIndex] = ProductCellViewModel(
+                product: product,
+                loadImage: self.loadImage
+            )
+            newCells.updatedItems.append(cellIndex)
+        }
+        
+        newCells.total = pageData.total
+        self.statesOfPages[page] = .loading
+        self.cells.value = newCells
+        self.isLoading.value = false
     }
 }

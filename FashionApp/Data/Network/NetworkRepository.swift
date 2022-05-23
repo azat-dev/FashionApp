@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 import UIKit
 
-class NetworkRepository {
+class NetworkManager {
     private(set) var baseUrl: String
     
     init(baseUrl: String) {
@@ -17,7 +17,7 @@ class NetworkRepository {
     }
 }
 
-extension NetworkRepository {
+extension NetworkManager {
     struct ResponseGetItems<Item: Decodable>: Decodable {
         var total: Int
         var items: [Item]
@@ -28,12 +28,12 @@ extension NetworkRepository {
     }
 }
 
-extension NetworkRepository {
+extension NetworkManager {
     func getItems<Item: Decodable>(
         endpoint: Endpoint,
         from: Int,
         limit: Int,
-        completion: @escaping (_ error: NSError?, _ response: ResponseGetItems<Item>?) -> Void
+        completion: @escaping (_ result: Result<ResponseGetItems<Item>, Error>) -> Void
     ) {
         
         let url = "\(baseUrl)/\(endpoint)?from=\(from)&limit=\(limit)"
@@ -45,11 +45,29 @@ extension NetworkRepository {
                 switch response.result {
                 case .failure(let error):
                     let nsError = NSError(domain: "", code: error.responseCode ?? 0)
-                    completion(nsError, nil)
+                    completion(.failure(nsError))
                 case .success(let result):
-                    completion(nil, result)
+                    completion(.success(result))
                 }
             }
+    }
+    
+    func getItem<Item: Decodable>(endpoint: Endpoint, id: String, completion: @escaping (Result<Item, Error>) -> Void) {
+        let url = "\(baseUrl)/\(endpoint)/\(id)"
+        
+        AF.request(url)
+            .validate()
+            .responseDecodable { (response: DataResponse<Item, AFError>) -> Void in
+                
+                switch response.result {
+                case .failure(let error):
+                    let nsError = NSError(domain: "", code: error.responseCode ?? 0)
+                    completion(.failure(nsError))
+                case .success(let result):
+                    completion(.success(result))
+                }
+            }
+            
     }
     
     static func loadImage(
