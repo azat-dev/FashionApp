@@ -8,7 +8,27 @@
 import Foundation
 import UIKit
 
-class ProductCellViewModel {
+// MARK: - Protocols
+
+protocol ProductCellViewModelOutput {
+    var isLoading: Observable<Bool> { get }
+    var name: Observable<String> { get }
+    var price: Observable<String> { get }
+    var brand: Observable<String> { get }
+    var imageViewModel: AsyncImageViewModel { get }
+    
+    func getProduct() -> Product?
+}
+
+protocol ProductCellViewModelInput {
+    
+}
+
+protocol ProductCellViewModel: ProductCellViewModelOutput & ProductCellViewModelInput  {}
+
+// MARK: - Implementation
+
+final class DefaultProductCellViewModel: ProductCellViewModel {
     private var product: Observable<Product?> = Observable(nil) {
         didSet {
             product.observe(on: self) { [unowned self] product in
@@ -35,7 +55,7 @@ class ProductCellViewModel {
     }
 }
 
-extension ProductCellViewModel {
+extension DefaultProductCellViewModel {
     private func update(from product: Product?) {
         
         guard let product = product else {
@@ -61,7 +81,7 @@ extension ProductCellViewModel {
     }
 }
 
-extension ProductCellViewModel {
+extension DefaultProductCellViewModel {
     private func open() {
         
     }

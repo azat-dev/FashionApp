@@ -70,7 +70,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     }
     
     func cellViewModel(at index: Int) -> ProductCellViewModel? {
-        let loadingViewModel = ProductCellViewModel(product: nil, imagesRepository: imagesRepository)
+        let loadingViewModel = DefaultProductCellViewModel(product: nil, imagesRepository: imagesRepository)
         
         guard index < cells.value.items.count else {
             return loadingViewModel
@@ -144,7 +144,7 @@ extension DefaultProductsListViewModel {
             let cellIndex = pageStart + index
             
             
-            newCells.items[cellIndex] = ProductCellViewModel(
+            newCells.items[cellIndex] = DefaultProductCellViewModel(
                 product: product,
                 imagesRepository: imagesRepository
             )
