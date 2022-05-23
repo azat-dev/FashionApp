@@ -67,6 +67,7 @@ class PriceTag<Layout: PriceTagLayoutable, Styles: PriceTagStylable>: UIView {
 }
 
 // MARK: - Setup Views
+
 extension PriceTag {
     private func setupViews() {
         button.addTarget(self, action: #selector(Self.onTapButton), for: .touchUpInside)
@@ -81,19 +82,21 @@ extension PriceTag {
 }
 
 // MARK: - Bind the ViewModel
+
 extension PriceTag {
     private func bindViewModel(viewModel: PriceTagViewModel) {
-        viewModel.name.bind { name, _ in
+        viewModel.name.observe(on: self) { name in
             self.nameLabel.text = name
         }
         
-        viewModel.price.bind { price, _ in
+        viewModel.price.observe(on: self) { price in
             self.priceLabel.text = price
         }
     }
 }
 
 // MARK: - Styles
+
 extension PriceTag {
     private func style() {
         Styles.apply(button: button)
@@ -104,6 +107,7 @@ extension PriceTag {
 }
 
 // MARK: - Layout
+
 extension PriceTag {
     private func layout() {
         Layout.apply(

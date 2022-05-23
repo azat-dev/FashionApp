@@ -29,32 +29,26 @@ class ProductListViewModel {
     private let pageSize = 10
     private var statesOfPages = [Int: PageState]()
     private var pagesQueue = OperationQueue()
+    
     private var productsRepository: ProductsRepository
+    private var imagesRepository: ImagesRepository
     
     private var loadImage: LoadImageFunction!
     
-    init(productsRepository: ProductsRepository) {
+    init(productsRepository: ProductsRepository, imagesRepository: ImagesRepository) {
         pagesQueue = OperationQueue()
         pagesQueue.maxConcurrentOperationCount = 5
-        self.productsRepository = productsRepository
         
-        loadImage = { (url, size, completion, progress) in
-            // FIXME: ADD LOAD IMAGE
-            //            NetworkRepository.loadImage(
-            //                url: networkRepository.baseUrl + url,
-            //                size: size,
-            //                completion: completion,
-            //                progress: progress
-            //            )
-        }
+        self.productsRepository = productsRepository
+        self.imagesRepository = imagesRepository
     }
     
     private func page(at index: Int) -> Int {
         return (index - index % pageSize) / pageSize
     }
     
-    func getCellViewModel(at index: Int) -> ProductCellViewModel? {
-        let loadingViewModel = ProductCellViewModel(product: nil, loadImage: loadImage)
+    func cellViewModel(at index: Int) -> ProductCellViewModel? {
+        let loadingViewModel = ProductCellViewModel(product: nil, imagesRepository: imagesRepository)
         
         guard index < cells.value.items.count else {
             return loadingViewModel
@@ -64,18 +58,19 @@ class ProductListViewModel {
     }
     
     private func product(at index: Int) -> Product? {
-        let cellViewModel = getCellViewModel(at: index)
+        let cellViewModel = cellViewModel(at: index)
         return cellViewModel?.getProduct()
     }
     
-    func viewModel(at index: Int) -> ProductViewModel? {
+    func productViewModel(at index: Int) -> ProductViewModel? {
         guard let product = product(at: index) else {
             return nil
         }
         
         let viewModel = ProductViewModel(
             productId: product.id,
-            productsRepository: productsRepository
+            productsRepository: productsRepository,
+            imagesRepository: imagesRepository
         )
         return viewModel
     }
@@ -89,6 +84,7 @@ class ProductListViewModel {
 }
 
 // MARK: - Networking
+
 extension ProductListViewModel {
     func loadPage(at index: Int) {
         
@@ -128,7 +124,7 @@ extension ProductListViewModel {
             
             newCells.items[cellIndex] = ProductCellViewModel(
                 product: product,
-                loadImage: self.loadImage
+                imagesRepository: imagesRepository
             )
             newCells.updatedItems.append(cellIndex)
         }

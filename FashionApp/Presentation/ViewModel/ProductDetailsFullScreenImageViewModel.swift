@@ -17,8 +17,7 @@ class ProductDetailsFullScreenImageViewModel {
     init(product: Product) {
         self.product = Observable(product)
         
-        self.product.bind {
-            [weak self] (product, _) in
+        self.product.observe(on: self) { [weak self] product in
             
             guard let self = self else {
                 return

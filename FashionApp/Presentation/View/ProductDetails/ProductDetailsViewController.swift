@@ -78,6 +78,7 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
 }
 
 // MARK: - Set up views
+
 private extension ProductDetailsViewController {
     private func setupViews() {
         navigationController?.delegate = navigationDelegate
@@ -103,32 +104,31 @@ private extension ProductDetailsViewController {
 }
 
 // MARK: - Bind ViewModel
+
 private extension ProductDetailsViewController {
     private func bindViewModel() {
         imageView.imageView.viewModel = viewModel.image
         
-        viewModel.isDescriptionButtonVisible.bind { [weak self] isVisible, _ in
+        viewModel.isDescriptionButtonVisible.observe(on: self) { [weak self] isVisible in
             self?.imageDescriptionButton.isHidden = !isVisible
         }
         
-        viewModel.title.bind {
-            [weak self] title, _ in
+        viewModel.title.observe(on: self) { [weak self] title in
             self?.titleLabel.text = title
         }
         
-        viewModel.brand.bind {
-            [weak self] brand, _ in
+        viewModel.brand.observe(on: self) { [weak self] brand in
             self?.brandLabel.text = brand
         }
         
-        viewModel.description.bind {
-            [weak self] description, _ in
+        viewModel.description.observe(on: self) { [weak self] description in
             self?.descriptionLabel.text = description
         }
     }
 }
 
 // MARK: - Layout
+
 private extension ProductDetailsViewController {
     func layout() {
         Layout.apply(
@@ -147,6 +147,7 @@ private extension ProductDetailsViewController {
 }
 
 // MARK: - Assign styles
+
 private extension ProductDetailsViewController {
     func style() {
         Styles.apply(scrollView: scrollView)

@@ -22,6 +22,7 @@ protocol ProductDetailsViewStylable {
 }
 
 // MARK: - Style Views
+
 class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     class var imageCornerRadius: CGFloat {
         15

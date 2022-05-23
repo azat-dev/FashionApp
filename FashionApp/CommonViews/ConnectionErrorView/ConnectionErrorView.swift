@@ -59,6 +59,7 @@ extension ConnectionErrorView {
 }
 
 // MARK: - Layout
+
 extension ConnectionErrorView {
     private func layout() {
         Layout.apply(
@@ -71,7 +72,8 @@ extension ConnectionErrorView {
     }
 }
 
-// MARK: - Style
+// MARK: - Styles
+
 extension ConnectionErrorView {
     private func style() {
         Styles.apply(view: self)

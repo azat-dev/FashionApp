@@ -16,6 +16,7 @@ protocol ProductsListViewControllerLayoutable {
 }
 
 // MARK: - Layout
+
 class ProductsListViewControllerLayout: ProductsListViewControllerLayoutable {
     private struct CellPattern {
         var ratio: CGFloat

@@ -11,8 +11,7 @@ import UIKit
 class ProductCellViewModel {
     private var product: Observable<Product?> = Observable(nil) {
         didSet {
-            product.bind {
-                [unowned self] (product, _) in
+            product.observe(on: self) { [unowned self] product in
                 self.update(from: product)
             }
         }
@@ -22,15 +21,15 @@ class ProductCellViewModel {
     var name = Observable("")
     var price = Observable("")
     var brand = Observable("")
-    var imageUrl: Observable<String?> = Observable(nil)
-    var loadImage: LoadImageFunction!
+    var imageViewModel: AsyncImageViewModel
     
-    init(product: Product?, loadImage: @escaping LoadImageFunction) {
-        self.loadImage = loadImage
+    init(product: Product?, imagesRepository: ImagesRepository) {
+
         self.product.value = product
+        self.imageViewModel = AsyncImageViewModel(imagesRepository: imagesRepository)
         
-        self.product.bind {
-            [unowned self] (product, _) in
+        self.product.observe(on: self) {
+            [unowned self] product in
             self.update(from: product)
         }
     }
@@ -43,8 +42,8 @@ extension ProductCellViewModel {
             self.name.value = "Loading product"
             self.brand.value = "Brand Name"
             self.price.value = "€000"
-            self.imageUrl.value = nil
             self.isLoading.value = true
+            self.imageViewModel.url.value = nil
             return
         }
         
@@ -53,8 +52,8 @@ extension ProductCellViewModel {
         self.brand.value = "From \(product.brand)"
         let priceText = String(format: "%.0f", product.price)
         self.price.value = "€\(priceText)"
-        self.imageUrl.value = product.image
         self.isLoading.value = false
+        self.imageViewModel.url.value = product.image
     }
     
     func getProduct() -> Product? {

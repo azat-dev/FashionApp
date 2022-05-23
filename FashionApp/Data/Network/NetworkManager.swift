@@ -73,7 +73,7 @@ extension NetworkManager {
     static func loadImage(
         url: String,
         size: Size?,
-        completion: @escaping (_ error: Error?, _ image: UIImage?) -> Void,
+        completion: @escaping (_ result: Result<Data, Error>) -> Void,
         progress: ((Double) -> Void)? = nil
     ) {
         
@@ -86,17 +86,9 @@ extension NetworkManager {
                 
                 switch response.result {
                 case .failure(let error):
-                    print("Error \(error)")
-                    completion(nil, nil)
-                    
+                    completion(.failure(error))
                 case .success(let data):
-                    
-                    guard let image = UIImage(data: data) else {
-                        completion(nil, nil)
-                        return
-                    }
-                    
-                    completion(nil, image)
+                    completion(.success(data))
                 }
             }
     }

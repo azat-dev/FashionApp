@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class AsyncImageView<ImageView: ImageSettable & UIView>: UIView {
-    var viewModel = AsyncImageViewModel() {
+    var viewModel: AsyncImageViewModel? {
         didSet {
             bindViewModel()
         }
@@ -17,26 +17,6 @@ class AsyncImageView<ImageView: ImageSettable & UIView>: UIView {
     
     var imageView = ImageView()
     var activityIndicator = UIActivityIndicatorView()
-    
-    var url: String? {
-        set {
-            viewModel.url.value = newValue
-        }
-        
-        get {
-            viewModel.url.value
-        }
-    }
-    
-    var loadImage: LoadImageFunction? {
-        set {
-            viewModel.loadImage.value = newValue
-        }
-        
-        get {
-            viewModel.loadImage.value
-        }
-    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -47,7 +27,7 @@ class AsyncImageView<ImageView: ImageSettable & UIView>: UIView {
         super.init(frame: frame)
         setup()
     }
-    
+
     private func setup() {
         setupViews()
         layout()
@@ -56,34 +36,36 @@ class AsyncImageView<ImageView: ImageSettable & UIView>: UIView {
 }
 
 // MARK: - Setup ViewModel
+
 extension AsyncImageView {
     private func bindViewModel() {
-        viewModel.image.bind { [weak self] image, _ in
+        guard let viewModel = viewModel else {
+            return
+        }
+        
+        viewModel.image.observe(on: self) { [weak self] image in
             guard let self = self else {
                 return
             }
             
             guard let image = image else {
-                DispatchQueue.main.async {
                     self.imageView.image = nil
                     self.activityIndicator.isHidden = false
                     self.imageView.isHidden = true
                     self.activityIndicator.startAnimating()
-                }
                 return
             }
             
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.isHidden = true
-                self.imageView.image = image
-                self.imageView.isHidden = false
-            }
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+            self.imageView.image = image
+            self.imageView.isHidden = false
         }
     }
 }
 
 // MARK: - Setup Views
+
 extension AsyncImageView {
     private func setupViews() {
         addSubview(imageView)
@@ -91,7 +73,8 @@ extension AsyncImageView {
     }
 }
 
-// MARK: - Style
+// MARK: - Styles
+
 extension AsyncImageView {
     private func style() {
         activityIndicator.style = .medium
@@ -99,6 +82,7 @@ extension AsyncImageView {
 }
 
 // MARK: - Layout
+
 extension AsyncImageView {
     private func layout() {
         imageView.snp.makeConstraints { make in

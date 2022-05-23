@@ -31,6 +31,7 @@ class ImageViewShadowed: UIView {
 }
 
 // MARK: - Setup Views
+
 extension ImageViewShadowed {
     private func setupViews() {
         containerView.addSubview(imageView)
@@ -40,6 +41,7 @@ extension ImageViewShadowed {
 }
 
 // MARK: - Layout
+
 extension ImageViewShadowed {
     private func layout() {
         

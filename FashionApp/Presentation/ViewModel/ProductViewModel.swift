@@ -13,6 +13,7 @@ class ProductViewModel {
     
     private var productId: String
     private var productsRepository: ProductsRepository
+    private var imagesRepository: ImagesRepository
     
     var isLoading = Observable(false)
     var isLoadingFailed = Observable(false)
@@ -20,19 +21,25 @@ class ProductViewModel {
     var brand = Observable("")
     var description = Observable("")
     var isDescriptionButtonVisible = Observable(false)
-    var image = AsyncImageViewModel()
+    var image: AsyncImageViewModel!
+    
     var loadedImage: Observable<UIImage?> = Observable(nil)
     
-    
-    init(productId: String, productsRepository: ProductsRepository) {
+    init(productId: String, productsRepository: ProductsRepository, imagesRepository: ImagesRepository) {
+        
+        self.productsRepository = productsRepository
+        self.imagesRepository = imagesRepository
+        
+        self.image = AsyncImageViewModel(imagesRepository: imagesRepository)
+        
         self.isLoading.value = true
         self.productId = productId
-        self.productsRepository = productsRepository
-        self.product.bind { [weak self] product, _ in
+        
+        self.product.observe(on: self) { [weak self] product in
             self?.update(from: product)
         }
     }
-
+    
     func load() {
         productsRepository.fetchProduct(id: productId) { [weak self] result in
             guard let self = self else {

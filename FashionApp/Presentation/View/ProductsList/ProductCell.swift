@@ -48,6 +48,7 @@ class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: U
 }
 
 // MARK: - Set up views
+
 extension ProductCell {
     func setupViews() {
         imageContainer.addSubview(asyncImageView)
@@ -62,32 +63,30 @@ extension ProductCell {
 }
 
 // MARK: - Bind the ViewModel
+
 private extension ProductCell {
     func bindViewModel() {
         
         guard let viewModel = viewModel else {
             return
         }
-        
-        asyncImageView.loadImage = viewModel.loadImage
+
             
-        viewModel.name.bind { [weak self] name, _ in
+        viewModel.name.observe(on: self) { [weak self] name in
             self?.nameLabel.text = name
         }
         
-        viewModel.brand.bind { [weak self] brand, _ in
+        viewModel.brand.observe(on: self) { [weak self] brand in
             self?.brandLabel.text = brand
         }
         
-        viewModel.price.bind { [weak self] price, _ in
+        viewModel.price.observe(on: self) { [weak self] price in
             self?.priceLabel.text = price
         }
         
-        viewModel.imageUrl.bind { [weak self] imageUrl, _ in
-            self?.asyncImageView.url = imageUrl
-        }
+        asyncImageView.viewModel = viewModel.imageViewModel
         
-        viewModel.isLoading.bind { [weak self] isLoading, _ in
+        viewModel.isLoading.observe(on: self) { [weak self] isLoading in
             guard let self = self else {
                 return
             }
@@ -106,7 +105,8 @@ private extension ProductCell {
     }
 }
 
-// MARK: - Assign styles
+// MARK: - Styles
+
 private extension ProductCell {
     func style() {
         Styles.apply(imageShadow: imageShadow)
@@ -119,6 +119,7 @@ private extension ProductCell {
 }
 
 // MARK: - Layout
+
 private extension ProductCell {
     func layout() {
         Layout.apply(

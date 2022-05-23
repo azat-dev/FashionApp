@@ -8,11 +8,6 @@
 import Foundation
 import UIKit
 
-struct Size {
-    var width: Int
-    var height: Int
-}
-
 typealias LoadImageFunction = (
     _ url: String,
     _ size: Size?,

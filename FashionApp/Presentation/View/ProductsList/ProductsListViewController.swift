@@ -82,7 +82,7 @@ class ProductsListViewController<
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let productViewModel = viewModel.viewModel(at: indexPath.item) else {
+        guard let productViewModel = viewModel.productViewModel(at: indexPath.item) else {
             return
         }
         
@@ -92,6 +92,7 @@ class ProductsListViewController<
 }
 
 // MARK: - Set up views
+
 extension ProductsListViewController {
     func setupViews() {
         
@@ -119,6 +120,7 @@ extension ProductsListViewController {
 }
 
 // MARK: - Bind ViewModel
+
 extension ProductsListViewController {
     private func hideConnectionErrorView() {
         connectionErrorView.removeFromSuperview()
@@ -172,20 +174,23 @@ extension ProductsListViewController {
     }
     
     func bindViewModel() {
-        viewModel.isLoading.bind { isLoading, _ in
-            self.updateActivityIndicator()
-            self.updateConnectionErrorView()
-            self.updateCollectionView()
+        viewModel.isLoading.observe(on: self) { [weak self] isLoading in
+            self?.updateActivityIndicator()
+            self?.updateConnectionErrorView()
+            self?.updateCollectionView()
         }
         
-        viewModel.connectionError.bind { connectionError, _ in
-            self.updateActivityIndicator()
-            self.updateConnectionErrorView()
-            self.updateCollectionView()
+        viewModel.connectionError.observe(on: self) { [weak self] connectionError in
+            self?.updateActivityIndicator()
+            self?.updateConnectionErrorView()
+            self?.updateCollectionView()
         }
         
-        viewModel.cells.bind { cells, prevCells in
-            if prevCells?.total != cells.total {
+        viewModel.cells.observe(on: self) { [weak self] cells in
+            guard let self = self else { return }
+            
+            let prevTotal = self.collectionView.numberOfItems(inSection: 0)
+            if prevTotal != cells.total {
                 self.collectionView.reloadData()
                 return
             }
@@ -196,6 +201,7 @@ extension ProductsListViewController {
 }
 
 // MARK: - Layout
+
 extension ProductsListViewController {
     func layout() {
         Layout.apply(
@@ -207,6 +213,7 @@ extension ProductsListViewController {
 }
 
 // MARK: - Styles
+
 extension ProductsListViewController {
     func style() {
         Styles.apply(view: view)
@@ -215,6 +222,7 @@ extension ProductsListViewController {
 }
 
 // MARK: - DataSource
+
 extension ProductsListViewController {
     class DataSource: NSObject, UICollectionViewDataSource {
         var viewModel: ProductListViewModel
@@ -233,7 +241,7 @@ extension ProductsListViewController {
                 for: indexPath
             )
             
-            let cellViewModel = viewModel.getCellViewModel(at: indexPath.item)
+            let cellViewModel = viewModel.cellViewModel(at: indexPath.item)
             (cell as? ProductCellWithViewModel)?.viewModel = cellViewModel
             return cell
         }

@@ -14,9 +14,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private lazy var productsRepository: ProductsRepository = {
         DefaultProductsRepository(networkManager: networkManager)
     } ()
+    private lazy var imagesRepository: ImagesRepository = {
+        DefaultImagesRepository(networkManager: networkManager)
+    } ()
 
     private func setupInitialVC(window: UIWindow) {
-        let listViewModel = ProductListViewModel(productsRepository: productsRepository)
+        let listViewModel = ProductListViewModel(
+            productsRepository: productsRepository,
+            imagesRepository: imagesRepository
+        )
         let listVC = ProductsListViewControllerStyled(viewModel: listViewModel)
         
         let navigationController = UINavigationController(rootViewController: listVC)

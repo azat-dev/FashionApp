@@ -70,6 +70,7 @@ class ProductDetailsFullScreenImage<Layout: ProductDetailsFullScreenImageLayout,
 }
 
 // MARK: - Setup views
+
 extension ProductDetailsFullScreenImage {
     private func setupViews() {
         
@@ -120,15 +121,17 @@ extension ProductDetailsFullScreenImage {
 
 
 // MARK: - Bind ViewModel
+
 extension ProductDetailsFullScreenImage {
     private func bindViewModel() {
-        viewModel?.loadedImage.bind { [weak self] newImage, _ in
+        viewModel?.loadedImage.observe(on: self) { [weak self] newImage in
             self?.imageView.image = newImage?.cropAlpha()
         }
     }
 }
 
 // MARK: - Styles
+
 extension ProductDetailsFullScreenImage {
     private func style() {
         Styles.apply(view: view)
@@ -139,6 +142,7 @@ extension ProductDetailsFullScreenImage {
 }
 
 // MARK: - Layout
+
 extension ProductDetailsFullScreenImage {
     private func layout() {
         Layout.apply(
