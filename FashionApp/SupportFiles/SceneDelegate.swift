@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     } ()
 
     private func setupInitialVC(window: UIWindow) {
-        let listViewModel = ProductListViewModel(
+        let listViewModel = DefaultProductsListViewModel(
             productsRepository: productsRepository,
             imagesRepository: imagesRepository
         )

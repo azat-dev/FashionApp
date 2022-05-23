@@ -1,5 +1,5 @@
 //
-//  ProductListViewModel.swift
+//  ProductsListViewModel.swift
 //  FashionApp
 //
 //  Created by Azat Kaiumov on 28.03.22.
@@ -9,20 +9,42 @@ import Foundation
 import UIKit
 import Alamofire
 
-class ProductListViewModel {
+struct CellsData {
+    var total: Int
+    var items: [Int: ProductCellViewModel]
+    var updatedItems: [Int]
+}
+
+enum PageState {
+    case loading
+    case loaded
+}
+
+// MARK: - Protocols
+
+protocol ProductsListViewModelInput {
+    func loadPage(at: Int)
+    func reload()
+}
+
+protocol ProductsListViewModelOutput {
+    var cells: Observable<CellsData> { get }
+    var isLoading: Observable<Bool> { get }
+    var connectionError: Observable<Bool> { get }
     
-    enum PageState {
-        case loading
-        case loaded
-    }
+    func productViewModel(at: Int) -> ProductViewModel?
+    func cellViewModel(at: Int) -> ProductCellViewModel?
+}
+
+protocol ProductsListViewModel: ProductsListViewModelInput & ProductsListViewModelOutput {
     
-    struct CellsData {
-        var items = [Int: ProductCellViewModel]()
-        var updatedItems = [Int]()
-        var total = 0
-    }
+}
+
+// MARK: - Implementation
+
+final class DefaultProductsListViewModel: ProductsListViewModel {
     
-    var cells = Observable(CellsData())
+    var cells = Observable(CellsData(total: 0, items: [:], updatedItems: []))
     var isLoading = Observable(true)
     var connectionError = Observable(false)
     
@@ -85,23 +107,23 @@ class ProductListViewModel {
 
 // MARK: - Networking
 
-extension ProductListViewModel {
+extension DefaultProductsListViewModel {
     func loadPage(at index: Int) {
-        
+
         let page = page(at: index)
         let pageStart = page * pageSize
-        
+
         guard statesOfPages[page] == nil else {
             return
         }
-        
+
         statesOfPages[page] = .loading
-        
+
         productsRepository.fetchProducts(from: pageStart, limit: pageSize) { [weak self] result in
             guard let self = self else {
                 return
             }
-            
+
             switch result {
             case .failure(_):
                 self.connectionError.value = true

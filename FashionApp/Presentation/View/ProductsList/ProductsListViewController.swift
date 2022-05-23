@@ -30,13 +30,13 @@ class ProductsListViewController<
         return PrefetchDelegate(viewModel: viewModel)
     } ()
     
-    var viewModel: ProductListViewModel! {
+    var viewModel: ProductsListViewModel! {
         didSet {
             bindViewModel()
         }
     }
         
-    init(viewModel: ProductListViewModel) {
+    init(viewModel: ProductsListViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
@@ -225,9 +225,9 @@ extension ProductsListViewController {
 
 extension ProductsListViewController {
     class DataSource: NSObject, UICollectionViewDataSource {
-        var viewModel: ProductListViewModel
+        var viewModel: ProductsListViewModel
         
-        init(viewModel: ProductListViewModel) {
+        init(viewModel: ProductsListViewModel) {
             self.viewModel = viewModel
         }
         
@@ -258,9 +258,9 @@ extension ProductsListViewController {
 
 extension ProductsListViewController {
     class PrefetchDelegate: NSObject, UICollectionViewDataSourcePrefetching {
-        var viewModel: ProductListViewModel!
+        var viewModel: ProductsListViewModel!
         
-        init(viewModel: ProductListViewModel) {
+        init(viewModel: ProductsListViewModel) {
             self.viewModel = viewModel
         }
         
