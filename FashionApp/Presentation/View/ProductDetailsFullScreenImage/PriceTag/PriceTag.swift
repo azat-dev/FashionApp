@@ -18,7 +18,7 @@ class PriceTag<Layout: PriceTagLayoutable, Styles: PriceTagStylable>: UIView {
     
     var viewModel: PriceTagViewModel! {
         didSet {
-            bindViewModel(viewModel: viewModel)
+            bind(to: viewModel)
         }
     }
     
@@ -36,6 +36,7 @@ class PriceTag<Layout: PriceTagLayoutable, Styles: PriceTagStylable>: UIView {
         setupViews()
         style()
         layout()
+        bind(to: viewModel)
     }
     
     @objc
@@ -84,7 +85,7 @@ extension PriceTag {
 // MARK: - Bind the ViewModel
 
 extension PriceTag {
-    private func bindViewModel(viewModel: PriceTagViewModel) {
+    private func bind(to viewModel: PriceTagViewModel) {
         viewModel.name.observe(on: self) { name in
             self.nameLabel.text = name
         }

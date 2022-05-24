@@ -89,7 +89,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
             return nil
         }
         
-        let viewModel = ProductViewModel(
+        let viewModel = DefaultProductViewModel(
             productId: product.id,
             productsRepository: productsRepository,
             imagesRepository: imagesRepository

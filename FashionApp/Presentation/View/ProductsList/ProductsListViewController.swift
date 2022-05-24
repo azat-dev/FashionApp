@@ -32,7 +32,7 @@ class ProductsListViewController<
     
     var viewModel: ProductsListViewModel! {
         didSet {
-            bindViewModel()
+            bind(to: viewModel)
         }
     }
         
@@ -49,7 +49,7 @@ class ProductsListViewController<
         super.viewDidLoad()
         setupViews()
         layout()
-        bindViewModel()
+        bind(to: viewModel)
         style()
     }
     
@@ -173,7 +173,7 @@ extension ProductsListViewController {
         collectionView.isHidden = !isVisible
     }
     
-    func bindViewModel() {
+    func bind(to viewModel: ProductsListViewModel) {
         viewModel.isLoading.observe(on: self) { [weak self] isLoading in
             self?.updateActivityIndicator()
             self?.updateConnectionErrorView()

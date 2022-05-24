@@ -11,7 +11,7 @@ import UIKit
 class AsyncImageView<ImageView: ImageSettable & UIView>: UIView {
     var viewModel: AsyncImageViewModel? {
         didSet {
-            bindViewModel()
+            bind(to: viewModel)
         }
     }
     
@@ -31,14 +31,14 @@ class AsyncImageView<ImageView: ImageSettable & UIView>: UIView {
     private func setup() {
         setupViews()
         layout()
-        bindViewModel()
+        bind(to: viewModel)
     }
 }
 
 // MARK: - Setup ViewModel
 
 extension AsyncImageView {
-    private func bindViewModel() {
+    private func bind(to viewModel: AsyncImageViewModel?) {
         guard let viewModel = viewModel else {
             return
         }

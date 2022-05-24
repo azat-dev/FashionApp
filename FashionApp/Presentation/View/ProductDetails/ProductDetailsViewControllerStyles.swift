@@ -13,8 +13,11 @@ protocol ProductDetailsViewStylable {
     static func apply(imageView: ImageViewShadowed)
     static func apply(scrollView: UIScrollView)
     static func apply(titleLabel: UILabel)
+    static func apply(titleLabelLoading: UILabel)
     static func apply(brandLabel: UILabel)
+    static func apply(brandLabelLoading: UILabel)
     static func apply(descriptionLabel: UILabel)
+    static func apply(descriptionLabelLoading: UILabel)
     static func apply(cartButton: UIButton)
     static func apply(imageDescriptionButton: UIButton)
     static func apply(backButton: UIButton)
@@ -58,7 +61,6 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     }
     
     class func apply(imageView: ImageViewShadowed) {
-        imageView.imageView.activityIndicator.style = .large
         imageView.shadowView.shape = imageShadowShape
         
         let shadowColor = UIColor(red: 0.094, green: 0.153, blue: 0.3, alpha: 1).cgColor
@@ -87,22 +89,29 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
     }
     
     class func apply(titleLabel: UILabel) {
+        GlobalStyles.apply(viewDisabledLoading: titleLabel)
+        titleLabel.textColor = .black
         titleLabel.font = Fonts.RedHatDisplay.medium.preferred(with: .largeTitle)
         titleLabel.textAlignment = .left
+        titleLabel.backgroundColor = .clear
     }
     
     class func apply(brandLabel: UILabel) {
+        GlobalStyles.apply(viewDisabledLoading: brandLabel)
         brandLabel.font = Fonts.RedHatDisplay.semiBold.preferred(with: .body)
         brandLabel.textAlignment = .left
         brandLabel.textColor = UIColor(named: "ColorBrandLabel")
+        brandLabel.backgroundColor = .clear
     }
     
     class func apply(descriptionLabel: UILabel) {
+        GlobalStyles.apply(viewDisabledLoading: descriptionLabel)
         descriptionLabel.font = Fonts.RedHatDisplay.medium.preferred(with: .subheadline)
         descriptionLabel.textAlignment = .left
         descriptionLabel.textColor = UIColor(named: "ColorProductDescription")
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.numberOfLines = 0
+        descriptionLabel.backgroundColor = .clear
     }
     
     class func apply(cartButton: UIButton) {
@@ -186,5 +195,20 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         backButtonConfig.image = image
         
         backButton.configuration = backButtonConfig
+    }
+    
+    class func apply(titleLabelLoading titleLabel: UILabel) {
+        apply(titleLabel: titleLabel)
+        GlobalStyles.apply(loadingLabel: titleLabel)
+    }
+    
+    class func apply(brandLabelLoading brandLabel: UILabel) {
+        apply(titleLabel: brandLabel)
+        GlobalStyles.apply(loadingLabel: brandLabel)
+    }
+    
+    class func apply(descriptionLabelLoading descriptionLabel: UILabel) {
+        apply(descriptionLabel: descriptionLabel)
+        GlobalStyles.apply(loadingLabel: descriptionLabel)
     }
 }

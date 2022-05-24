@@ -25,7 +25,7 @@ class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: U
     
     public var viewModel: ProductCellViewModel? {
         didSet {
-            bindViewModel()
+            bind(to: viewModel)
         }
     }
     
@@ -42,8 +42,8 @@ class ProductCell<Layout: ProductCellLayoutable, Styles: ProductCellStylable>: U
     private func setup() {
         setupViews()
         layout()
-        bindViewModel()
         style()
+        bind(to: viewModel)
     }
 }
 
@@ -65,12 +65,11 @@ extension ProductCell {
 // MARK: - Bind the ViewModel
 
 private extension ProductCell {
-    func bindViewModel() {
+    func bind(to viewModel: ProductCellViewModel?) {
         
         guard let viewModel = viewModel else {
             return
         }
-
             
         viewModel.name.observe(on: self) { [weak self] name in
             self?.nameLabel.text = name
@@ -100,7 +99,7 @@ private extension ProductCell {
             
             Styles.apply(nameLabel: self.nameLabel)
             Styles.apply(brandLabel: self.brandLabel)
-            Styles.apply(priceLabel: self.priceLabel)
+            Styles.apply(priceLabel: self.priceLabel)            
         }
     }
 }

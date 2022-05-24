@@ -7,7 +7,23 @@
 
 import Foundation
 
-class ProductDetailsFullScreenImageViewModel {
+// MARK: - Protocols
+
+protocol ProductDetailsFullScreenImageViewModelOutput {
+    var price: Observable<String> { get }
+    var name: Observable<String> { get }
+    var isActive: Observable<Bool> { get }
+}
+
+protocol ProductDetailsFullScreenImageViewModelInput {
+    
+}
+
+protocol ProductDetailsFullScreenImageViewModel: ProductDetailsFullScreenImageViewModelOutput & ProductDetailsFullScreenImageViewModelInput { }
+
+// MARK: - Implementation
+
+final class DefaultProductDetailsFullScreenImageViewModel: ProductDetailsFullScreenImageViewModel {
     private var product: Observable<Product>
     
     var price = Observable("")

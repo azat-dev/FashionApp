@@ -24,7 +24,7 @@ protocol ProductCellViewModelInput {
     
 }
 
-protocol ProductCellViewModel: ProductCellViewModelOutput & ProductCellViewModelInput  {}
+protocol ProductCellViewModel: ProductCellViewModelOutput & ProductCellViewModelInput {}
 
 // MARK: - Implementation
 

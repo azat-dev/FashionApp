@@ -37,6 +37,7 @@
 		AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */; };
 		AA13C599283B6169007B83D2 /* ImagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA13C598283B6169007B83D2 /* ImagesRepository.swift */; };
 		AA13C59B283B6231007B83D2 /* DefaultImagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA13C59A283B6231007B83D2 /* DefaultImagesRepository.swift */; };
+		AA13C59D283BEF50007B83D2 /* GlobalStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA13C59C283BEF50007B83D2 /* GlobalStyles.swift */; };
 		AA204B9D282024840076576C /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA204B9C282024840076576C /* AsyncOperation.swift */; };
 		AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */; };
 		AA54D85E2826884900F980C1 /* ConnectionErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA54D85D2826884900F980C1 /* ConnectionErrorView.swift */; };
@@ -142,6 +143,7 @@
 		AA0A520B27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDirectionalEdgeInsets+Init.swift"; sourceTree = "<group>"; };
 		AA13C598283B6169007B83D2 /* ImagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesRepository.swift; sourceTree = "<group>"; };
 		AA13C59A283B6231007B83D2 /* DefaultImagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImagesRepository.swift; sourceTree = "<group>"; };
+		AA13C59C283BEF50007B83D2 /* GlobalStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStyles.swift; sourceTree = "<group>"; };
 		AA204B9C282024840076576C /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		AA477A2F27CD70B10044CDE7 /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		AA54D85D2826884900F980C1 /* ConnectionErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionErrorView.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 			children = (
 				AA0A521427EB60E5009B3BF2 /* View */,
 				AA0A521227EB4A27009B3BF2 /* ViewModel */,
+				AA13C59C283BEF50007B83D2 /* GlobalStyles.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -715,6 +718,7 @@
 				AAAE49E627F1009300F3FBD1 /* ProductCellViewModel.swift in Sources */,
 				AA0A520C27EB3CA6009B3BF2 /* NSDirectionalEdgeInsets+Init.swift in Sources */,
 				AA477A3027CD70B10044CDE7 /* CustomLayout.swift in Sources */,
+				AA13C59D283BEF50007B83D2 /* GlobalStyles.swift in Sources */,
 				AA54D86328268B6900F980C1 /* ConnectionErrorViewStyles.swift in Sources */,
 				AA053F8C27F195A5004DE5B2 /* ProductDetailsViewControllerLayout.swift in Sources */,
 				AAEF55BA2837C25600AA982E /* ProductCellWithViewModel.swift in Sources */,

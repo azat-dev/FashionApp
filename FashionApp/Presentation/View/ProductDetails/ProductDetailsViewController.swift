@@ -13,7 +13,6 @@ typealias ProductDetailsViewControllerStyled = ProductDetailsViewController<Prod
 
 class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles: ProductDetailsViewStylable>: UIViewController {
     
-    
     private var backButton = UIButton(type: .system)
     private var scrollView = UIScrollView()
     private var titleLabel = UILabel()
@@ -26,7 +25,12 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     
     private var navigationDelegate = NavigationDelegate()
     
-    var viewModel: ProductViewModel!
+    var viewModel: ProductViewModel! {
+        didSet {
+            bind(to: viewModel)
+        }
+    }
+    
     var openedImage: ImageViewShadowed?
     var openedImageFrame: CGRect? {
         guard let openedImage = openedImage else {
@@ -48,13 +52,14 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        viewModel.load()
     }
     
     private func setup() {
         setupViews()
         style()
         layout()
-        bindViewModel()
+        bind(to: viewModel)
     }
     
     @objc
@@ -63,7 +68,6 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
             dismiss(animated: true)
             return
         }
-        
         
         navigationController.popViewController(animated: true)
     }
@@ -100,14 +104,18 @@ private extension ProductDetailsViewController {
         
         scrollView.addSubview(contentView)
         view.addSubview(scrollView)
-    } 
+    }
 }
 
 // MARK: - Bind ViewModel
 
 private extension ProductDetailsViewController {
-    private func bindViewModel() {
+    private func bind(to viewModel: ProductViewModel) {
         imageView.imageView.viewModel = viewModel.image
+        
+        viewModel.state.observe(on: self) { [weak self] state in
+            self?.updateState(to: state)
+        }
         
         viewModel.isDescriptionButtonVisible.observe(on: self) { [weak self] isVisible in
             self?.imageDescriptionButton.isHidden = !isVisible
@@ -123,6 +131,27 @@ private extension ProductDetailsViewController {
         
         viewModel.description.observe(on: self) { [weak self] description in
             self?.descriptionLabel.text = description
+        }
+    }
+    
+    private func updateState(to state: LoadingState) {
+        
+        switch state {
+        case .loaded:
+            
+            Styles.apply(titleLabel: titleLabel)
+            Styles.apply(brandLabel: brandLabel)
+            Styles.apply(descriptionLabel: descriptionLabel)
+            cartButton.isHidden = false
+            imageDescriptionButton.isHidden = false
+            
+        case .loading, .initial, .failed:
+            
+            Styles.apply(titleLabelLoading: titleLabel)
+            Styles.apply(brandLabelLoading: brandLabel)
+            Styles.apply(descriptionLabelLoading: descriptionLabel)
+            cartButton.isHidden = true
+            imageDescriptionButton.isHidden = true
         }
     }
 }

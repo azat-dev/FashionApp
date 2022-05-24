@@ -21,7 +21,7 @@ class ProductDetailsFullScreenImage<Layout: ProductDetailsFullScreenImageLayout,
     var viewModel: ProductViewModel! {
         didSet {
             setupViews()
-            bindViewModel()
+            bind(to: viewModel)
         }
     }
 
@@ -41,7 +41,7 @@ class ProductDetailsFullScreenImage<Layout: ProductDetailsFullScreenImageLayout,
     
     private func setup() {
         setupViews()
-        bindViewModel()
+        bind(to: viewModel)
         layout()
         style()
     }
@@ -123,8 +123,8 @@ extension ProductDetailsFullScreenImage {
 // MARK: - Bind ViewModel
 
 extension ProductDetailsFullScreenImage {
-    private func bindViewModel() {
-        viewModel?.loadedImage.observe(on: self) { [weak self] newImage in
+    private func bind(to viewModel: ProductViewModel?) {
+        viewModel?.image.image.observe(on: self) { [weak self] newImage in
             self?.imageView.image = newImage?.cropAlpha()
         }
     }
