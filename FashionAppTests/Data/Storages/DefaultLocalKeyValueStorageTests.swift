@@ -19,12 +19,14 @@ class DefaultLocalKeyValueStorageTests: XCTestCase {
     
     func test_get_not_existing_key() {
         
-        XCTAssertNil(storage.getItem(key: "test"))
+        XCTAssertNil(storage.getItem(key: "test", as: String.self))
     }
     
     func test_remove_not_existing_key() {
         
-        XCTAssertNil(storage.removeItem(key: "test"))
+        XCTAssertNoThrow({
+            self.storage.removeItem(key: "test")
+        })
     }
     
     func test_remove_existing_key() {
@@ -34,8 +36,8 @@ class DefaultLocalKeyValueStorageTests: XCTestCase {
         
         storage.removeItem(key: "test1")
         
-        XCTAssertNil(storage.getItem(key: "test1"))
-        XCTAssertEqual(storage.getItem(key: "test2"), "value2")
+        XCTAssertNil(storage.getItem(key: "test1", as: String.self))
+        XCTAssertEqual(storage.getItem(key: "test2", as: String.self), "value2")
     }
 
     func test_set_get_item() {
@@ -43,7 +45,7 @@ class DefaultLocalKeyValueStorageTests: XCTestCase {
         storage.setItem(key: "test1", value: "value1")
         storage.setItem(key: "test2", value: "value2")
         
-        XCTAssertEqual(storage.getItem(key: "test1"), "value1")
-        XCTAssertEqual(storage.getItem(key: "test2"), "value2")
+        XCTAssertEqual(storage.getItem(key: "test1", as: String.self), "value1")
+        XCTAssertEqual(storage.getItem(key: "test2", as: String.self), "value2")
     }
 }
