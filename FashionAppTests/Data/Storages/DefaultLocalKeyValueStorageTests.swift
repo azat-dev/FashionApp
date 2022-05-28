@@ -45,5 +45,5 @@ class DefaultLocalKeyValueStorageTests: XCTestCase {
         
         XCTAssertEqual(storage.getItem(key: "test1"), "value1")
         XCTAssertEqual(storage.getItem(key: "test2"), "value2")
-    }    
+    }
 }
