@@ -52,4 +52,46 @@ class LocalCartRepositoryTests: XCTestCase {
         XCTAssertEqual(savedCart.items.count, cart.items.count)
         XCTAssertEqual(savedCart.items, cart.items)
     }
+    
+    func test_put_update_existing_cart() async {
+
+        let cart1 = Cart(
+            updatedAt: nil,
+            items: [
+                CartItem(productId: "1", amount: 1),
+                CartItem(productId: "2", amount: 2),
+            ]
+        )
+
+        let result = await cartRepository.putCart(cart: cart1)
+
+        guard case .success(let savedCart1) = result else {
+            XCTAssertFalse(true, "Can't save cart")
+            return
+        }
+
+        XCTAssertNotNil(savedCart1)
+        XCTAssertEqual(savedCart1.items.count, cart1.items.count)
+        XCTAssertEqual(savedCart1.items, cart1.items)
+        
+        let cart2 = Cart(
+            updatedAt: savedCart1.updatedAt,
+            items: [
+                CartItem(productId: "3", amount: 3),
+                CartItem(productId: "4", amount: 4),
+            ]
+        )
+
+        let result2 = await cartRepository.putCart(cart: cart2)
+
+        guard case .success(let savedCart2) = result2 else {
+            XCTAssertFalse(true, "Can't save cart")
+            return
+        }
+
+        XCTAssertNotNil(savedCart2)
+        XCTAssertNotEqual(savedCart2.updatedAt, cart2.updatedAt)
+        XCTAssertEqual(savedCart2.items.count, cart2.items.count)
+        XCTAssertEqual(savedCart2.items, cart2.items)
+    }
 }
