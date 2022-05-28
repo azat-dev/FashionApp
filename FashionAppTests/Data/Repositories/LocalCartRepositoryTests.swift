@@ -32,7 +32,7 @@ class LocalCartRepositoryTests: XCTestCase {
     func test_put_new_cart() {
         
         let cart = Cart(
-            createdAt: nil
+            updatedAt: nil,
             items: []
         )
         
