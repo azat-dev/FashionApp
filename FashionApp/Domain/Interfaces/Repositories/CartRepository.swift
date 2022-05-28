@@ -8,5 +8,6 @@
 import Foundation
 
 protocol CartRepository {
-    func fetchCart() async -> Result<Cart, CartUseCaseError>
+    func fetchCart() async -> Result<Cart?, CartUseCaseError>
+    func putCart(cart: Cart) async -> Result<Cart, CartUseCaseError>
 }

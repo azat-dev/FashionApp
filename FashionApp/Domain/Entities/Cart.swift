@@ -8,9 +8,9 @@
 import Foundation
 
 
-struct CartItem {
+struct CartItem: Equatable {
     var productId: String
-    var amount: String
+    var amount: Int
 }
 
 struct Cart {
