@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var networkManager = NetworkManager(baseUrl: "http://192.168.0.102:8080")
+    var networkManager = DefaultNetworkManager(baseUrl: "http://192.168.0.102:8080")
     private lazy var productsRepository: ProductsRepository = {
         DefaultProductsRepository(networkManager: networkManager)
     } ()

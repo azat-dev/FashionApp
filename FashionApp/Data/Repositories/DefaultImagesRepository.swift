@@ -27,7 +27,7 @@ extension DefaultImagesRepository: ImagesRepository {
             url = imagePath
         }
         
-        NetworkManager.loadImage(
+        networkManager.loadImage(
             url: url,
             size: size,
             completion: completion,

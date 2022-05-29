@@ -24,7 +24,7 @@ extension DefaultProductsRepository: ProductsRepository {
     
     func fetchProducts(from: Int, limit: Int, completion: @escaping (Result<Page<Product>, Error>) -> Void) {
         networkManager.getItems(endpoint: .products, from: from, limit: limit) {
-            (_ result: Result<NetworkManager.ResponseGetItems<Product>, Error>) -> Void in
+            (_ result: Result<ResponseGetItems<Product>, Error>) -> Void in
             
             if case .failure(let error) = result {
                 completion(.failure(error))

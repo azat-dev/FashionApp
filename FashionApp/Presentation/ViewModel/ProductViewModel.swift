@@ -15,7 +15,7 @@ enum LoadingState {
     case failed
 }
 
-// MARK: - Protocol
+// MARK: - Interfaces
 
 protocol ProductViewModelOutput {
     var state: Observable<LoadingState> { get }
@@ -33,7 +33,9 @@ protocol ProductViewModelInput {
 protocol ProductViewModel: ProductViewModelOutput & ProductViewModelInput {}
 
 // MARK: - Implementation
+
 class DefaultProductViewModel: ProductViewModel {
+
     private var product: Observable<Product?> = Observable(nil)
     
     private var productId: String
@@ -63,6 +65,7 @@ class DefaultProductViewModel: ProductViewModel {
     }
     
     func load() {
+        
         self.state.value = .loading
         
         productsRepository.fetchProduct(id: productId) { [weak self] result in
@@ -91,6 +94,7 @@ class DefaultProductViewModel: ProductViewModel {
     //    }
     
     private func update(from product: Product?) {
+        
         guard let product = product else {
             self.state.value = .loading
             return

@@ -9,7 +9,46 @@ import Foundation
 import Alamofire
 import UIKit
 
-class NetworkManager {
+// MARK: - Interfaces
+
+struct ResponseGetItems<Item: Decodable>: Decodable {
+    var total: Int
+    var items: [Item]
+}
+
+enum Endpoint: String, CaseIterable {
+    case products = "products"
+}
+
+protocol NetworkManager {
+    
+    var baseUrl: String { get }
+    
+    func getItems<Item: Decodable>(
+        endpoint: Endpoint,
+        from: Int,
+        limit: Int,
+        completion: @escaping (_ result: Result<ResponseGetItems<Item>, Error>) -> Void
+    )
+    
+    func getItem<Item: Decodable>(
+        endpoint: Endpoint,
+        id: String,
+        completion: @escaping (Result<Item, Error>) -> Void
+    )
+    
+    func loadImage(
+        url: String,
+        size: Size?,
+        completion: @escaping (_ result: Result<Data, Error>) -> Void,
+        progress: ((Double) -> Void)?
+    )
+}
+
+// MARK: - Implementations
+
+class DefaultNetworkManager: NetworkManager {
+    
     private(set) var baseUrl: String
     
     init(baseUrl: String) {
@@ -17,18 +56,7 @@ class NetworkManager {
     }
 }
 
-extension NetworkManager {
-    struct ResponseGetItems<Item: Decodable>: Decodable {
-        var total: Int
-        var items: [Item]
-    }
-
-    enum Endpoint: String, CaseIterable {
-        case products = "products"
-    }
-}
-
-extension NetworkManager {
+extension DefaultNetworkManager {
     func getItems<Item: Decodable>(
         endpoint: Endpoint,
         from: Int,
@@ -70,7 +98,7 @@ extension NetworkManager {
             
     }
     
-    static func loadImage(
+    func loadImage(
         url: String,
         size: Size?,
         completion: @escaping (_ result: Result<Data, Error>) -> Void,

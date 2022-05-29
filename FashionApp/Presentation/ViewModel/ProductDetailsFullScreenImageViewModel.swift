@@ -15,15 +15,14 @@ protocol ProductDetailsFullScreenImageViewModelOutput {
     var isActive: Observable<Bool> { get }
 }
 
-protocol ProductDetailsFullScreenImageViewModelInput {
-    
-}
+protocol ProductDetailsFullScreenImageViewModelInput { }
 
 protocol ProductDetailsFullScreenImageViewModel: ProductDetailsFullScreenImageViewModelOutput & ProductDetailsFullScreenImageViewModelInput { }
 
 // MARK: - Implementation
 
 final class DefaultProductDetailsFullScreenImageViewModel: ProductDetailsFullScreenImageViewModel {
+    
     private var product: Observable<Product>
     
     var price = Observable("")
@@ -31,6 +30,7 @@ final class DefaultProductDetailsFullScreenImageViewModel: ProductDetailsFullScr
     var isActive = Observable(false)
     
     init(product: Product) {
+        
         self.product = Observable(product)
         
         self.product.observe(on: self) { [weak self] product in
