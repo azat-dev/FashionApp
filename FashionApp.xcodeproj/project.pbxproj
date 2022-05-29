@@ -332,11 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				AA06BCEA27E2555C003CFF77 /* Fonts.swift */,
-				AADDDD9027C4505600E893E1 /* AppDelegate.swift */,
-				AADDDD9227C4505600E893E1 /* SceneDelegate.swift */,
 				AADDDD9E27C4505700E893E1 /* LaunchScreen.storyboard */,
-				AADDDD9927C4505600E893E1 /* FashionApp.xcdatamodeld */,
-				AADDDDA127C4505700E893E1 /* Info.plist */,
 				AADDDD9C27C4505700E893E1 /* Assets.xcassets */,
 				AA06BCCC27E24694003CFF77 /* fonts */,
 			);
@@ -523,6 +519,17 @@
 			path = UseCases;
 			sourceTree = "<group>";
 		};
+		AAD7516D2843FFB100C7111C /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				AADDDD9027C4505600E893E1 /* AppDelegate.swift */,
+				AADDDD9227C4505600E893E1 /* SceneDelegate.swift */,
+				AADDDDA127C4505700E893E1 /* Info.plist */,
+				AADDDD9927C4505600E893E1 /* FashionApp.xcdatamodeld */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		AADC300428041961004488E1 /* PriceTag */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,6 +563,7 @@
 		AADDDD8F27C4505600E893E1 /* FashionApp */ = {
 			isa = PBXGroup;
 			children = (
+				AAD7516D2843FFB100C7111C /* Application */,
 				AA13C597283B5D51007B83D2 /* Presentation */,
 				AAA7E117283A2D5900865350 /* Domain */,
 				AAA7E112283A26F400865350 /* Data */,
