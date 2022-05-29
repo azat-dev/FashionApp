@@ -13,21 +13,14 @@ class LocalCartRepositoryTests: XCTestCase {
     var storage: LocalKeyValueStorage!
     var cartRepository: LocalCartRepository!
     
-    func cleanStorage() {
-        let defaults = UserDefaults.standard
-        defaults.dictionaryRepresentation().keys.forEach { key in
-            defaults.removeObject(forKey: key)
-        }
-    }
-    
     override func setUp() async throws {
-        cleanStorage()
         storage = DefaultLocalKeyValueStorage()
+        storage.clean()
         cartRepository = LocalCartRepository(localKeyValueStorage: storage)
     }
     
     override func tearDown() {
-        cleanStorage()
+        storage.clean()
     }
     
     func test_get_cart_not_existing() async {

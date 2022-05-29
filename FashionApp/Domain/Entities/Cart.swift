@@ -17,3 +17,23 @@ struct Cart {
     var updatedAt: Date?
     var items: [CartItem]
 }
+
+extension Cart {
+    
+    mutating func put(item: CartItem) {
+        
+        let index = items.firstIndex { cartItem in cartItem.productId == item.productId }
+        
+        guard let index = index else {
+            items.append(item)
+            return
+        }
+        
+        items[index] = item
+    }
+    
+    mutating func removeItem(productId: String) {
+        
+        items.removeAll { item in item.productId == productId }
+    }
+}

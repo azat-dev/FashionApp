@@ -10,9 +10,11 @@ import Foundation
 // MARK: - Interfaces
 
 protocol LocalKeyValueStorage {
+    
     func setItem<T>(key: String, value: T) where T: Encodable
     func getItem<T>(key: String, as: T.Type) -> T? where T: Decodable
     func removeItem(key: String)
+    func clean()
 }
 
 // MARK: - Implementations
@@ -41,5 +43,14 @@ class DefaultLocalKeyValueStorage: LocalKeyValueStorage {
     
     func removeItem(key: String) {
         UserDefaults.standard.removeObject(forKey: key)
+    }
+    
+    func clean() {
+        
+        let defaults = UserDefaults.standard
+        
+        defaults.dictionaryRepresentation().keys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
     }
 }

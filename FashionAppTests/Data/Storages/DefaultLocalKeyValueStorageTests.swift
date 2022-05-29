@@ -48,4 +48,15 @@ class DefaultLocalKeyValueStorageTests: XCTestCase {
         XCTAssertEqual(storage.getItem(key: "test1", as: String.self), "value1")
         XCTAssertEqual(storage.getItem(key: "test2", as: String.self), "value2")
     }
+    
+    func test_clean() {
+        
+        storage.setItem(key: "test1", value: "value1")
+        storage.setItem(key: "test2", value: "value2")
+        
+        storage.clean()
+        
+        XCTAssertNil(storage.getItem(key: "test1", as: String.self))
+        XCTAssertNil(storage.getItem(key: "test2", as: String.self))
+    }
 }
