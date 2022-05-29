@@ -331,6 +331,8 @@
 		AA0A521327EB5981009B3BF2 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				AADDDDA127C4505700E893E1 /* Info.plist */,
+				AADDDD9927C4505600E893E1 /* FashionApp.xcdatamodeld */,
 				AA06BCEA27E2555C003CFF77 /* Fonts.swift */,
 				AADDDD9E27C4505700E893E1 /* LaunchScreen.storyboard */,
 				AADDDD9C27C4505700E893E1 /* Assets.xcassets */,
@@ -524,8 +526,6 @@
 			children = (
 				AADDDD9027C4505600E893E1 /* AppDelegate.swift */,
 				AADDDD9227C4505600E893E1 /* SceneDelegate.swift */,
-				AADDDDA127C4505700E893E1 /* Info.plist */,
-				AADDDD9927C4505600E893E1 /* FashionApp.xcdatamodeld */,
 			);
 			path = Application;
 			sourceTree = "<group>";

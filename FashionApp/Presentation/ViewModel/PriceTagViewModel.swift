@@ -8,7 +8,24 @@
 import Foundation
 import UIKit
 
-class PriceTagViewModel {
+// MARK: - Interfaces
+
+protocol PriceTagViewModelOutput {
+    
+    var price: Observable<String>  { get }
+    var name: Observable<String> { get }
+    var isActive: Observable<Bool> { get }
+    var point: CGPoint { get }
+}
+
+protocol PriceTagViewModelInput { }
+
+typealias PriceTagViewModel = PriceTagViewModelOutput & PriceTagViewModelInput
+
+// MARK: - Implementations
+
+final class DefaultPriceTagViewModel: PriceTagViewModel {
+    
     private var product: Observable<Product>
     
     var price = Observable("100")
@@ -17,6 +34,7 @@ class PriceTagViewModel {
     var point: CGPoint
     
     init(product: Product, point: CGPoint) {
+        
         self.point = point
         
         self.product = Observable(product)
@@ -33,6 +51,7 @@ class PriceTagViewModel {
     }
     
     func toggle() {
+        
         isActive.value = !isActive.value
     }
 }
