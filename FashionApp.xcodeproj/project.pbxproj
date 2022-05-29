@@ -72,7 +72,6 @@
 		AADC301028042015004488E1 /* PriceTagStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC300F28042015004488E1 /* PriceTagStyles.swift */; };
 		AADC30122804201F004488E1 /* PriceTagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC30112804201F004488E1 /* PriceTagLayout.swift */; };
 		AADC301428042ABC004488E1 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC301328042ABC004488E1 /* ImageData.swift */; };
-		AADC301628043728004488E1 /* Basket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADC301528043728004488E1 /* Basket.swift */; };
 		AADDDD9127C4505600E893E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9027C4505600E893E1 /* AppDelegate.swift */; };
 		AADDDD9327C4505600E893E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9227C4505600E893E1 /* SceneDelegate.swift */; };
 		AADDDD9527C4505600E893E1 /* ProductsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADDDD9427C4505600E893E1 /* ProductsListViewController.swift */; };
@@ -184,7 +183,6 @@
 		AADC300F28042015004488E1 /* PriceTagStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTagStyles.swift; sourceTree = "<group>"; };
 		AADC30112804201F004488E1 /* PriceTagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceTagLayout.swift; sourceTree = "<group>"; };
 		AADC301328042ABC004488E1 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
-		AADC301528043728004488E1 /* Basket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basket.swift; sourceTree = "<group>"; };
 		AADDDD8D27C4505600E893E1 /* FashionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FashionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AADDDD9027C4505600E893E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AADDDD9227C4505600E893E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -341,7 +339,6 @@
 				AADDDDA127C4505700E893E1 /* Info.plist */,
 				AADDDD9C27C4505700E893E1 /* Assets.xcassets */,
 				AA06BCCC27E24694003CFF77 /* fonts */,
-				AAAE49E727F100B700F3FBD1 /* Observable.swift */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -375,6 +372,7 @@
 		AA13C597283B5D51007B83D2 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				AA0A521127EB49F9009B3BF2 /* CommonViews */,
 				AA0A521427EB60E5009B3BF2 /* View */,
 				AA0A521227EB4A27009B3BF2 /* ViewModel */,
 				AA13C59C283BEF50007B83D2 /* GlobalStyles.swift */,
@@ -386,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				AA204B9C282024840076576C /* AsyncOperation.swift */,
+				AAAE49E727F100B700F3FBD1 /* Observable.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -398,15 +397,6 @@
 				AA54D86228268B6900F980C1 /* ConnectionErrorViewStyles.swift */,
 			);
 			path = ConnectionErrorView;
-			sourceTree = "<group>";
-		};
-		AA8C543027D26E1D00B36D97 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				AADC301328042ABC004488E1 /* ImageData.swift */,
-				AADC301528043728004488E1 /* Basket.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		AAA7E112283A26F400865350 /* Data */ = {
@@ -451,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				AA8C542E27D26E1500B36D97 /* Product.swift */,
+				AADC301328042ABC004488E1 /* ImageData.swift */,
 				AAD7516128428C4900C7111C /* Cart.swift */,
 			);
 			path = Entities;
@@ -568,8 +559,6 @@
 				AA13C597283B5D51007B83D2 /* Presentation */,
 				AAA7E117283A2D5900865350 /* Domain */,
 				AAA7E112283A26F400865350 /* Data */,
-				AA8C543027D26E1D00B36D97 /* Model */,
-				AA0A521127EB49F9009B3BF2 /* CommonViews */,
 				AA0A521327EB5981009B3BF2 /* SupportFiles */,
 				AA204B9B282024730076576C /* Utils */,
 				AA0A520627EB3C00009B3BF2 /* Extensions */,
@@ -827,7 +816,6 @@
 				AA8C542D27D26D8200B36D97 /* ProductCell.swift in Sources */,
 				AA54D861282689A600F980C1 /* ConnectionErrorViewLayout.swift in Sources */,
 				AA9F7AA4280DE3C00073DCA9 /* CGRect+Utils.swift in Sources */,
-				AADC301628043728004488E1 /* Basket.swift in Sources */,
 				AAA6C3DD2801783C0046F477 /* UIImage+Crop.swift in Sources */,
 				AAAE49E827F100B700F3FBD1 /* Observable.swift in Sources */,
 				AAFEEF2B280F3291006E63E7 /* CustomIntensityVisualEffect.swift in Sources */,
