@@ -19,6 +19,8 @@
 		<string>RedHatDisplay-SemiBold.ttf</string>
 		<string>RedHatDisplay-SemiBoldItalic.ttf</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
