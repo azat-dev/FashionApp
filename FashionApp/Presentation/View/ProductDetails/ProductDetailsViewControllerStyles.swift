@@ -9,29 +9,32 @@ import Foundation
 import UIKit
 import UIImageViewAlignedSwift
 
-protocol ProductDetailsViewStylable {
-    static func apply(imageView: ImageViewShadowed)
-    static func apply(scrollView: UIScrollView)
-    static func apply(titleLabel: UILabel)
-    static func apply(titleLabelLoading: UILabel)
-    static func apply(brandLabel: UILabel)
-    static func apply(brandLabelLoading: UILabel)
-    static func apply(descriptionLabel: UILabel)
-    static func apply(descriptionLabelLoading: UILabel)
-    static func apply(cartButton: UIButton)
-    static func apply(imageDescriptionButton: UIButton)
-    static func apply(backButton: UIButton)
-    static func apply(contentView: UIView)
+// MARK: - Interfaces
+
+protocol ProductDetailsViewControllerStyles {
+    func apply(imageView: ImageViewShadowed)
+    func apply(scrollView: UIScrollView)
+    func apply(titleLabel: UILabel)
+    func apply(titleLabelLoading: UILabel)
+    func apply(brandLabel: UILabel)
+    func apply(brandLabelLoading: UILabel)
+    func apply(descriptionLabel: UILabel)
+    func apply(descriptionLabelLoading: UILabel)
+    func apply(cartButton: UIButton)
+    func apply(imageDescriptionButton: UIButton)
+    func apply(backButton: UIButton)
+    func apply(contentView: UIView)
 }
 
-// MARK: - Style Views
+// MARK: - Implementations
 
-class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
-    class var imageCornerRadius: CGFloat {
+class DefaultProductDetailsViewControllerStyles: ProductDetailsViewControllerStyles {
+    
+    var imageCornerRadius: CGFloat {
         15
     }
     
-    class var imageShadowShape: ShapeCallback {
+    var imageShadowShape: ShapeCallback {
         get {
             let callback: ShapeCallback = { view in
                 let width = view.frame.width * 0.6
@@ -50,8 +53,8 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
                 
                 return CGPath(
                     roundedRect: rect,
-                    cornerWidth: imageCornerRadius,
-                    cornerHeight: imageCornerRadius,
+                    cornerWidth: self.imageCornerRadius,
+                    cornerHeight: self.imageCornerRadius,
                     transform: nil
                 )
             }
@@ -60,7 +63,7 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         }
     }
     
-    class func apply(imageView: ImageViewShadowed) {
+    func apply(imageView: ImageViewShadowed) {
         imageView.shadowView.shape = imageShadowShape
         
         let shadowColor = UIColor(red: 0.094, green: 0.153, blue: 0.3, alpha: 1).cgColor
@@ -80,15 +83,15 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         imageView.containerView.layer.cornerRadius = imageCornerRadius
     }
     
-    class func apply(scrollView: UIScrollView) {
+    func apply(scrollView: UIScrollView) {
         scrollView.backgroundColor = UIColor.systemBackground
     }
     
-    class func apply(contentView: UIView) {
+    func apply(contentView: UIView) {
         
     }
     
-    class func apply(titleLabel: UILabel) {
+    func apply(titleLabel: UILabel) {
         GlobalStyles.apply(viewDisabledLoading: titleLabel)
         titleLabel.textColor = .black
         titleLabel.font = Fonts.RedHatDisplay.medium.preferred(with: .largeTitle)
@@ -96,7 +99,7 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         titleLabel.backgroundColor = .clear
     }
     
-    class func apply(brandLabel: UILabel) {
+    func apply(brandLabel: UILabel) {
         GlobalStyles.apply(viewDisabledLoading: brandLabel)
         brandLabel.font = Fonts.RedHatDisplay.semiBold.preferred(with: .body)
         brandLabel.textAlignment = .left
@@ -104,7 +107,7 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         brandLabel.backgroundColor = .clear
     }
     
-    class func apply(descriptionLabel: UILabel) {
+    func apply(descriptionLabel: UILabel) {
         GlobalStyles.apply(viewDisabledLoading: descriptionLabel)
         descriptionLabel.font = Fonts.RedHatDisplay.medium.preferred(with: .subheadline)
         descriptionLabel.textAlignment = .left
@@ -114,7 +117,7 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         descriptionLabel.backgroundColor = .clear
     }
     
-    class func apply(cartButton: UIButton) {
+    func apply(cartButton: UIButton) {
         let cartButtonCornerRadius: CGFloat = 12
         let cartButtonImage = UIImage(systemName: "cart")
         let cartButtonBackgroundColor = UIColor(named: "ColorProductCellBackground")
@@ -157,7 +160,7 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         cartButton.configuration = cartButtonConfig
     }
     
-    class func apply(imageDescriptionButton: UIButton) {
+    func apply(imageDescriptionButton: UIButton) {
         if #available(iOS 15, *) {
             let imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .bold)
             let image = UIImage(systemName: "viewfinder", withConfiguration: imageConfig)
@@ -176,7 +179,7 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         }
     }
     
-    class func apply(backButton: UIButton) {
+    func apply(backButton: UIButton) {
         
         let imageConfig = UIImage.SymbolConfiguration(
             pointSize: 16,
@@ -197,17 +200,17 @@ class ProductDetailsViewControllerStyles: ProductDetailsViewStylable {
         backButton.configuration = backButtonConfig
     }
     
-    class func apply(titleLabelLoading titleLabel: UILabel) {
+    func apply(titleLabelLoading titleLabel: UILabel) {
         apply(titleLabel: titleLabel)
         GlobalStyles.apply(loadingLabel: titleLabel)
     }
     
-    class func apply(brandLabelLoading brandLabel: UILabel) {
+    func apply(brandLabelLoading brandLabel: UILabel) {
         apply(titleLabel: brandLabel)
         GlobalStyles.apply(loadingLabel: brandLabel)
     }
     
-    class func apply(descriptionLabelLoading descriptionLabel: UILabel) {
+    func apply(descriptionLabelLoading descriptionLabel: UILabel) {
         apply(descriptionLabel: descriptionLabel)
         GlobalStyles.apply(loadingLabel: descriptionLabel)
     }

@@ -22,17 +22,21 @@ enum PageState {
 
 // MARK: - Protocols
 
+typealias ProductsListCoordinator = OpeningProduct
+
 protocol ProductsListViewModelInput {
+    
     func loadPage(at: Int)
     func reload()
+    func openProduct(at: Int)
 }
 
 protocol ProductsListViewModelOutput {
+    
     var cells: Observable<CellsData> { get }
     var isLoading: Observable<Bool> { get }
     var connectionError: Observable<Bool> { get }
     
-    func productViewModel(at: Int) -> ProductViewModel?
     func cellViewModel(at: Int) -> ProductCellViewModel?
 }
 
@@ -48,6 +52,7 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     var isLoading = Observable(true)
     var connectionError = Observable(false)
     
+    private let coordinator: ProductsListCoordinator
     private let pageSize = 10
     private var statesOfPages = [Int: PageState]()
     private var pagesQueue = OperationQueue()
@@ -57,12 +62,13 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
     
     private var loadImage: LoadImageFunction!
     
-    init(productsRepository: ProductsRepository, imagesRepository: ImagesRepository) {
+    init(productsRepository: ProductsRepository, imagesRepository: ImagesRepository, coordinator: ProductsListCoordinator) {
         pagesQueue = OperationQueue()
         pagesQueue.maxConcurrentOperationCount = 5
         
         self.productsRepository = productsRepository
         self.imagesRepository = imagesRepository
+        self.coordinator = coordinator
     }
     
     private func page(at index: Int) -> Int {
@@ -84,24 +90,24 @@ final class DefaultProductsListViewModel: ProductsListViewModel {
         return cellViewModel?.getProduct()
     }
     
-    func productViewModel(at index: Int) -> ProductViewModel? {
-        guard let product = product(at: index) else {
-            return nil
-        }
-        
-        let viewModel = DefaultProductViewModel(
-            productId: product.id,
-            productsRepository: productsRepository,
-            imagesRepository: imagesRepository
-        )
-        return viewModel
-    }
-    
     func reload() {
         isLoading.value = true
         connectionError.value = false
         
         loadPage(at: 0)
+    }
+    
+    func openProduct(at index: Int) {
+        
+        guard
+            index < cells.value.items.count,
+            let cellViewModel = cells.value.items[index],
+            let product = cellViewModel.getProduct()
+        else {
+            return
+        }
+        
+        coordinator.openProduct(productId: product.id)
     }
 }
 

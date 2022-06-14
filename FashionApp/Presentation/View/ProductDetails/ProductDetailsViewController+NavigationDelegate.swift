@@ -18,7 +18,7 @@ extension ProductDetailsViewController {
         ) -> UIViewControllerAnimatedTransitioning? {
             guard
                 let _ = fromVC as? ProductDetailsViewController,
-                let _ = toVC as? ProductDetailsFullScreenImageViewControllerStyled
+                let _ = toVC as? ProductDetailsFullScreenImageViewController
             else {
                 return nil
             }

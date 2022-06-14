@@ -8,21 +8,26 @@
 import Foundation
 import UIKit
 
+// MARK: - Interfaces
+
 protocol ProductsListViewControllerStylable {
-    static func apply(view: UIView)
-    static func apply(activityIndicator: UIActivityIndicatorView)
-    static func apply(collectionView: UICollectionView)
+    func apply(view: UIView)
+    func apply(activityIndicator: UIActivityIndicatorView)
+    func apply(collectionView: UICollectionView)
 }
 
+// MARK: - Implementations
+
 class ProductsListViewControllerStyles: ProductsListViewControllerStylable {
-    class func apply(view: UIView) {
+    
+    func apply(view: UIView) {
         view.backgroundColor = .white
     }
     
-    class func apply(activityIndicator: UIActivityIndicatorView) {
+    func apply(activityIndicator: UIActivityIndicatorView) {
         activityIndicator.style = .large
     }
     
-    class func apply(collectionView: UICollectionView) {
+    func apply(collectionView: UICollectionView) {
     }
 }

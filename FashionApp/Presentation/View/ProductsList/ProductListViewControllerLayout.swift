@@ -8,22 +8,26 @@
 import Foundation
 import UIKit
 
-protocol ProductsListViewControllerLayoutable {
-    static func apply(view: UIView, activityIndicator: UIActivityIndicatorView, collectionView: UICollectionView)
-    static func isRoundedCell(index: IndexPath) -> Bool
-    static var collectionViewLayout: UICollectionViewLayout { get }
-    static func apply(view: UIView, connectionErrorView: ConnectionErrorViewStyled)
+// MARK: - Interfaces
+
+protocol ProductsListViewControllerLayout {
+    
+    func apply(view: UIView, activityIndicator: UIActivityIndicatorView, collectionView: UICollectionView)
+    func isRoundedCell(index: IndexPath) -> Bool
+    var collectionViewLayout: UICollectionViewLayout { get }
+    func apply(view: UIView, connectionErrorView: ConnectionErrorViewStyled)
 }
 
-// MARK: - Layout
+// MARK: - Implementations
 
-class ProductsListViewControllerLayout: ProductsListViewControllerLayoutable {
+struct DefaultProductsListViewControllerLayout: ProductsListViewControllerLayout {
+    
     private struct CellPattern {
         var ratio: CGFloat
         var isRounded: Bool
     }
     
-    class private var cellsPatterns: [CellPattern] {
+    private var cellsPatterns: [CellPattern] {
         [
             .init(ratio: 2.0, isRounded: false),
             .init(ratio: 1.8, isRounded: true),
@@ -32,11 +36,11 @@ class ProductsListViewControllerLayout: ProductsListViewControllerLayoutable {
         ]
     }
     
-    class private var numberOfColumns: Int { 2 }
-    class private var horizontalSpacing: CGFloat { 20 }
-    class private var verticalSpacing: CGFloat { 20 }
+    private var numberOfColumns: Int { 2 }
+    private var horizontalSpacing: CGFloat { 20 }
+    private var verticalSpacing: CGFloat { 20 }
     
-    class func apply(
+    func apply(
         view: UIView,
         activityIndicator: UIActivityIndicatorView,
         collectionView: UICollectionView
@@ -51,7 +55,7 @@ class ProductsListViewControllerLayout: ProductsListViewControllerLayoutable {
         }
     }
     
-    class func isRoundedCell(index: IndexPath) -> Bool {
+    func isRoundedCell(index: IndexPath) -> Bool {
         let interval = cellsPatterns.count
         
         for (patternOffset, cellPattern) in cellsPatterns.enumerated() {
@@ -67,7 +71,7 @@ class ProductsListViewControllerLayout: ProductsListViewControllerLayoutable {
         return false
     }
     
-    class var collectionViewLayout: UICollectionViewLayout {
+    var collectionViewLayout: UICollectionViewLayout {
         let layout = CustomLayout()
         let insets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         
@@ -91,7 +95,7 @@ class ProductsListViewControllerLayout: ProductsListViewControllerLayoutable {
         return layout
     }
     
-    class func apply(view: UIView, connectionErrorView: ConnectionErrorViewStyled) {
+    func apply(view: UIView, connectionErrorView: ConnectionErrorViewStyled) {
         connectionErrorView.snp.makeConstraints { make in
             make.centerY.equalTo(view.snp.centerY)
             make.centerX.equalTo(view.snp.centerX)

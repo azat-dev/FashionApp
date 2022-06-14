@@ -9,15 +9,14 @@ import Foundation
 import UIKit
 
 private func extractViewController<T>(viewController: UIViewController) -> T? {
-    let navigationVC = viewController as? UINavigationController
     
+    let navigationVC = viewController as? UINavigationController
     return (navigationVC?.topViewController ?? viewController) as? T
 }
 
 extension ProductDetailsViewController {
+    
     class FullScreenImageTransition: NSObject, UIViewControllerAnimatedTransitioning {
-        typealias DetailsViewController = ProductDetailsViewController<Layout, Styles>
-        
         private var duration: TimeInterval = 0.5
         
         private var imageBackgroundView = UIView()
@@ -27,8 +26,8 @@ extension ProductDetailsViewController {
         private var originalImage: ImageViewShadowed!
         private var fullscreenImage: UIView!
         private var fullscreenImageSnapshot: UIView!
-        private var detailsVC: DetailsViewController!
-        private var fullscreenImageVC: ProductDetailsFullScreenImageViewControllerStyled!
+        private var detailsVC: ProductDetailsViewController!
+        private var fullscreenImageVC: ProductDetailsFullScreenImageViewController!
         private var fullscreenRootView: UIView!
         private var detailsRootView: UIView!
         
@@ -52,8 +51,8 @@ extension ProductDetailsViewController {
             }
             
             guard
-                let detailsVC: DetailsViewController = extractViewController(viewController: isPresenting ? fromVC : toVC),
-                let fullscreenImageVC: ProductDetailsFullScreenImageViewControllerStyled = extractViewController(viewController: isPresenting ? toVC : fromVC)
+                let detailsVC: ProductDetailsViewController = extractViewController(viewController: isPresenting ? fromVC : toVC),
+                let fullscreenImageVC: ProductDetailsFullScreenImageViewController = extractViewController(viewController: isPresenting ? toVC : fromVC)
             else {
                 return false
             }

@@ -1,5 +1,5 @@
 //
-//  ProductViewModel.swift
+//  ProductDetailsViewModel.swift
 //  FashionApp
 //
 //  Created by Azat Kaiumov on 28.03.22.
@@ -17,30 +17,36 @@ enum LoadingState {
 
 // MARK: - Interfaces
 
-protocol ProductViewModelOutput {
+typealias ProductDetailsCoordinator = OpeningProduct & OpeningProductFullScreenImage & GoingBack
+
+protocol ProductDetailsViewModelOutput {
     var state: Observable<LoadingState> { get }
     var title: Observable<String> { get }
     var brand: Observable<String> { get }
     var description: Observable<String> { get }
     var isDescriptionButtonVisible: Observable<Bool> { get }
     var image: AsyncImageViewModel { get }
+    var productId: String { get }
 }
 
-protocol ProductViewModelInput {
+protocol ProductDetailsViewModelInput {
     func load()
+    func openFullscreenImage()
+    func goBack()
 }
 
-protocol ProductViewModel: ProductViewModelOutput & ProductViewModelInput {}
+protocol ProductDetailsViewModel: ProductDetailsViewModelOutput & ProductDetailsViewModelInput {}
 
 // MARK: - Implementation
 
-class DefaultProductViewModel: ProductViewModel {
+class DefaultProductDetailsViewModel: ProductDetailsViewModel {
 
     private var product: Observable<Product?> = Observable(nil)
     
-    private var productId: String
-    private var productsRepository: ProductsRepository
-    private var imagesRepository: ImagesRepository
+    private (set) var productId: String
+    private let productsRepository: ProductsRepository
+    private let imagesRepository: ImagesRepository
+    private let coordinator: ProductDetailsCoordinator
     
     var state = Observable(LoadingState.initial)
     var title = Observable("Some long title stub")
@@ -49,10 +55,17 @@ class DefaultProductViewModel: ProductViewModel {
     var isDescriptionButtonVisible = Observable(false)
     var image: AsyncImageViewModel
     
-    init(productId: String, productsRepository: ProductsRepository, imagesRepository: ImagesRepository) {
+    
+    init(
+        productId: String,
+        productsRepository: ProductsRepository,
+        imagesRepository: ImagesRepository,
+        coordinator: ProductDetailsCoordinator
+    ) {
         
         self.productsRepository = productsRepository
         self.imagesRepository = imagesRepository
+        self.coordinator = coordinator
         
         self.image = AsyncImageViewModel(imagesRepository: imagesRepository)
         
@@ -108,10 +121,32 @@ class DefaultProductViewModel: ProductViewModel {
         self.image.url.value = product.image
         self.state.value = .loaded
     }
-}
-
-extension ProductViewModel {
+    
+    
     func addToCart() {
         
+    }
+    
+    func openProduct() {
+        coordinator.openProduct(productId: productId)
+    }
+    
+    func goBack() {
+        coordinator.goBack()
+    }
+    
+    func openFullscreenImage() {
+        
+        guard
+            let product = product.value,
+            let image = image.image.value
+        else {
+            return
+        }
+        
+        coordinator.openProductFullScreenImage(
+            product: product,
+            image: image
+        )
     }
 }

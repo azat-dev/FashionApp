@@ -7,14 +7,10 @@
 
 import UIKit
 
-typealias ProductsListViewControllerStyled = ProductsListViewController<
-    ProductsListViewControllerLayout, ProductsListViewControllerStyles
->
-
-class ProductsListViewController<
-    Layout: ProductsListViewControllerLayoutable,
-    Styles: ProductsListViewControllerStylable
->: UIViewController, UICollectionViewDelegate {
+final class ProductsListViewController: UIViewController, UICollectionViewDelegate {
+    
+    private let styles: ProductsListViewControllerStyles!
+    private let layout: ProductsListViewControllerLayout!
     
     private var collectionView: UICollectionView!
     private var activityIndicator = UIActivityIndicatorView()
@@ -22,21 +18,21 @@ class ProductsListViewController<
         return ConnectionErrorViewStyled()
     } ()
     
-    private lazy var dataSource: DataSource = {
-        return DataSource(viewModel: viewModel)
-    } ()
-    
-    private lazy var prefetchDelegate: PrefetchDelegate = {
-        return PrefetchDelegate(viewModel: viewModel)
-    } ()
-    
     var viewModel: ProductsListViewModel! {
         didSet {
             bind(to: viewModel)
         }
     }
+    
+    init(
+        viewModel: ProductsListViewModel,
+        styles: ProductsListViewControllerStyles,
+        layout: ProductsListViewControllerLayout
+    ) {
         
-    init(viewModel: ProductsListViewModel) {
+        self.styles = styles
+        self.layout = layout
+        
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
@@ -48,14 +44,14 @@ class ProductsListViewController<
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        layout()
+        applyLayout()
         bind(to: viewModel)
         style()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        viewModel.loadPage(at: 0)
-//    }
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        viewModel.loadPage(at: 0)
+    //    }
     
     override func viewDidAppear(_ animated: Bool) {
         let maxY = collectionView.frame.maxY
@@ -68,7 +64,7 @@ class ProductsListViewController<
                 maxIndex = 15
                 break
             }
-
+            
             maxIndex += 1
             if cellAttributes.frame.maxY > maxY {
                 break
@@ -82,23 +78,19 @@ class ProductsListViewController<
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let productViewModel = viewModel.productViewModel(at: indexPath.item) else {
-            return
-        }
-        
-        let vc = ProductDetailsViewControllerStyled(viewModel: productViewModel)
-        show(vc, sender: self)
+        viewModel.openProduct(at: indexPath.item)
     }
 }
 
 // MARK: - Set up views
 
 extension ProductsListViewController {
+    
     func setupViews() {
         
         collectionView = UICollectionView(
             frame: view.frame,
-            collectionViewLayout: Layout.collectionViewLayout
+            collectionViewLayout: layout.collectionViewLayout
         )
         
         collectionView.register(
@@ -110,9 +102,9 @@ extension ProductsListViewController {
             forCellWithReuseIdentifier: ProductCellRoundedStyled.reuseIdentifier
         )
         
-        collectionView.dataSource = dataSource
+        collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.prefetchDataSource = prefetchDelegate
+        collectionView.prefetchDataSource = self
         
         view.addSubview(collectionView)
         view.addSubview(activityIndicator)
@@ -122,6 +114,7 @@ extension ProductsListViewController {
 // MARK: - Bind ViewModel
 
 extension ProductsListViewController {
+    
     private func hideConnectionErrorView() {
         connectionErrorView.removeFromSuperview()
     }
@@ -138,9 +131,9 @@ extension ProductsListViewController {
             self?.viewModel.reload()
         }
         
-        Layout.apply(view: view, connectionErrorView: connectionErrorView)
+        layout.apply(view: view, connectionErrorView: connectionErrorView)
     }
-
+    
     private func updateActivityIndicator() {
         let isLoading = viewModel.isLoading.value
         let connectionError = viewModel.connectionError.value
@@ -203,8 +196,9 @@ extension ProductsListViewController {
 // MARK: - Layout
 
 extension ProductsListViewController {
-    func layout() {
-        Layout.apply(
+    
+    func applyLayout() {
+        layout.apply(
             view: view,
             activityIndicator: activityIndicator,
             collectionView: collectionView
@@ -215,62 +209,49 @@ extension ProductsListViewController {
 // MARK: - Styles
 
 extension ProductsListViewController {
+    
     func style() {
-        Styles.apply(view: view)
-        Styles.apply(collectionView: collectionView)
+        styles.apply(view: view)
+        styles.apply(collectionView: collectionView)
     }
 }
 
 // MARK: - DataSource
 
-extension ProductsListViewController {
-    class DataSource: NSObject, UICollectionViewDataSource {
-        var viewModel: ProductsListViewModel
+extension ProductsListViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        init(viewModel: ProductsListViewModel) {
-            self.viewModel = viewModel
-        }
+        let isRounded = layout.isRoundedCell(index: indexPath)
+        let reuseIdentifier = isRounded ? ProductCellRoundedStyled.reuseIdentifier : ProductCellStyled.reuseIdentifier
         
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            
-            let isRounded = Layout.isRoundedCell(index: indexPath)
-            let reuseIdentifier = isRounded ? ProductCellRoundedStyled.reuseIdentifier : ProductCellStyled.reuseIdentifier
-            
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: reuseIdentifier,
-                for: indexPath
-            )
-            
-            let cellViewModel = viewModel.cellViewModel(at: indexPath.item)
-            (cell as? ProductCellWithViewModel)?.viewModel = cellViewModel
-            return cell
-        }
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: reuseIdentifier,
+            for: indexPath
+        )
         
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return viewModel.cells.value.total
-        }
-        
-        func numberOfSections(in collectionView: UICollectionView) -> Int {
-            return 1
-        }
+        let cellViewModel = viewModel.cellViewModel(at: indexPath.item)
+        (cell as? ProductCellWithViewModel)?.viewModel = cellViewModel
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.cells.value.total
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
 }
 
-extension ProductsListViewController {
-    class PrefetchDelegate: NSObject, UICollectionViewDataSourcePrefetching {
-        var viewModel: ProductsListViewModel!
-        
-        init(viewModel: ProductsListViewModel) {
-            self.viewModel = viewModel
+extension ProductsListViewController: UICollectionViewDataSourcePrefetching {
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for index in indexPaths {
+            viewModel.loadPage(at: index.item)
         }
-        
-        func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-            for index in indexPaths {
-                viewModel.loadPage(at: index.item)
-            }
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
     }
 }

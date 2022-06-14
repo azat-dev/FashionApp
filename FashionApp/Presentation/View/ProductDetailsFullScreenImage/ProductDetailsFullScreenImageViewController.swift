@@ -9,29 +9,40 @@ import Foundation
 import UIKit
 import UIImageViewAlignedSwift
 
-typealias ProductDetailsFullScreenImageViewControllerStyled = ProductDetailsFullScreenImage<ProductDetailsFullScreenImageLayout, ProductDetailsFullScreenImageStyles>
+// MARK: - Implementations
 
-class ProductDetailsFullScreenImage<Layout: ProductDetailsFullScreenImageLayout, Styles: ProductDetailsFullScreenImageStylable>: UIViewController {
+final class ProductDetailsFullScreenImageViewController: UIViewController  {
+
+    private let styles: ProductDetailsFullScreenImageViewControllerStyles!
+    private let layout: ProductDetailsFullScreenImageViewControllerLayout!
     
     private(set) var imageView = UIImageViewAligned()
     private var backButton = UIButton()
     private var buyButton = UIButton()
     private var priceTags = [PriceTagStyled]()
     
-    var viewModel: ProductViewModel! {
+    var viewModel: ProductDetailsFullScreenImageViewModel! {
         didSet {
             setupViews()
             bind(to: viewModel)
         }
     }
 
-    init(viewModel: ProductViewModel) {
+    init(
+        viewModel: ProductDetailsFullScreenImageViewModel,
+        styles: ProductDetailsFullScreenImageViewControllerStyles,
+        layout: ProductDetailsFullScreenImageViewControllerLayout
+    ) {
+        
+        self.styles = styles
+        self.layout = layout
+        
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("Not implemented")
     }
     
     override func viewDidLoad() {
@@ -42,23 +53,13 @@ class ProductDetailsFullScreenImage<Layout: ProductDetailsFullScreenImageLayout,
     private func setup() {
         setupViews()
         bind(to: viewModel)
-        layout()
+        applyLayout()
         style()
     }
     
     @objc
     private func goBack() {
-        guard let navigationController = navigationController else {
-            dismiss(animated: true)
-            return
-        }
-        
-        
-        navigationController.popViewController(animated: true)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        viewModel.goBack()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,7 +72,7 @@ class ProductDetailsFullScreenImage<Layout: ProductDetailsFullScreenImageLayout,
 
 // MARK: - Setup views
 
-extension ProductDetailsFullScreenImage {
+extension ProductDetailsFullScreenImageViewController {
     private func setupViews() {
         
         backButton.addTarget(self, action: #selector(Self.goBack), for: .touchUpInside)
@@ -83,7 +84,7 @@ extension ProductDetailsFullScreenImage {
     }
 }
 
-extension ProductDetailsFullScreenImage {
+extension ProductDetailsFullScreenImageViewController {
     private func addPriceTags() {
 //        let priceTag1 = PriceTagView(frame: .zero)
 //        priceTag1.viewModel = PriceTagViewModel(
@@ -122,9 +123,9 @@ extension ProductDetailsFullScreenImage {
 
 // MARK: - Bind ViewModel
 
-extension ProductDetailsFullScreenImage {
-    private func bind(to viewModel: ProductViewModel?) {
-        viewModel?.image.image.observe(on: self) { [weak self] newImage in
+extension ProductDetailsFullScreenImageViewController {
+    private func bind(to viewModel: ProductDetailsFullScreenImageViewModel?) {
+        viewModel?.image.observe(on: self) { [weak self] newImage in
             self?.imageView.image = newImage?.cropAlpha()
         }
     }
@@ -132,20 +133,20 @@ extension ProductDetailsFullScreenImage {
 
 // MARK: - Styles
 
-extension ProductDetailsFullScreenImage {
+extension ProductDetailsFullScreenImageViewController {
     private func style() {
-        Styles.apply(view: view)
-        Styles.apply(backButton: backButton)
-        Styles.apply(imageView: imageView)
-        Styles.apply(buyButton: buyButton)
+        styles.apply(view: view)
+        styles.apply(backButton: backButton)
+        styles.apply(imageView: imageView)
+        styles.apply(buyButton: buyButton)
     }
 }
 
 // MARK: - Layout
 
-extension ProductDetailsFullScreenImage {
-    private func layout() {
-        Layout.apply(
+extension ProductDetailsFullScreenImageViewController {
+    private func applyLayout() {
+        layout.apply(
             view: view,
             backButton: backButton,
             imageView: imageView,

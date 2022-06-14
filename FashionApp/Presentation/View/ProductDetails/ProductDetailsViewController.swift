@@ -9,9 +9,10 @@ import Foundation
 import UIKit
 import UIImageViewAlignedSwift
 
-typealias ProductDetailsViewControllerStyled = ProductDetailsViewController<ProductDetailsViewControllerLayout, ProductDetailsViewControllerStyles>
-
-class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles: ProductDetailsViewStylable>: UIViewController {
+final class ProductDetailsViewController: UIViewController {
+    
+    private let styles: ProductDetailsViewControllerStyles!
+    private let layout: ProductDetailsViewControllerLayout!
     
     private var backButton = UIButton(type: .system)
     private var scrollView = UIScrollView()
@@ -25,7 +26,7 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     
     private var navigationDelegate = NavigationDelegate()
     
-    var viewModel: ProductViewModel! {
+    var viewModel: ProductDetailsViewModel! {
         didSet {
             bind(to: viewModel)
         }
@@ -40,13 +41,21 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
         return view.convert(openedImage.frame, to: nil)
     }
     
-    init(viewModel: ProductViewModel) {
+    init(
+        viewModel: ProductDetailsViewModel,
+        styles: ProductDetailsViewControllerStyles,
+        layout: ProductDetailsViewControllerLayout
+    ) {
+        
+        self.styles = styles
+        self.layout = layout
+        
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("Not implemented")
     }
     
     override func viewDidLoad() {
@@ -58,32 +67,26 @@ class ProductDetailsViewController<Layout: ProductDetailsViewLayoutable, Styles:
     private func setup() {
         setupViews()
         style()
-        layout()
+        applyLayout()
         bind(to: viewModel)
     }
     
     @objc
     private func goBack() {
-        guard let navigationController = navigationController else {
-            dismiss(animated: true)
-            return
-        }
-        
-        navigationController.popViewController(animated: true)
+        viewModel.goBack()
     }
     
     @objc
     private func openImage() {
-        let vc = ProductDetailsFullScreenImageViewControllerStyled(viewModel: viewModel)
         
         openedImage = imageView
-        show(vc, sender: self)
+        viewModel.openFullscreenImage()
     }
 }
 
 // MARK: - Set up views
 
-private extension ProductDetailsViewController {
+extension ProductDetailsViewController {
     private func setupViews() {
         navigationController?.delegate = navigationDelegate
         
@@ -109,8 +112,8 @@ private extension ProductDetailsViewController {
 
 // MARK: - Bind ViewModel
 
-private extension ProductDetailsViewController {
-    private func bind(to viewModel: ProductViewModel) {
+extension ProductDetailsViewController {
+    private func bind(to viewModel: ProductDetailsViewModel) {
         imageView.imageView.viewModel = viewModel.image
         
         viewModel.state.observe(on: self) { [weak self] state in
@@ -139,17 +142,17 @@ private extension ProductDetailsViewController {
         switch state {
         case .loaded:
             
-            Styles.apply(titleLabel: titleLabel)
-            Styles.apply(brandLabel: brandLabel)
-            Styles.apply(descriptionLabel: descriptionLabel)
+            styles.apply(titleLabel: titleLabel)
+            styles.apply(brandLabel: brandLabel)
+            styles.apply(descriptionLabel: descriptionLabel)
             cartButton.isHidden = false
             imageDescriptionButton.isHidden = false
             
         case .loading, .initial, .failed:
             
-            Styles.apply(titleLabelLoading: titleLabel)
-            Styles.apply(brandLabelLoading: brandLabel)
-            Styles.apply(descriptionLabelLoading: descriptionLabel)
+            styles.apply(titleLabelLoading: titleLabel)
+            styles.apply(brandLabelLoading: brandLabel)
+            styles.apply(descriptionLabelLoading: descriptionLabel)
             cartButton.isHidden = true
             imageDescriptionButton.isHidden = true
         }
@@ -158,9 +161,10 @@ private extension ProductDetailsViewController {
 
 // MARK: - Layout
 
-private extension ProductDetailsViewController {
-    func layout() {
-        Layout.apply(
+extension ProductDetailsViewController {
+    
+    func applyLayout() {
+        layout.apply(
             view: view,
             scrollView: scrollView,
             contentView: contentView,
@@ -177,16 +181,16 @@ private extension ProductDetailsViewController {
 
 // MARK: - Assign styles
 
-private extension ProductDetailsViewController {
+extension ProductDetailsViewController {
     func style() {
-        Styles.apply(scrollView: scrollView)
-        Styles.apply(contentView: contentView)
-        Styles.apply(imageView: imageView)
-        Styles.apply(titleLabel: titleLabel)
-        Styles.apply(brandLabel: brandLabel)
-        Styles.apply(descriptionLabel: descriptionLabel)
-        Styles.apply(cartButton: cartButton)
-        Styles.apply(backButton: backButton)
-        Styles.apply(imageDescriptionButton: imageDescriptionButton)
+        styles.apply(scrollView: scrollView)
+        styles.apply(contentView: contentView)
+        styles.apply(imageView: imageView)
+        styles.apply(titleLabel: titleLabel)
+        styles.apply(brandLabel: brandLabel)
+        styles.apply(descriptionLabel: descriptionLabel)
+        styles.apply(cartButton: cartButton)
+        styles.apply(backButton: backButton)
+        styles.apply(imageDescriptionButton: imageDescriptionButton)
     }
 }

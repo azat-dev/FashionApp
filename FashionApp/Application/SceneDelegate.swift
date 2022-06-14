@@ -10,26 +10,16 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var networkManager = DefaultNetworkManager(baseUrl: "http://192.168.0.102:8080")
-    private lazy var productsRepository: ProductsRepository = {
-        DefaultProductsRepository(networkManager: networkManager)
-    } ()
-    private lazy var imagesRepository: ImagesRepository = {
-        DefaultImagesRepository(networkManager: networkManager)
-    } ()
+    var appCoordinator: AppCoordinator!
 
-    private func setupInitialVC(window: UIWindow) {
-        let listViewModel = DefaultProductsListViewModel(
-            productsRepository: productsRepository,
-            imagesRepository: imagesRepository
-        )
-        let listVC = ProductsListViewControllerStyled(viewModel: listViewModel)
-        
-        let navigationController = UINavigationController(rootViewController: listVC)
-        navigationController.isNavigationBarHidden = false
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
-    }
+//    private func setupInitialVC(window: UIWindow) {
+//        
+//        
+//        let navigationController = UINavigationController(rootViewController: listVC)
+//        navigationController.isNavigationBarHidden = false
+//        window.rootViewController = navigationController
+//        window.makeKeyAndVisible()
+//    }
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -39,7 +29,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         self.window = window
-        setupInitialVC(window: window)
+        
+        appCoordinator = DefaultAppCoordinator(window: window)
+        appCoordinator.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

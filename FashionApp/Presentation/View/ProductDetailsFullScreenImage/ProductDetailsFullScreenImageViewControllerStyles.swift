@@ -9,20 +9,25 @@ import Foundation
 import UIImageViewAlignedSwift
 import UIKit
 
-protocol ProductDetailsFullScreenImageStylable {
-    static func apply(view: UIView)
-    static func apply(backButton: UIButton)
-    static func apply(buyButton: UIButton)
-    static func apply(imageView: UIImageViewAligned)
+// MARK: - Interfaces
+
+protocol ProductDetailsFullScreenImageViewControllerStyles {
+    func apply(view: UIView)
+    func apply(backButton: UIButton)
+    func apply(buyButton: UIButton)
+    func apply(imageView: UIImageViewAligned)
 }
 
-class ProductDetailsFullScreenImageStyles: ProductDetailsFullScreenImageStylable {
+// MARK: - Implementations
 
-    class func apply(view: UIView) {
+final class DefaultProductDetailsFullScreenImageViewControllerStyles: ProductDetailsFullScreenImageViewControllerStyles {
+
+    func apply(view: UIView) {
+        
         view.backgroundColor = UIColor(named: "ColorProductCellBackground")
     }
     
-    class func apply(backButton: UIButton) {
+    func apply(backButton: UIButton) {
         
         let imageConfig = UIImage.SymbolConfiguration(
             pointSize: 16,
@@ -44,7 +49,7 @@ class ProductDetailsFullScreenImageStyles: ProductDetailsFullScreenImageStylable
         backButton.configuration = configuration
     }
     
-    class func apply(buyButton: UIButton) {
+    func apply(buyButton: UIButton) {
         
         let title = "Go buy"
         let cornerRadius: CGFloat = 12
@@ -83,7 +88,8 @@ class ProductDetailsFullScreenImageStyles: ProductDetailsFullScreenImageStylable
         buyButton.configuration = configuration
     }
     
-    class func apply(imageView: UIImageViewAligned) {
+    func apply(imageView: UIImageViewAligned) {
+    
         imageView.contentMode = .scaleAspectFit
         imageView.alignBottom = true
     }

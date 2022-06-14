@@ -21,7 +21,6 @@ protocol ProductCellViewModelOutput {
 }
 
 protocol ProductCellViewModelInput {
-    
 }
 
 protocol ProductCellViewModel: ProductCellViewModelOutput & ProductCellViewModelInput {}

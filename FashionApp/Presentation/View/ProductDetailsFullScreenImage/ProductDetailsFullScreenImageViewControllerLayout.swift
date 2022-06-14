@@ -9,8 +9,10 @@ import Foundation
 import UIKit
 import UIImageViewAlignedSwift
 
-protocol ProductDetailsFullScreenImageLayoutable {
-    static func apply(
+// MARK: - Interfaces
+
+protocol ProductDetailsFullScreenImageViewControllerLayout {
+    func apply(
         view: UIView,
         backButton: UIButton,
         imageView: UIImageViewAligned,
@@ -18,8 +20,11 @@ protocol ProductDetailsFullScreenImageLayoutable {
     )
 }
 
-class ProductDetailsFullScreenImageLayout: ProductDetailsFullScreenImageLayoutable {
-    static func apply(view: UIView, backButton: UIButton, imageView: UIImageViewAligned, buyButton: UIButton) {
+// MARK: - Implementations
+
+struct DefaultProductDetailsFullScreenImageViewControllerLayout: ProductDetailsFullScreenImageViewControllerLayout {
+    
+    func apply(view: UIView, backButton: UIButton, imageView: UIImageViewAligned, buyButton: UIButton) {
         
         backButton.snp.makeConstraints { make in
             make.left.equalTo(view.safeAreaLayoutGuide)
