@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 public final class Observable<Value> {
     
     struct Observer<Value> {
